@@ -1,0 +1,39 @@
+[{TableOfContents }] \\\
+
+!!!开发前的准备
+||事项||操作
+|修改PATH| 将 %AXIS2_HOME%\bin 目录加入用户的可执行文件搜索路径 PATH
+|部署AXIS2|（以Tomcat为例）将AXIS2的WAR包放置在 %TOMCAT_HOME%\webapps 目录下，然后启动 Tomcat
+
+!!!开发Server的基本流程
+开发流程：
+# 在Eclise中创建工程，将%AXIS2_HOME%\lib目录下的所有jar加入Build Path中
+# 由WSDL文件生成服务端代码，如：WSDL2Java.bat -uri EchoService.wsdl -ss -sd ，其中-ss 表示生成服务端代码， -sd 表示生成业务描述文件 services.xml
+# 将生成的src目录、resources目录和build.xml加入工程
+# 修改 *ServiceSkeleton 类，实现服务对请求的响应。本例中修改的只有一个EchoServiceSkeleton类
+# 使用ant执行build.xml，生成aar文件
+# 将aar文件部署到Web服务器中。以Tomcat为例，将aar文件放到 %TOMECAT_HOME%/webapps/axis2/WEB-INF/services 目录下
+# 到  http://localhost:8080/axis2/services/listServices 页面查看服务是否已经正确部署，在页面上应该可以看到刚才拷贝到的服务。
+# 使用Client来验证服务
+
+
+本例中的服务器代码，实现将输入的字符串原样返回
+%%prettify 
+{{{
+org.apache.axis2.jaxws.samples.echo.EchoStringResponse resp =
+    new org.apache.axis2.jaxws.samples.echo.EchoStringResponse();
+resp.setEchoResponse(echoStringInput.getEchoInput());
+return resp;
+}}}
+/%
+
+
+!!!技巧
+
+!!利于热部署特性
+AXIS支持热部署，首次部署时不用停止Tomcat，直接将 aar 文件拷贝到 services 目录下，过一会系统会自动找到该服务，在Tomcat会打印出如下日志：
+{{{
+[INFO] Deploying Web service: EchoService.aar - file:/D:/Java/Apache/tomcat-6.0.18/webapps/axis2/WEB-INF/services/EchoService.aar
+}}}
+但如果不是首次部署，则需要重新启动Tomcat才行。\\
+当然也可以先删除 services 目录下的 aar 文件，等Tomcat将其Undeploying之后，再将新的 aar 文件拷贝到 services 目录下。

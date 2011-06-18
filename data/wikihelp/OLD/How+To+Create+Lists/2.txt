@@ -1,0 +1,134 @@
+! Bulleted lists
+Use an asterisk (*) in the first column to make bulleted lists. Use more asterisks for deeper indentation. 
+
+This
+
+{{{
+* One \\ one and a half
+* Two
+* Three
+** Three.One}}}
+
+produces this
+
+* One \\ one and a half
+* Two
+* Three
+** Three.One
+
+----
+
+! Numbered lists
+Just like with bulleted lists, but use a hash (#) instead of the asterisk.
+
+This
+
+{{{
+# One
+# Two
+# Three
+## Three.One
+}}}
+
+produces this
+
+# One
+# Two
+# Three
+## Three.One
+
+
+----
+
+Back to [Editing Pages],  [TextFormattingRules]
+
+
+
+----
+
+Errmm.. is is posible to create a list without any numbers or dots? just a indentation?!
+
+--Matty, 15-Mar-2007
+
+Yes.  Try the following:
+
+{{{
+;:one
+;:two
+;:three
+}}}
+
+which will result in 
+
+;:one
+;:two
+;:three
+
+
+Okay this works for me... but what about a double indentation...?! {{{;:;:}}} dont works :(
+
+That gets more complicated.  But it's possible:
+
+{{{
+%%(margin-left:1ex;)
+First indent
+%%(margin-left:1ex;)
+Second indent
+%%(margin-left:1ex;)
+Third indent
+%%
+Back to second\\
+Still in second
+%%
+Back to first.
+%%
+}}}
+Result is like this:
+%%(margin-left:1ex;)
+First indent
+%%(margin-left:1ex;)
+Second indent
+%%(margin-left:1ex;)
+Third indent
+%%
+Back to second\\
+Still in second
+%%
+Back to first.
+%%
+
+---
+
+Is it possible to mark a listitem as a heading means that the listitem is shown in the table of contents...
+
+Simple.  No :-)
+
+----
+
+Is it possible to have a numbered list with preformatted text that can copy/pasted without losing the embedded newlines? For example, copy/pasting the block with two cp commands shows that it's all one line. This is solved by having the triple-brace on it's own line but that restarts list numbering
+
+Example 1:
+# Run cp{{{
+In this, newlines are missing when copied and pasted into a text editor
+$ cp file1 file2
+$ cp file2 file3
+}}}
+# Run ls{{{
+$ ls -l file1 file2 file3
+}}}
+
+Example 2:
+# Run cp
+{{{
+In this, newlines are NOT missing when copied and pasted into a text editor.
+But the second item in the list (with ls) starts at 1 again
+$ cp file1 file2
+$ cp file2 file3
+}}}
+# Run ls{{{
+$ ls -l file1 file2 file3
+}}}
+
+----
+Back to [Editing Pages]
+

@@ -1,0 +1,20 @@
+Inserts the latest changes in order. 
+
+!Parameters: 
+* __since__=''n'' : show changes from the last n days.
+* __format__=''(full|compact)'' : if "full", then display a long
+  version with all possible info.  If "compact", then be as compact as possible.
+* __timeFormat__=''<string>''.  Sets the format of the time according to Java [SimpleDateFormat|http://java.sun.com/j2se/1.4.2/docs/api/java/text/SimpleDateFormat.html] conventions.  If empty, uses platform default.  If omitted, uses JSPWiki default.
+* __dateFormat__=''<string>''.  Sets the format of the date according to Java [SimpleDateFormat|http://java.sun.com/j2se/1.4.2/docs/api/java/text/SimpleDateFormat.html] conventions.  If empty, uses platform default.  If omitted, uses JSPWiki default.
+
+!Example:
+{{{
+[{INSERT RecentChangesPlugin since=5, format=compact}]
+}}}
+
+Inserts the changes from the past 5 days in a compact format.  You
+might use this to make an automatical list of changes to the [LeftMenu], or [LeftMenuFooter], for example.
+
+
+
+

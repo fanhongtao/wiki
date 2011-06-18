@@ -1,0 +1,10 @@
+Stub articles are articles which could use a bit more editing.  Please tag a page with only a terse comment with {{{[StubArticle]}}}.
+
+Please go ahead and add stuff to any of the following pages:
+
+----
+
+[{ReferringPagesPlugin}]
+
+[{ALLOW edit Authenticated}][{ALLOW view All}]
+

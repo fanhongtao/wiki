@@ -1,0 +1,13 @@
+__安装__
+* [JSP Wiki安装|JSPWikiInstall]
+* [共用配置方式安装|InstallWithCascadingProperties]
+
+__额外安装的插件__
+* [Table Plugin|JSPWiki:TablePlugin]
+* [Code 2 Html|JSPWiki:Code2Html]
+
+
+__使用技巧__
+* [Wiki页面编辑|Doc:EditingPages]
+
+

@@ -1,0 +1,143 @@
+[{TableOfContents }]\\
+
+!!!Linux下搭建采用SSH协议的Git服务器
+!!1.安装openssh
+{{{
+$ sudo apt-get install openssh-server openssh-client
+}}}
+
+!!2.安装git
+{{{
+$ sudo apt-get install git-core
+}}}
+
+也可以从 [http://git-scm.com/download] 下载最新的git源码包，自行编译并安装git。
+
+假设下载了[git-1.7.3.tar.bz2|http://kernel.org/pub/software/scm/git/git-1.7.3.tar.bz2]，可以执行以下命令。
+{{{
+$ bzip2 -cf git-1.7.3.tar.bz2 | tar -xvf -
+$ cd git-1.7.3
+$ ./configure
+$ make
+$ sudo make install
+}}}
+
+!!3.创建git用户
+创建一个用户git，该用户将作为所有代码仓库和用户权限的管理者
+{{{
+$ sudo useradd -d /home/git -m git
+}}}
+
+!!4.将开发者的ssh公钥添加到git用户的 authorized_keys 文件
+（第三行）假设将一个开发者的id_rsa.pub文件FTP至git用户的根目录
+{{{
+$ su - git
+$ mkdir .ssh
+$ cat id_rsa.pub >> ~/.ssh/authorized_keys
+}}}
+如果有多个开发者，则需要将每个开发者的公钥都加入到 authorized_keys 文件中。
+
+!!5.创建空仓库
+在git用户的家目录下创建一个仓库的目录，并使用命令“git init --bare”来将其创建为空仓库（bare repository）
+{{{
+$ su - git
+$ mkdir project1.git
+$ cd project1.git
+$ git init --bare
+}}}
+
+创建仓库的动作会多次执行，所以我们编写一个脚本来简化处理流程，脚本名 create_bare_repo.sh，存放在 git 用户的家目录下
+%%prettify 
+{{{
+#!/bin/bash
+
+# check args
+if [ $# -eq 0 ]; then
+    echo "usage $0 repository-name(s)"
+    exit 1
+fi
+
+function endwith()
+{
+    local str=$1
+    local suffix=$2
+    local strlen=${#str}
+    local suffixlen=${#suffix}
+    local ret="0"
+    if [ $strlen -ge $suffixlen ]; then
+        local tmp=${str:$strlen-$suffixlen}
+        if [ "$tmp" == "$suffix" ]; then
+            ret="1"
+        fi
+    fi
+    
+    echo $ret
+}
+
+function del_suffix()
+{
+    local strlen=${#1}
+    local suffixlen=${#2}
+     
+    echo ${1:0:$strlen-$suffixlen}
+}
+
+cd ~git
+for name in $*
+do
+    # change name to stand git repository name
+    if [ `endwith $name "/"` -eq 1 ]; then
+        name=`del_suffix $name "/"`
+    fi
+    if [ `endwith $name ".git"` -eq 0 ]; then
+        name=${name}.git
+    fi
+    
+    # check if the directory exist
+    if [ -d $name ]; then
+        echo "directory [ $name ] already exist."
+        continue
+    fi
+    
+    # make a bare repository
+    mkdir $name
+    cd $name
+    git init --bare
+    cd ..
+    chown git:users $name
+done
+exit 0
+}}}
+/%
+
+这样，空仓库的步骤就可以简化为
+{{{
+$ sudo ~git/create_bare_repo.sh project1.git
+}}}
+
+!!6.限制git用户登录
+由于在第 4 步中，将开发者的 ssh 公钥添加到git用户的 authorized_keys 文件。所以开发者可以通过如下命令实现ssh登录到 git 用户
+{{{
+ssh git@gitserver
+}}}
+其中“@”前面的 git 表示登录 git用户；“@”后面的 gitserver 则是服务器的名字或IP地址，如 10.0.0.1。
+
+为了限制开发者通过git用户登录，可以通过将git用户对应的shell修改成git-shell的方式来限制。
+{{{
+$ sudo vi /etc/passwd
+}}}
+将 /etc/passwd 文件中的 git 用户对应的shell从缺省的 /bin/bash　修改成　git-shell，修改后的内容类似
+{{{
+git:x:1000:1483::/home/git:/usr/local/bin/git-shell
+}}}
+
+这时如果再试图登录，会得到如下错误信息
+{{{
+ssh git@gitserver
+fatal: What do you think I am? A shell?
+Connection to gitserver closed.
+}}}
+
+限制git用户登录之后，第5步中提到的脚本 create_bare_repo.sh 就显得更加有用了。
+
+

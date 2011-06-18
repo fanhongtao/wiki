@@ -1,0 +1,25 @@
+!!!pathogen
+
+!!介绍
+通过安装插件，可以扩展VIM的功能，但当安装几个插件之后，就会发现插件比较难管理：插件的内容会分散在 autoload、doc、ftplugin 等目录下，如果想要删除一个插件，不容易删除干净。
+
+pathogen 插件则提供了新的插件管理方式：为每个插件单独创建一个目录，想要删除插件时，只用将对应的目录删除即可。
+
+!!安装方式
+* 从 VIM 网站上[下载pathogen|http://www.vim.org/scripts/script.php?script_id=2332]
+* 将下载得到的 pathogen.vim 放在 ~\vimfiles\autoload 目录下（Windows操作系统）
+* 在 ~\vimfiles 目录下创建一个 bundle 子目录
+* 在 .vimrc 中增加如下语句
+{{{
+call pathogen#runtime_append_all_bundles() 
+}}}
+
+!!插件管理方式
+下面以安装 [recent插件|Vim.Plugin.recent] 为例进行说明：
+* 在 ~\vimfiles\bundle 目录下创建一个子目录 recent_1767 。其中recent表示插件名，1767表示插件ID，通过这样的命名方式可以便于管理插件。
+* 从VIM网站下下载 recent 插件的安装包 recent.zip
+* 将 recent.zip 在 recent_1767 目录下解压，形成  recent_1767\doc 和 recent_1767\plugin 目录
+* 如果想要删除 recent 插件，只需要删除 recent_1767 就可以了
+
+从上面的安装步骤可以看出，我们将 ~\vimfiles\bundle\recent_1767 当作是 ~\vimfiles ，然后按照插件本身描述的安装步骤进行安装就可以了。有些插件只提供单独的 xxx.vim 文件，就需要手工在 ${plugin_name}_${plugin_id} 目录下创建 plugin 或 autoload 这样的子目录。
+

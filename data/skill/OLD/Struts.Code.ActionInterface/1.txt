@@ -1,0 +1,19 @@
+Action 接口预定义了五个最常用的[Result|Struts.Configure.Result]名称，并申明了Action类缺省 execute 方法。
+
+[{Code language=java
+
+public abstract interface com.opensymphony.xwork2.Action
+{
+    public static final java.lang.String SUCCESS = "success";
+    
+    public static final java.lang.String NONE = "none";
+    
+    public static final java.lang.String ERROR = "error";
+    
+    public static final java.lang.String INPUT = "input";
+    
+    public static final java.lang.String LOGIN = "login";
+    
+    public abstract java.lang.String execute() throws java.lang.Exception;
+}
+}]

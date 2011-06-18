@@ -1,0 +1,198 @@
+[{TableOfContents }]
+
+!!!正则表达式
+
+awk所使用的扩展正则表达式类似于 grep 和 egrep 。当记录满足正则表达式的内容时，就认为模式匹配。
+
+一个 regular expression 以斜线('/')包围当作 AWK 的 pattern。如果输入记录含有 regexp 就视为符合。例如：pattern 为 /foo/，对於任何输入记录含有'foo'则视为符合。
+{{{
+awk '/foo/' input.txt
+}}}
+
+regexp 也能使用在比较的算式：\\
+exp ~ /regexp/ 	：如果 exp 符合 regexp，则结果为真(true)。\\
+exp !~ /regexp/	：如果 exp 不符合 regexp，则结果为真。
+{{{
+awk -F"|" '$2 ~ /abc/' f.unl	# 打印出第2个字段包含 abc 的记录
+}}}
+
+假定一个名为 testfile 的文件具有以下内容：
+{{{
+smawley, andy
+smiley, allen
+smith, alan
+smithern, harry
+smithhern, anne
+smitters, alexis
+}}}
+
+格式约定：以“>>”作为命令行的提示符，
+{{{
+>> awk '/sm[a-h]/' testfile
+smawley, andy
+}}}
+表示执行命令 awk '/sm[[^a-h]/' testfile，输出的结果为 smawley, andy 。
+
+
+在正则表达式中，可以的特殊字符有：
+!1. + （加号，plus sign）
++表示重复前面的规则一次或多次。
+{{{
+>> awk '/smith+ern/' testfile
+smithern, harry
+smithhern, anne
+}}}
+将包含smit ，且后跟一个或多个 h ，再以 ern 结尾的字符串的记录打印至标准输出。
+
+!2. ? （问号，question mark）
+?表示重复前面的规则零次或一次。
+{{{
+>> awk '/smith?/' testfile
+smith, alan
+smithern, harry
+smithhern, anne
+smitters, alexis
+}}}
+将包含smit ，后有零个或一个 h 字符的记录打印至标准输出。
+
+!3. | （垂直线，vertical bar）
+垂直线表示多个规则中只要有一个满足就可以。
+{{{
+>> awk '/allen|alan/' testfile
+smiley, allen
+smith, alan
+}}}
+将包含字符串 allen 或 alan 的所有记录打印至标准输出。
+
+!4. ( ) （小括号）
+( ) 用于将字符串组合在一起。
+{{{
+>> awk '/a(ll)?(nn)?e/' testfile
+smiley, allen
+smithhern, anne
+}}}
+将具有字符串 ae 或 alle 或 anne 或allnne 的所有记录打印至标准输出。
+
+!5. {m} 
+如果正好有m个模式的具体值位于字符串中，则字符串匹配。
+{{{
+>> awk '/l{2}/' testfile
+smiley, allen
+}}}
+将有2个l 的字符串打印至标准输出。
+
+注：如果有多于2个l，比如， alllen，也算是匹配。为了避免这种情况，通常应该在{m}前、后再多指定一些模式。如：/al{2}en/，这样就只可能匹配 allen 。/al{2}en/是指在模式a和en中间含有且只有两个模式'l'，例如如果存在'acllben'和'alllen'用上述方法就匹配不出来。下面的 {m,} 和 {m,n} 也有类似的情况。
+
+!6. {m,} 
+如果至少有m个模式的具体值位于字符串中，则字符串匹配。如，
+{{{
+>> awk '/t{2,}/' testfile
+smitters, alexis
+}}}
+将至少有两个连续的 t 出现的记录打印至标准输出。
+
+!7. {m,n}
+如果有m 和 n 之间（包括 m 和 n）个模式的具体值位于字符串中，则字符串匹配。
+{{{
+>> awk '/er{1,2}/' testfile
+smithern, harry
+smithhern, anne
+smitters, alexis
+}}}
+注：m、,(逗号)和n之间，不能有空格出现！
+
+!8. [[String]
+指定正则表达式与方括号内 String 变量指定的任何字符匹配。如：
+{{{
+>> awk '/sm[a-h]/' testfile
+smawley, andy
+}}}
+将具有 sm 后跟以字母 a 到 h 之间的任何字符的所有记录打印至标准输出。
+
+如果是字母或数字存在连续的情况，则可以使用“起始字母-终止字母”的简写方式，如：[[x-z] 表示从x到z的所有字母。如果是不连续字母/数值，则直接写出所有的单个字母，如[[axz]表示a、x、z这三个字母。
+{{{
+^[ -_:0-9a-zA-Z]+$
+}}}
+表示由
+
+!9. [[^ String]
+在 [[ ] （方括号）和在指定字符串开头的 ^ （插入记号）指明正则表达式与方括号内的任何字符不匹配。
+{{{
+>> awk '/sm[^a-h]/' testfile
+smiley, allen
+smith, alan
+smithern, harry
+smithhern, anne
+smitters, alexis
+}}}
+
+!10. ~~ 和 !~ 
+表示指定变量与正则表达式匹配（代字号）或不匹配（感叹号、代字号）的条件语句。
+{{{
+>> awk '$1 ~ /n/' testfile
+smithern, harry
+smithhern, anne
+}}}
+将第一个字段包含字符 n 的所有记录打印至标准输出。
+
+!11. ^（circumflex）
+指定字段或记录的开头。
+{{{
+>> awk '$2 ~ /^h/' testfile
+smithern, harry
+}}}
+把字符 h 作为第二个字段的第一个字符的所有记录打印至标准输出。
+
+!12. $ （dollar sign）
+指定字段或记录的末尾。
+{{{
+>> awk '$2 ~ /y$/' testfile
+smawley, andy
+smithern, harry
+}}}
+把字符 y 作为第二个字段的最后一个字符的所有记录打印至标准输出。
+
+!13. . （句号，period）
+表示除了在空白末尾的终端换行字符以外的任何字符。
+{{{
+>> awk '/a..e/' testfile
+smawley, andy
+smiley, allen
+smithhern, anne
+}}}
+将具有两个字符隔开 a 和 e 所有记录打印至标准输出。
+
+!14. * （星号，asterisk）
+表示重复前面的规则零次或多次。
+{{{
+>> awk '/a.*e/' testfile
+smawley, andy	
+smiley, allen
+smithhern, anne
+smitters, alexis
+}}}
+将具有零个或多个字符隔开 a 和 e 所有记录打印至标准输出。
+
+!15. \ （反斜杠，backslash）
+转义字符。当位于扩展正则表达式中具有特殊含义的任何字符之前时，转义字符除去该字符的任何特殊含义。如，
+{{{
+/a\/\//
+}}}
+将与模式 a// 匹配，因为反斜杠否定了斜杠作为正则表达式定界符的通常含义。要将反斜杠本身指定为字符，则使用两个反斜杠。
+
+!16. 识别的转义序列：
+awk命令识别大多数C语言中约定的转义序列，以及awk命令本身用作特殊字符的几个转义序列。如下表：
+|| 转义序列 || 表示的字符
+| \" | "（双引号）字符
+| \/ | /（斜杠）字符
+| \ddd | 其编码由1、2或3位八进制整数表示的字符，其中，d 表示一个八进制数位
+| \ \ | \（反斜杠）字符
+| \a | 警告字符
+| \b | 退格字符
+| \f | 换页字符
+| \n | 换行字符
+| \r | 回车字符
+| \t | 跳格字符
+| \v | 垂直跳格
+
+注：除了在 gsub、match、split 和 sub  内置函数中，扩展正则表达式的匹配都基于输入记录。记录分隔符（缺省情况下为换行字符）不能嵌套在表达式中，且没有与记录分隔符字符匹配的表达式（因为awk是先对记录、字段作了分隔，才进行匹配操作的）。如果记录分隔符不是换行字符，则可与换行字符匹配。在指定的四个内置函数中，匹配基于文本字符串，且任何字符（包含记录分隔符）可以嵌套在模式中，这样模式与适当的字符相匹配。然而，用awk命令进行 的所有正则表达式匹配中，在模式使用一个或多个NULL（空）字符将生成未定义的结果。

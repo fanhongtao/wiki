@@ -1,0 +1,82 @@
+[{TableOfContents }]\\
+
+!!!Git基本使用步骤
+本文描述了如何在[GitHub|http://github.com]上创建一个自己的项目，如何在Windows平台下使用该项目。
+
+!!安装Git
+从 [http://code.google.com/p/msysgit/]上下载 msysgit。
+
+安装时保留默认选项，不要使用putty作为客户端，GitHub只支持openssh。安装完成后需要生成SSH Key。
+
+!!生成SSH Key
+通过鼠标右键菜单中的“Git Bash”菜单项，进入Git Bash的交互界面。下文中都假设是在 Git Bash 界面（而不是Dos界面）进行操作。
+
+其中以 “$” 开头的行表示是在 Git Bash 界面上输入的命令，没有以 “$” 开头的行则表示是命令的执行结果或执行命令过程中要求输入的文字
+
+{{{
+$ ssh-keygen -t rsa -C "fanhongtao@gmail.com"
+Generating public/private rsa key pair.
+Enter file in which to save the key (/c/Documents and Settings/fht/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /c/Documents and Settings/fht/.ssh/id_rsa.
+Your public key has been saved in /c/Documents and Settings/fht/.ssh/id_rsa.pub.
+The key fingerprint is:
+6e:df:68:d2:78:ed:c8:77:61:36:6f:23:4e:d6:d5:73 fanhongtao@gmail.com
+}}}
+执行 ssh-keygen 命令后，会要求输入key目录和密码，可根据自己的情况输入。如果不想在使用公钥的时候输入密码，则这里也不输入密码。
+
+
+!!将Public Key 添加到GitHub
+打开你的GitHub->SSH Public Key->点击“Add another public key”，将你的public key（id_rsa.pub）的内容拷贝到GitHub中
+
+这里假设已经有GitHub帐号，如果没有，可以免费注册一个。免费帐号有300M的空间，应该可以满足个人的代码存储要求了。
+
+!!测试SSH
+{{{
+$ ssh git@github.com
+The authenticity of host 'github.com (207.97.227.239)' can't be established.
+RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'github.com,207.97.227.239' (RSA) to the list of known hosts.
+Enter passphrase for key '/c/Documents and Settings/fht/.ssh/id_rsa':
+ERROR: Hi fanhongtao! You've successfully authenticated, but GitHub does not provide shell access
+Connection to github.com closed.
+}}}
+
+看到有 “successfully authenticated” 字样，说明GitHub上的SSH已经配置好了。
+
+!!提交变更
+! 配置用户信息
+{{{
+$ git config --global user.name "fanhongtao"
+$ git config --global user.email fanhongtao@gmail.com
+}}}
+
+! 创建Repository
+下面举例说明如何合建一个全新的 Repository。
+{{{
+$ mkdir MyCode   # 在本地创建一个目录，作为本地工程的根目录
+$ cd MyCode      # 进入该目录
+$ git init       # 创建 Repository
+$ touch README   # 在本地工程创建一个文件
+$ git add README # 将文件添加到 Repository
+$ git commit -m 'first commit'    # 将修改提交到本地的Repository
+$ git remote add origin git@github.com:fanhongtao/MyCode.git  # 在远端创建一个名为 origin的branch
+$ git push origin master  # 将本地Repository提交到远端
+}}}
+
+
+!! 获取GitHub上的版本
+! 获取新版本
+{{{
+$ git clone git@github.com:fanhongtao/MyCode.git
+}}}
+
+执行该命令后，会在当前目录下创建一个 MyCode 目录，将 github 上的 MyCode.git 拷贝一份到本地。
+
+! 更新本地拷贝
+{{{
+$ cd MyCode   # 进入根目录
+$ git pull    # 将远端的代码更新到本地
+}}}

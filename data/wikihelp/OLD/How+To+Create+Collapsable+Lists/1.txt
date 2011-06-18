@@ -1,0 +1,59 @@
+!! Collapsable lists 
+
+This [JSPWiki Style] turns ordinary lists into collapsable trees by enclosing them inside a %~%collapse ... %~% tag.
+When clicking a list item bullet, you can expand or collapse nested list items.
+The status of expanded/collapsed nodes are persisted in a browsers cookie, so you don't have to redo your clicking when visiting other pages in between.
+
+Formatting of the bullets is done through CSS. You can change
+the look and feel of open/close bullets in the jspwiki.css. The default implementation uses
+• (normal) or « (closed bullet) or » (open bullet) 
+but this can easily be replaced by any picture you want.
+
+See also [How To Create Collapsable Boxes]
+
+!! Usage
+
+Enclose the collapsable list in a %~%collapse tag.
+* Unorder sublists (* bullet) are rendered by default not collapsed; 
+* Ordered sublists (# bullets) are rendered by default collapsed.
+{{{
+%%collapse
+* Europe
+** France
+*** Paris
+*** Nice
+** South-Africa
+** Belgium (collapsed by default) 
+### Brussel
+### Peulis
+* Australia
+**
+*** Perth
+* Australia
+*** Sydney
+**** Kangeroo
+**** Huppeldepup
+%%
+}}}
+
+Reality check:
+%%collapse
+* Europe
+** France
+*** Paris
+*** Nice
+** South-Africa
+** Belgium (collapsed by default)
+### Brussel 
+### Peulis
+* Australia
+**
+*** Perth
+* Australia
+*** Sydney
+**** Kangeroo
+**** Huppeldepup
+%%
+
+----
+Back to [Editing Pages]

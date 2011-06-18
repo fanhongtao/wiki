@@ -1,0 +1,44 @@
+Struts 2.1.8.1 中docs/docs 目录下的html文档中，有引用 cwiki.apache.org 中的图片。当打开帮助文档时，会因为需要下载图片而导致显示速度变慢，如果没有Porxy权限，还会导致页面打开失败。\\
+为了加快显示速度，需要将 .html 中所有关于 cwiki.apache.org 的引用都转换成本地图片。\\
+
+实现步骤：
+
+!!!创建转换脚本
+在 docs/docs 目录下，生成一个名为 convert.awk 的文件
+%%prettify 
+{{{
+{
+    sub("http://cwiki.apache.org/confluence/download/resources/confluence.ext.code:code", "resources");
+    sub("http://cwiki.apache.org/confluence/images", "images");
+    sub("http://struts.apache.org/images", "images");
+    print $0;
+}
+
+}}}
+/%
+
+再生成一个名为 convert.sh 的文件
+%%prettify 
+{{{
+#!/bin/bash
+
+files=`ls *.html`
+for file in ${files}
+do
+    echo $file
+    awk -f convert.awk ${file} > ${file}.tmp
+    mv ${file}.tmp  ${file}
+done
+}}}
+/%
+
+!!!下载图片
+home.html 中引用了一张 starting-struts2.jpg 的图片，需要手工下载并放置到 docs/docs/images 目录下。\\
+其它文件中引用的图片在本地的 images 目录下都已经存在，不用单独下载。
+
+!!!执行转换脚本
+执行 convert.sh 文件，就可以将文档中所有图片转换成本地的。
+
+
+
+

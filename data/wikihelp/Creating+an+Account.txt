@@ -1,0 +1,30 @@
+This page describes two methods to create an account and some additional notes on why you should do so. JSPWiki has four types of users: Anonymous Guest, Asserted User, Authenticated User and Admin Group.  An administrator can set what the level of access to the wiki is required, but in order to access certain functions you need to register and log in. For more information on the types of users and their default access see [Security|http://doc.jspwiki.org/2.4/wiki/Security#section-Security-SecurityPolicies]
+
+!Create an account
+*Click the Login button in the upper right hand corner.
+*Click the Register New User tab or the link "Join (WikiName) Now!"
+*In the Register New User tab:
+**Fill in the Login name field. Avoid special characters and spaces. The Login name will be case sensitive.
+**Fill in the Password field. Avoid special characters and spaces. The Password will be case sensitive.
+**Fill in the Password verify with the same text you typed in the Password field.
+**Fill in the Name field with your wiki name. This name will be displayed in the recent changes list, at the bottom of pages you edit, and anywhere else JSPWiki needs to show what you did.
+**Fill in the E-Mail address. You'll use this address when you need to recover your password. Good idea to fill this in __before__ forgetting your password.
+**Click the Save Profile button.
+*Your account has been created.
+
+!Alternate Method
+Setting your user name this way isn’t a real method of authentication, because it just sets a cookie in your browser without requiring a password. Depending on the security policy, the wiki may grant you fewer privileges as an “asserted” user.
+*go to the [UserPreferences] page by clicking on the My Prefs button in the upper right hand corner.
+*Change the Name field from your IP address to your wiki name. This name will be displayed in the recent changes list, at the bottom of pages you edit, and anywhere else JSPWiki needs to show what you did.
+*OPTIONAL: Change the other values to your own preferences.
+*click on "Save User Preferences"
+
+%%information
+When the user saves the profile, JSPWiki checks to make sure that the new user id, wiki name and full name aren't already used by someone else. If so, the user is given the opportunity to choose different values. 
+%%
+
+%%warning
+If container-managed authentication is in force, the user ID will not be editable; the container will supply this value.
+%%
+
+

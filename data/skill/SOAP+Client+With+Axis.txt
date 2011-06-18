@@ -1,0 +1,236 @@
+[{TableOfContents }] \\\
+
+!!!开发前的准备
+||事项||操作
+|修改PATH| 将 %AXIS2_HOME%\bin 目录加入用户的可执行文件搜索路径 PATH 
+
+!!!开发Client的基本流程
+开发流程：
+# 在Eclise中创建Java工程，将%AXIS2_HOME%\lib目录下的所有jar加入Build Path中
+# 由WSDL文件生成客户端接口代码，如： WSDL2Java.bat -uri EchoService.wsdl
+# 将生成的src目录和build.xml加入工程
+# 自己编写调用客户端接口的代码，实现一个调用操作，本例中的EchoClient.java
+
+示例代码
+%%prettify 
+{{{
+// 生成Stub对象
+EchoServiceStub stub = new EchoServiceStub("http://localhost:18080/axis2/services/EchoService");
+
+// 设置为重用Client
+Options options = stub._getServiceClient().getOptions();
+options.setProperty(HTTPConstants.REUSE_HTTP_CLIENT, "true");
+
+// 创建连接管理器
+MultiThreadedHttpConnectionManager conmgr = new MultiThreadedHttpConnectionManager();
+
+// 设置每个主机的最大并行连接数
+conmgr.getParams().setDefaultMaxConnectionsPerHost(10);
+
+// 创建HttpClient的实例
+HttpClient httpClient = new HttpClient(conmgr);
+ConfigurationContext configurationContext =
+    stub._getServiceClient().getServiceContext().getConfigurationContext();
+configurationContext.setProperty(HTTPConstants.CACHED_HTTP_CLIENT, httpClient);
+
+// 调用EchoService接口，并对返回值进行处理
+EchoServiceStub.EchoStringInput req = new EchoServiceStub.EchoStringInput();
+req.setEchoInput("Message ");
+EchoServiceStub.EchoStringResponse rsp = stub.echoOperation(req);
+System.out.println(rsp.getEchoResponse());
+}}}
+/%
+
+!!!设置SOAP Header
+通过 xxxStub 对象获取 ServiceClient，然后将定义一个 SOAPHeaderBlock 对象，将SOAP Header的参加逐一添加到 SOAPHeaderBlock 对象中，再将 SOAPHeaderBlock 对象加入 ServiceClient。
+由于不同SOAP消息的消息头通常定义都相同，所以一般的做法是将添加消息头的代码抽取成一个公共方法。
+
+示例代码
+%%prettify 
+{{{
+// 获取 ServiceClient 对象
+EchoServiceStub stub = new EchoServiceStub("http://localhost:18080/axis2/services/EchoService");
+ServiceClient serviceClient = stub._getServiceClient();
+HeaderSetter.setAOMTSoapHeader(serviceClient );
+}}}
+/%
+
+公共方法：
+%%prettify 
+{{{
+protected static final String nameSpace = "http://wsi.portalservice.dpf.huawei.com";
+
+public static void setAOMTSoapHeader(ServiceClient serviceClient)
+{
+    // 获取AXIOM的对象工厂
+    OMFactory fac = OMAbstractFactory.getOMFactory();
+    SOAPFactory sfac = OMAbstractFactory.getSOAP11Factory();
+
+    // 创建名字空间NameSpace
+    OMNamespace omNs = fac.createOMNamespace(nameSpace, "tns");
+
+    // 创建RequestSOAPHeader
+    SOAPHeaderBlock block_RequestSOAPHeader = sfac.createSOAPHeaderBlock("RequestSOAPHeader", omNs);
+
+    // 设置operatorID
+    SOAPHeaderBlock block_operatorID = sfac.createSOAPHeaderBlock(SOAPHEADER_OPERATORID, omNs);
+    block_operatorID.addChild(sfac.createOMText(operatorId));
+    block_RequestSOAPHeader.addChild(block_operatorID);
+
+    // 增加Header中的其它值
+
+    // 添加 SOAP消息头
+    serviceClient.addHeader(block_RequestSOAPHeader);
+}
+}}}
+/%
+
+
+!!!Client发送附件
+有时候会需要SOAP请求消息中提交附件。如：通过SOAP消息发送彩信时，会将彩信的SMIL文件、图片文件、文本文件等都做为SOAP的附件进行发送。
+
+!!修改存根类的发送方法
+AXIS自动生成的存根类（Stub）的发送方法是不支持附件的，因此需要手工修改该发送方法，添加一个Attachments传入参数：
+org.apache.axiom.attachments.Attachments attachments
+然后将
+%%prettify
+{{{
+// 增加以下代码用于设置SOAP附件
+/*****begin - 设置SOAP附件的代码*****/
+if (attachments != null)
+{
+    _operationClient.getOptions().setProperty(
+        org.apache.axis2.Constants.Configuration.ENABLE_SWA,
+        org.apache.axis2.Constants.VALUE_TRUE);
+    _messageContext.setAttachmentMap(attachments);
+}
+/*****end - 设置附件的代码*****/
+}}}
+/%
+
+!!发送附件
+定义一个Attachments对象，然后将需要发送的文件添加到附件中，最后再调用发送接口时将附件传入
+%%prettify
+{{{
+DataHandler dh = null;
+Attachments attachments = new Attachments();
+
+dh = new DataHandler(new FileDataSource(new File("d:\\temp\\MNSTest\\1\\mns\\mms.smil")));
+attachments.addDataHandler("1234567801", dh);
+
+dh = new DataHandler(new FileDataSource(new File("d:\\temp\\MNSTest\\1\\mns\\1.txt")));
+attachments.addDataHandler("1234567802", dh);
+
+// ... 添加其它的文件
+
+// 发送SOAP消息时传入附件
+SendMessageResponseE rspMessage = sendMessageStub.sendMessage(reqMessage, attachments);
+}}}
+/%
+
+
+!!!Client接收附件
+在一些特殊的情况下，服务器返回给客户端的消息中会带有附件，如：客户端通过SOAP向服务器查询照片，服务器就可能将照片放在SOAP消息中返回。
+当然，更好的做法是服务器仅返回照片的下载地址。\\
+处理接收附件时有两点需要注意：\\
+1. 存根方法中需要调用 Attachments.getAllContentIDs 方法
+2. 获取到返回值后，应该使用 Attachments.getContentIDList 来获取附件的ID。
+
+!!修改存根类的发送方法
+AXIS自动生成的存根类（Stub）的发送方法的返回值是SOAP请求的应答消息，并不包含附件信息，因此需要手工修改该发送方法，使其可以将接收到的附件返回给调用者。
+
+先定义一个简单的封闭类，用于将SOAP的应答消息的附件封装成一个对象。
+%%prettify
+{{{
+public class ResponseWithAttachments<R, A>
+{
+    private R response;
+    
+    private A attachments;
+    
+   
+    public ResponseWithAttachments(R response, A attachments)
+    {
+        this.response = response;
+        this.attachments = attachments;
+    }
+
+
+    public R getResponse()
+    {
+        return this.response;
+    }
+    
+    public A getAttachments()
+    {
+        return this.attachments;
+    }
+}
+}}}
+/%
+
+再修改存根类的发送方法，将返回值从 xxxResponse 修改成 ResponseWithAttachments，如，将 
+%%prettify
+{{{
+public  com.huawei.dpf.portalservice.wsi.PortalServiceStub.QueryAlbumRsp QueryAlbum
+}}}
+/%
+
+修改成：
+%%prettify
+{{{
+public ResponseWithAttachments<com.huawei.dpf.portalservice.wsi.PortalServiceStub.QueryAlbumRsp, Attachments> QueryAlbum
+}}}
+/%
+
+最后修改该发送方法，在接收到服务器的返回消息时，从消息中提取附件的内容：
+%%prettify
+{{{
+Attachments attachments = _returnMessageContext.getAttachmentMap();
+attachments.getAllContentIDs();
+
+return new ResponseWithAttachments<QueryAlbumRsp, Attachments>(
+                (com.huawei.dpf.portalservice.wsi.PortalServiceStub.QueryAlbumRsp)object, attachments);
+}}}
+/%
+
+!!接收附件
+下面的例子在接收到服务器返回的附件后，将附件对应的内容保存到文件中。
+%%prettify
+{{{
+ResponseWithAttachments<PortalServiceStub.QueryAlbumRsp, Attachments> rwa = stub.QueryAlbum(req);
+Attachments attachments = rwa.getAttachments();
+String[] content_id = (String[])attachments.getContentIDList().toArray(new String[0]);
+for (int i = 0; i < content_id.length; i++)
+{
+    DataHandler dataHandler = attachments.getDataHandler(content_id[i]);
+    File file = null;
+    String contentType = dataHandler.getContentType();
+    if (contentType.contains("text"))
+    {
+        file = new File("C:\\test" + i + ".txt"); //文本附件
+    }
+    else if (contentType.contains("image")) //图片附件
+    {
+        if (contentType.equals("image/gif"))
+        {
+            file = new File("C:\\test" + i + ".gif");
+        }
+        else
+        {
+            file = new File("C:\\test" + i + ".jpg");
+        }
+    }
+    else
+    {
+        file = new File("C:\\test" + i + ".dat");
+    }
+    System.out.println("Write file : " + file.getName());
+    FileOutputStream fileOutputStream = new FileOutputStream(file);
+    dataHandler.writeTo(fileOutputStream);
+    fileOutputStream.flush();
+    fileOutputStream.close();
+}
+}}}
+/%
+

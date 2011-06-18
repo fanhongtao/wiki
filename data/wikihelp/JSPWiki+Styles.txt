@@ -1,0 +1,36 @@
+In addition to the simple styles represented by the [WikiMarkup], JSPWiki also allows you to put in your own styles, which 
+are defined in the jspwiki.css file. These may vary from site to site, and it is up to the site administrator to define a style.
+
+Following styles are supported by the standard jspwiki.css file:
+
+* %~%small -- Smaller then normal font, like %%small this %%
+* %~%sub -- Subscript, like a%%sub ij %%= a%%sub ji%%
+* %~%sup -- Superscript, like 2%%sup 3 %%= 8
+* %~%strike -- Strikethrough text, like %%strike this text is hardly readable %%
+* %~%center -- Center your text. See also [How To Center Text]
+* %~%ltr -- left-to-right text formatting
+* %~%rtl -- right-to-left text formatting
+* %~%commentbox -- comment box floating at the right margin. See [How To Create Comment Boxes]
+
+Special block markers :
+%%information
+Use %~%information ... %~% for informational messages
+%%
+%%warning
+Use %~%warning ... %~% for warning blocks
+%%
+%%error
+Use %~%error ... %~% for error blocks
+%%
+
+
+Some other, more dynamic styles are supported as well, powered by client-side ~JavaScript
+
+* %~%collapsable -- Turn ordinary lists into collapsable trees. See [How To Create Collapsable Lists]
+* %~%collapsebox -- Turn text section into a collapsable box. See [How To Create Collapsable Boxes]
+* %~%sortable -- Turn ordinary wiki tables into sortable tables. See [How To Create Sortable Tables] 
+* %~%tabbedSection, %~%tab -- Create pages with tabular sections. See [How To Create Tabbed Sections] 
+* %~%graphBar, %~%gBar -- Turn lists of values in horizontal grapghical bars. See [How To Create Graph Bars]
+* %~%zebra-table -- Odd/even colouring of tables. See [How To Create Zebra Tables]
+
+

@@ -1,0 +1,32 @@
+!!!在新标签页中打开文件
+
+如果只使用Vim自带的功能，想要在在一个Tab中打开文件，可能的方式有：
+* 在Vim中使用 ''tabnew'' 命令打开一个新Tab页，再通过鼠标将资源管理器中的文件拖入到新Tab页上
+* 如果在Vim编辑的文件中有另外一个文件的文件名，可以通过快捷键 Ctrl-W gf （此方法功能受限，如果文件的路径中有空格，则无法正常打开文件）
+
+这此方法不是操作步骤过多，就是使用场景受限。因此需要寻找一种更为快捷的方式。
+
+假设我们将 Vim 7.2 版本安装在 D:\Program Files\Vim 目录下，则可以通过以下步骤
+
+1、编辑一个名为 VimTab.reg 的本文文件，文件内容为
+%%prettify 
+{{{
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\*\shell\Vim Tab]
+@="&Vim Tab"
+
+[HKEY_CLASSES_ROOT\*\shell\Vim Tab\command]
+@="\"D:\\Program Files\\Vim\\vim72\\gvim.exe\" -p --remote-tab-silent \"%1\""
+
+}}}
+/%
+
+2、双击该文件，系统会提示“是否确认要将 VimTab.reg 中的信息添加进注册表？”，点击“是”
+
+3、在资源管理器中，选择想要编辑的文件，点击鼠标右键，此时会发现有一个“Vim Tab”的菜单项，通过该菜单，就可以将选中的文件在 Vim 的 Tab 页中打开。
+
+以上方法在 Windows XP + Vim 7.2 环境下测试通过。
+
+----
+注：通过执行“gvim.exe -h” 可以查看VIM的启动参数说明。

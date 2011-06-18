@@ -1,0 +1,29 @@
+在使用Java定时器（java.util.Timer）时需要注意，如果在执行 TimerTask 时，TimerTask 抛出了异常，则会导致Timer被取消，所以需要自己捕获 TimerTask 中可能的异常。\\
+比较好的做法是自己实现一个 TimerTask 子类，在子类中捕获所有异常并记录日志。程序中使用使用定时器时，使用自己定义的子类。\\
+
+一个参考例子：
+
+%%prettify 
+{{{
+public abstract class SafeTimerTask extends TimerTask
+{
+    /* (non-Javadoc)
+     * @see java.util.TimerTask#run()
+     */
+    @Override
+    public void run()
+    {
+        try
+        {
+            execute();
+        }
+        catch (Throwable e)
+        {
+            System.out.println("Execute timer-task failed." + e);
+        }
+    }
+
+    abstract protected void execute();
+}
+}}}
+/%

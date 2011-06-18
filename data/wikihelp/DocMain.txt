@@ -1,0 +1,101 @@
+!!!Welcome!
+
+%%commentbox 
+Editorial pages:
+* [StubArticle]
+* [RefactorMe]
+* [AnswerMe]
+%%
+
+This is the official documentation wiki for the JSPWiki 2.4.x, 2.6.x and 2.8.x series.  Anything which is not documentation should be directed to the [Official JSPWiki site|http://www.jspwiki.org].  Any support questions on this site will be mercilessly refactored or removed.
+
+Only some of the documentation from this site will be included with the distribution.  Please list the pages that should be included in [DistributionDocumentation].
+
+To try out JSPWiki features, please visit our [Sandbox Wiki|http://sandbox.jspwiki.org], which is an open wiki which gets wiped clean regularly.
+
+----
+
+%%(width:50%)
+[{TableOfContents}]
+%%
+
+!!!Using JSPWiki
+
+This section covers the basic, day-to-day issues of a user of a JSPWiki.
+
+!!Creating an Account
+[Creating an Account]
+* [Recovering your password] - if you have mush-for-brains, like me.
+
+!!Creating, Editing and Deleting Pages
+* [Creating pages|Creating Pages|Wiki.How To.Create Pages]
+* [Editing pages]: how to add text styles, tables, attachments, footnotes, sidebars, and more.
+* [Renaming and Deleting pages]
+
+!!Searching for Content
+* [Searching] for something
+* [RSS support]
+
+!!Setting Up Wiki Groups
+* [WikiGroups]
+
+----
+
+!!!Administering JSPWiki
+
+This section covers issues needed by an administrator of a JSPWiki.
+
+!!Configuration
+* [JSPWiki.properties] - JSPWiki property file and documentation
+
+* [Page storage] - how does JSPWiki store files?  See also the version-specific documentation:
+** [FileSystemProvider]
+** [VersioningFileProvider]
+** [RCSFileProvider]
+
+* [JSPWiki Work Directory]
+
+!!Customizing your wiki 
+
+* [Wiki.Developer.Templates] - how to customize the way your Wiki looks 
+** [DefaultTemplate] - the template that we ship with 
+** URLConstructors - if you're not happy with the URLs JSPWiki users
+
+* [WikiModules], including 
+** [WikiPlugins] 
+** [WikiFilters] 
+** [WikiEditors] 
+** [Wiki.How To.Use Variables]
+** [Wiki.How To.Create Forms]
+
+* [Wiki.Admin.Security]
+** [PagePermissions]
+** [WikiPermissions]
+** [Managing users]
+** [Managing groups]
+
+* [Backups] - and restoring
+* [Tips and tricks]
+* [ApacheOptimization] - if you have an Apache front-end, how to make JSPWiki faster?
+
+----
+
+!!!JSPWiki Community
+
+JSPWiki users, administrators, and developers gather in a number of places:
+
+* [jspwiki.org|JSPWiki:Main] - this is the main place for all JSPWiki-related discussion, bug reports, and other things
+* [Mailing list|JSPWiki:JSPWikiMailingList] - come here, if you want to discuss with the developers of JSPWiki
+* [IRC channel|JSPWiki:IrcChannel] - if you prefer IRC, this is where we hang out.
+
+!!How to contribute?
+
+''This section should contain links to the www.jspwiki.org -specific discussion...''
+
+!!Frequently Asked Questions (F.A.Q.)
+
+The JSPWiki FAQ's are currently held at [JSPWiki:JSPWikiFAQ].
+
+[{ALLOW view All}][{ALLOW edit Authenticated}]
+
+

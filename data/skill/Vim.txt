@@ -1,0 +1,15 @@
+Vim 是一款功能强大的编辑器，有丰富的插件、完善的（英文）文档。
+
+Vim 是可自由分发的开放源代码软件，使用的过程中不会涉及版权问题。
+
+下载地址： [http://www.vim.org/]
+
+-----
+Vim相关的技巧文档
+* [配置Vim|Vim.Config]
+* [在新标签页中打开文件|Vim.OpenFileInTab]
+* [我所安装的插件|Vim.InstalledPlugin]
+----
+* [Vim相关网站|Vim.Site]
+
+

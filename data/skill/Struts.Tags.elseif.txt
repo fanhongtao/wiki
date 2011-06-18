@@ -1,0 +1,9 @@
+!!!elseif标签
+elseif标签必须和[if标签|Struts.tags.if]配合使用。
+
+!!参数
+|| Name || Required || Default || Evaluated || Type || Description
+| test | true |  | false | Boolean | Expression to determine if body of tag is to be displayed
+
+!!使用举例
+参见[if标签|Struts.tags.if]。

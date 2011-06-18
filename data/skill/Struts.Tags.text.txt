@@ -1,0 +1,15 @@
+!!!text标签
+
+!!参数
+%%sortable
+%%zebra-table
+|| Name || Required || Default || Evaluated || Type || Description
+| name | true |  | false | String | Name of resource property to fetch
+| searchValueStack | false | true | false | Boolean | Search the stack if property is not found on resources
+| var | false | | false | String | Name used to reference the value pushed into the Value Stack
+/%
+/%
+
+!!使用举例
+
+

@@ -1,0 +1,48 @@
+[{TableOfContents }]
+
+!!!AWK启动参数
+awk 启动格式为：
+{{{
+awk [ -F Ere ] [ -v Assignment ] ... { -f ProgramFile | 'Program' } [ [ File ... | Assignment ... ] ] ...
+}}}
+%%information
+注意：启动参数的顺序是不能随便调整的，比如， -v Assignment 就不能放在 File 之后。所以，最保险的做法，就是严格执照上面顺序来写。
+/%
+
+
+!1.-F Ere
+
+使用扩展正则表达式 Ere 作为字段分隔符（对应于特殊变量 FS）
+
+!2. -v Assignment
+
+定义可以在AWK语言中访问的标量变量。
+
+Assignment的格式为：Name=Value （注意，Name，=，Value三者之间不能有空格！），其中，Name是变量的名字，可以是任何以字符或下划线开头，后跟字母、下划线和数字的任意组合。Value是变量的值，可以是下划线、数字和字母的任意组合。且前面和后面都有一个”（双引号），如果Value部分是数字，则也将为变量指定对应的数字值。
+
+通过 -v 标志指定的赋值操作发生在 BEGIN 操作之前，所以，可以在 BEGIN 操作中引用。
+
+可以有多个 -v 标志，用来为多个变量赋值。
+
+!3. -f  ProgramFile
+
+从 ProgramFile 变量指定的文件名中获取 AWK 命令的指令。如果多次指定 -f 标志，则文件的串联（按照指定的顺序）将用作指令集。
+
+!4. 'Program'
+
+包含 awk 命令的指令。如果不指定 -f 标志，Program变量应该是命令行上的第一个项，并且应该包括在’’（单引号）中。如：
+
+awk ‘{print $0}’   x.unl
+
+!5. Assignment
+
+和 “-v Assignment”的功能相同，只是执行的时间不一样。
+
+Assignment 会在awk程序扫描到 Assignment 才被执行。可以参考“[完整的AWK流程|Awk.Mechanism]”一节。
+
+注意，从AWK的流程中可以看出，BEGIN 操作中不能访问Assignment 所指定的变量！但可以访问 -v Assignment 所指定的变量。
+
+!6. File
+
+指定包含要处理的输入的文件名称。如果不指定 File 变量，或指定了 - （减号），则处理标准输入。
+

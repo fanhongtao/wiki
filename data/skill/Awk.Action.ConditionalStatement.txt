@@ -1,0 +1,76 @@
+[{TableOfContents }]
+
+!!!条件语句
+在AWK中的条件语句的C中的条件语句具有相同的语法和功能。所有语句允许使用 { } (大括号)将语句组合在一起。可以在条件语句的表达式部分和语句部分之间使用可选的换行字符，且换行字符或分号（;）用于隔离{}（大括号）中的多个语句。
+!!遵从C语言规则的条件语句
+AWK中共有六种遵从C语言规则的条件语句，分别是：
+!1、 if 语句
+{{{
+if ( Expression ) { Statement } [ else Action ]
+}}}
+如果 Expression 计算结果为真（True），则执行 Statement ，否则，执行 Action （如果有 else 分支的话）。
+
+!2、 while 语句
+{{{
+while ( Expression ) { Statement }
+}}}
+如果 Expression 的计算结果为真，则执行Statement，然后再次计算 Expression，如果结果为真，则再次执行 Statement，重复这一过程，直到 Expression 的计算结果为假为止。
+
+如果 Expression 的第一次计算结果就为假，则 Statement 永远不会被执行。
+
+!3、 do - while 语句
+{{{
+do { Statement } while (Expression)
+}}}
+执行 Statement，然后计算 Expression，如果结果为真，则再次执行 Statement，计算 Expression，重复这一过程，直到 Expression 的计算结果为假为止。
+
+如果 Expression 的第一次计算结果就为假，则 Statement 只会被执行一次。
+
+!4、 for 语句
+{{{
+for ( Expression1 ; Expression2 ; Expression3 ) { Statement }
+}}}
+计算 Expression1，计算 Expression2，如果Expression2计算结果为真，则执行 Statement，然后再执行 Expression3 。重复这一过程（Expression2、Statement、Expression3）直到 Expression2 的计算结果为假为止。
+
+如果 Expression2 的第一次计算结果就为假，则 Statement 和 Expression3 永远不会被执行。
+
+!5、 break 语句
+当break 语句用于 while 或 for 语句时，导致退出循环
+
+!6、 continue 语句
+当 continue 语句用于while 或 for 语句时，导致循环移动到下一个迭代。
+
+上面只对六种语句作了简单介绍，更多内容可以参考C语言的书。
+
+
+!!不遵从C语言规则的条件语句
+AWK中共有五种不遵从C语言规则的条件语句，分别是：
+! 1、 for … in 语句
+{{{
+for ( Variable in Array ) { Statement }
+}}}
+for … in 语句将 Variable 参数设置为 Array 数组变量的每个索引值，一次一个索引且没有特定的顺序，并用第个迭代来执行 Statement 所指定的操作。请参阅 delete 语句以获得 for … in 语句的示例。
+
+! 2、 delete 语句
+{{{
+delete Array [expression]
+}}}
+delete 语句删除数组Array中指定的数组元素和 Expression 参数指定的索引。例如：语句
+{{{
+for ( i in g)
+    delete g[i]
+}}}
+将删除 g[] 数组的每个元素。
+
+! 3、exit 语句
+{{{
+exit  [Expression]
+}}}
+exit 语句首先（按照在AWK文件中出现的先后顺序）调用所有 END 模式的操作，然后以 Expression 参数指定的退出状态终止AWK命令。如果 exit 语句在 END 操作中出现，则不调用后继的 END 操作。
+
+! 4、 next 语句
+停止对当前输入记录的处理，从下一个输入记录继续处理。
+
+! 5、 # 语句
+在AWK中，注释以 # 开始，一直持续到行结束，类似于C++中的 // 注释。
+

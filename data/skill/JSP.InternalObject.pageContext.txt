@@ -1,0 +1,43 @@
+!!!pageContext对象
+
+javax.servlet.jsp.PageContext 的实例，该对象代表该JSP 页面上下文，使用该对象可以访问页面中的共享数据。常用的方法有getServletContext()和getServletConfig()等。
+
+pageContext对象能够存取其他隐含对象。
+
+!!1.pageContext对象存取其他隐含对象属性的方法，此时需要指定范围的参数。
+
+　　Object getAttribute(String name, int scope)
+
+　　Enumeration getAttributeNamesInScope(int scope)
+
+　　void removeAttribute(String name, int scope)
+
+　　void setAttribute(String name, Object value, int scope)
+
+　　范围参数有四个，分别代表四种范围：PAGE_SCOPE、REQUEST_SCOPE、SESSION_SCOPE、 APPLICATION_SCOPE
+
+!!2.PageContext对象取得其他隐含对象的方法
+
+|| 方法 || 描述
+| Exception getException( ) | 获取目前网页的异常，需要此网页为 error page
+| JspWriter getOut( ) | 获取目前网页的输出流，例如：out
+| Object getPage( ) | 获取目前网页的Servlet 实体(instance)，例如：page
+| ServletRequest getRequest( ) | 获取目前网页的请求，例如：request
+| ServletResponse getResponse( ) | 获取目前网页的响应，例如：response
+| ServletConfig getServletConfig( ) | 获取目前此网页的ServletConfig 对象，例如：config
+| ServletContext getServletContext( ) | 获取目前此网页的执行环境(context)，例如：application
+| HttpSession getSession( ) | 获取和目前网页有联系的会话(session)，例如：session
+
+!!　3.PageContext对象提供取得属性的方法
+
+|| 方法 || 描述
+| Object getAttribute(String name, int scope) | 获取name 属性，范围为scope的属性对象
+| Enumeration getAttributeNamesInScope(int scope) | 获取所有属性范围为scope 的属性名称
+| int getAttributesScope(String name) | 获取属性名称为name 的属性范围
+| void removeAttribute(String name) | 移除属性名称为name 的属性对象
+| void removeAttribute(String name, int scope) | 移除属性名称为name，范围为scope 的属性对象
+| void setAttribute(String name, Object value, int scope) | 指定属性对象的名称为name、值为value、范围为scope
+| Object findAttribute(String name) | 寻找在所有范围中属性名称为name 的属性对象
+
+----
+Back to [JSP.InternalObject]

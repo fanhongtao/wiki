@@ -1,0 +1,89 @@
+!!!Struts基本配置
+
+下面以 Struts 2.1.8.1 为例，说明使用Struts的最基本步骤（假设使用 Eclipse IDE for Java EE Developers 版本）：
+
+1、在Eclipse中创建一个“Dynamic Web Project”，工程名为 JSPTest
+
+2、将Struts的最基本的jar文件拷贝至新工程的 WebContent/WEB-INF/lib 目录下，包括以下jar
+{{{
+commons-fileupload-1.2.1.jar
+commons-io-1.3.2.jar
+freemarker-2.3.15.jar
+ognl-2.7.3.jar
+struts2-core-2.1.8.1.jar
+xwork-core-2.1.6.jar
+}}}
+
+3、修改 WebContent/WEB-INF/web.xml 文件，增加
+%%prettify 
+{{{
+<filter>
+    <filter-name>struts2</filter-name>
+    <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+</filter>
+
+<filter-mapping>
+    <filter-name>struts2</filter-name>
+    <url-pattern>/*</url-pattern>
+</filter-mapping>
+}}}
+/%
+
+4、修改工程的 “Build Path” ，将 “Default output folder” 从缺省的 “JSPTest/build/classes”，修改成 “JSPTest/WebContent/WEB-INF/classes”
+
+5、在 JSPTest/src 目录下，创建一个 struts.xml 文件，内容为：
+%%prettify 
+{{{
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="false" />
+
+    <!-- Default Namespace  -->
+    <package name="default" extends="struts-default">
+        <action name="*">
+	    <result>/{1}.jsp</result>
+        </action>
+    </package>
+</struts>
+}}}
+/%
+
+6、在 WebContent 目录下创建JSP文件，如创建一个 index.jsp 
+%%prettify 
+{{{
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Hello World</title>
+</head>
+<body>
+    <s:label>Hello, World</s:label>
+</body>
+</html>
+}}}
+/%
+注意其中的以下两行：
+%%prettify 
+{{{
+<%@ taglib prefix="s" uri="/struts-tags" %>
+
+<s:label>Hello, World</s:label>
+}}}
+/%
+第一行用于说明需要使用Struts的Tags，第二行则是使用Struts的label标签。
+
+7、在Eclipse中运行工程。选中 JSPTest 工程，通过右键菜单中的“Run As” -> “Run On Server”, 选择“Manually define a new server”，将“Server name”命名为“JSPTest”（其它名字当然也可以，但与工程同名更好管理），点击“Finish”。
+
+此时应该可以看到 Eclipse 打开一个内置的浏览器页面，在浏览器页面上显示“Hello, World”字样。
+
+----
+Back to [Struts.Configure]

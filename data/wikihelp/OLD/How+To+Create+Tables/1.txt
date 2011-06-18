@@ -1,0 +1,66 @@
+This is the current correct syntax for tables:
+
+This
+{{{
+||head1||head2
+|field11|field12
+|field21|field22
+}}}
+produces this
+
+||head1||head2
+|field11|field12
+|field21|field22
+
+----
+
+This syntax is more intuitive (table-like):
+
+This
+{{{
+||head1||head2||
+|field11|field12|
+|field21|field22|
+}}}
+produces this
+
+||head1||head2||
+|field11|field12|
+|field21|field22|
+
+
+The additional '|' at the right produces an additional column. Someone might consider this a bug.
+
+----
+
+I would also like to see a way to span a cell so if I was to do
+
+This
+{{{
+||head1||head2||
+|field11|field12|
+|field21
+}}}
+
+it would produces a table where field21 spaned the columns head1 and head2. While now it produces this:
+||head1||head2||
+|field11|field12|
+|field21
+
+----
+
+If you want to display a '|' inside a table you can insert its numeric character entity:
+{{{
+||AND|&
+||OR |&#124;
+}}}
+produces
+||AND|&
+||OR |&#124;
+
+
+----
+Back to [Editing Pages]
+
+
+

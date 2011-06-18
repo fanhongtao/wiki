@@ -1,0 +1,32 @@
+This
+
+{{{
+This is normal text.
+%%(color:red)
+This text is red.
+%%
+This is normal text again.
+}}}
+
+__produces this__
+
+This is normal text.
+%%(color:red)
+This text is red.
+%%
+This is normal text again.
+
+----
+
+__Inline text formatting__
+
+{{{This is normal text. %%(color:red;)This inline text is red.%% This is normal text again.}}}
+
+__produces this__
+
+This is normal text. %%(color:red)This inline text is red.%% This is normal text again.
+
+----
+
+Back to [Editing Pages], [JSPWiki Styles]
+

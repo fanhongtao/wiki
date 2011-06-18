@@ -1,0 +1,32 @@
+!!!response对象
+response 对象主要将JSP对象 处理数据后的结果传回到客户端。
+
+response 对象是实现javax.servlet.http.HttpServletResponse 接口。response对象所提供的方法。
+
+!!1.设定报头的方法
+
+|| 方法 || 描述
+| void addCookie(Cookie cookie) | 新增cookie
+| void addDateHeader(String name, long date) | 新增long类型的值到name报头
+| void addHeader(String name, String value) | 新增String类型的值到name报头
+| void addIntHeader(String name, int value) | 新增int类型的值到name报头
+| void setDateHeader(String name, long date) | 指定long类型的值到name报头
+| void setHeader(String name, String value) | 指定String类型的值到name报头
+| void setIntHeader(String name, int value) | 指定int类型的值到name报头
+
+!!2.设定响应状态码的方法
+
+|| 方法 || 描述
+| void sendError(int sc) | 传送状态码(status code)
+| void sendError(int sc, String msg) | 传送状态码和错误信息
+| void setStatus(int sc) | 设置状态码
+| void setStatus(int sc, String msg) | 设置状态码和错误信息
+
+!!3.用来URL 重写(rewriting)的方法
+
+|| 方法 || 描述
+| String encodeRedirectURL(String url) | 对使用sendRedirect( )方法的URL予以编码
+| String encodeURL(String url) | 对URL予以编码
+
+----
+Back to [JSP.InternalObject]

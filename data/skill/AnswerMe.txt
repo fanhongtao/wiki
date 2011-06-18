@@ -1,0 +1,6 @@
+Please tag any page with a question that needs answering with {{{[AnswerMe]}}}.  Also, if you hit a page with a question, and you know the answer, please add your answer, and refactor the page so that it fits in the general tone of the article.  Try to avoid long Q&A -lists, except in the FAQ-pages.
+
+The following pages are tagged with AnswerMe:
+
+[{ReferringPagesPlugin exclude='LeftMenu'}]
+

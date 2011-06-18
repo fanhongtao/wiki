@@ -1,0 +1,17 @@
+Git是一个分布式的版本控制系统，最初由Linus Torvalds为了方便管理Linux内核代码而编写。
+
+相比SVN，Git有以下特点：
+* 分支更快、更容易
+* 支持离线工作：本地提交可以稍后提交到服务器上
+* Git的每个仓库都包含有完整项目历史信息，可以将任一个仓库作为中心库
+* 只在根目录下有一个 .git 目录，不像SVN在每个目录下都有一个 .svn 目录
+
+更多比较可以参见[https://git.wiki.kernel.org/index.php/GitSvnComparsion]
+
+-----
+Git相关文档
+* [Linux下搭建采用SSH协议的Git服务器|Git.SshServerInLinux]
+* [Windows下搭建基于文件协议的Git服务器|Git.FileServerInWindows]
+* [Git基本使用步骤|Git.BaseUse]
+* [Git命令说明|Git.Commands]
+* [网络文章|Git.NetDocs]

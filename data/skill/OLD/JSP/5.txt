@@ -1,0 +1,8 @@
+;JSP:全称JavaServer Pages，是由Sun Microsystems公司倡导和许多公司参与共同建立的一种使软件开发者可以响应客户端请求，而动态生成HTML、XML或其他格式文档的Web网页的技术标准。JSP技术是以Java语言作为脚本语言的，JSP网页为整个服务器端的Java库单元提供了一个接口来服务于HTTP的应用程序。
+
+上面的定义出自[http://zh.wikipedia.org/zh-cn/JSP]
+
+----
+JSP 相关的文档
+* [JSP内置对象|JSP.InternalObject]
+

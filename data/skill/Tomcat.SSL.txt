@@ -1,0 +1,53 @@
+为Tomcat配置SSL
+
+这里假设使用自己生成的证书（certificate）
+
+步骤：
+
+1、创建一个 keystore
+{{{
+"%JAVA_HOME%\bin\keytool" -genkey -alias tomcat -keyalg RSA -validity 365
+}}}
+上面的命令会创建一个名为 ".keystore"，有效期为365天的证书。如果不指定 validity 参数，缺省有效期只有90天。
+
+生成的证书存放在用户的Home目录
+* Windows操作系统的 %USERPROFILE% （如：C:\Documents and Settings\fht）。
+* Unix系统则是存放在 $HOME
+
+注意，要求“keystore密码”和“<tomcat>的主密码”必须相同。即在提示“<tomcat>的主密码”时直接按回车。
+
+如果两者密码不同，在启动Tomcat时，会提示：
+{{{
+java.io.IOException: Cannot recover key
+}}}
+
+<tomcat>的主密码，可以在 $CATALINA_BASE/conf/tomcat-users.xml 中查找到。如果文件中没有内容，则需要手工增加类似如下的内容：
+%%prettify 
+{{{
+<?xml version='1.0' encoding='utf-8'?>
+<tomcat-users>
+  <role rolename="manager"/>
+  <user username="tomcat" password="s3cret" roles="manager"/>
+</tomcat-users>
+}}}
+/%
+
+2、将 $CATALINA_BASE/conf/server.xml 中的 "SSL HTTP/1.1 Connector" 从注释中移出
+修改后的内容大致如：
+%%prettify 
+{{{
+<Connector port="8443" protocol="HTTP/1.1" SSLEnabled="true"
+           maxThreads="150" scheme="https" secure="true"
+           clientAuth="false" sslProtocol="TLS"
+           keystoreFile="${user.home}/.keystore" keystorePass="changeit"
+/>
+}}}
+/%
+
+重新启动Tomcat，再通过 8443 访问进行访问即可，如：
+{{{
+https://localhost:8443/
+}}}
+注意，需要使用 https 而不是 http
+
+

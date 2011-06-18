@@ -1,0 +1,44 @@
+本页面介绍如何安装[JSPWiki|http://www.jspwiki.org/]
+[{TableOfContents }]
+!!!安装前的准备
+要安装JSPWiki，需要有：
+*Java 5 或 更高的版本
+*实现了Servlet 2.4 的Web Server，如：[Tomcat|http://tomcat.apache.org/] 5.5 或更高版本。
+*[下载|http://www.jspwiki.org/wiki/JSPWikiDownload]一个JSPWiki安装包。
+
+!!!单一Wiki实例
+如果只想在机器上安装一个Wiki的实例，那就比较简单了，下面以在Windows下安装JSPWiki 2.8.2为例进行说明。
+!!配置步骤
+#下载JSPWiki安装包：JSPWiki-2.8.2-bin.zip 。
+#将安装包在一个临时目录（D:\temp）解压，然后将解压后得到的 JSPWiki.war 放到${TOMCAT_HOME}\webapps目录。如果想在访问时使用 wiki（或其它名字）而不是JSPWiki，则将 JSPWiki.war 改名为 wiki.war。
+#启动Tomcat，然后通过 http://<myhost>/JSPWiki/Install.jsp 来访问安装页面（如果第二步将JSPWiki.war改名为了 wiki.war，则通过 http://<myhost>/wiki/Install.jsp 进行访问）。
+#回答安装页面上的几个问题。
+#记录下Admin的密码，然后重启Tomcat。
+#通过 http://<myhost>/JSPWiki （或第2步中改名后的路径）来访问Wiki的内容。
+
+!!安装页面的问题
+*基本信息
+[{Image src='InstallJSPWiki_Basic.gif' align='center'}]\\
+
+“应用程序名称”会显示在浏览器的标题上，如下图中的红色框中的“JSPWiki”：
+[{Image src='InstallJSPWiki_AppName.jpg' align='center'}]\\
+“基本URL”就是访问Wiki时所使用的URL地址，如：http://10.0.0.1/JSPWiki/ ，需要注意的事，URL地址不要使用 http://localhost 或 http://127.0.0.1 这样的本地IP，同时需要以"/"结尾，否则其它人访问时就会有问题。
+“页面存储”是存放Wiki页面及其附件的目录。为了方便后期维护，建议使用Web容器以外的目录，如：D:\Wiki\Data 。
+
+
+*高级设置
+[{Image src='InstallJSPWiki_Advance.gif' align='center'}]\\
+配置“日志文件”和“工作目录”，同样的，建议配置为Web容器以外的目录，如：\\
+将“日志文件”配置为 D:\Wiki\Tmp\jspwiki.log \\
+将“工作目录”配置为 D:\Wiki\Tmp
+
+!!!其它说明
+如果在使用Tomcat，需要修改 ${TOMCAT_HOME}\conf\server.xml 中的 Connector 元素，增加 URIEncoding="UTF-8"，以便可以正确解析WikiName中的汉字，修改后的Connector类似：
+%%prettify 
+{{{
+<Connector port="8080" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="8443" URIEncoding="UTF-8"/>
+}}}
+/%
+

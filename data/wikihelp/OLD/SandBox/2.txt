@@ -1,0 +1,19 @@
+你好！
+
+这里是沙盒！
+
+在这里您可以任意编辑！
+
+只需要点击“编辑”链接就可以开始编辑了！
+
+
+-----
+ID	NAME	DEVELOPER	HOMEPAGE	DEPENDPLUGIN	DESCRIPTION
+201	DownThemAll!	Federico Parodi, Nils Maier, Stefano Verna	http://www.downthemall.net/	(null)	DownThemAll is all you can desire from a download manager: it features an advanced accelerator that increases speed up to 400% and it allows you to pause and resume downloads at any time.  DownThemAll is fast, reliable and easy-to-use! It lets you download all the links or images contained in a webpage and much more: you can refine your downloads by fully customizable criteria to get only what you really want!  DownThemAll is absolutely freeware and open-source. No Adware, no Spyware.
+212	Mozilla Archive Format (with Faithful Save)	Christopher Ottley, Paolo Amadini	http://maf.mozdev.org/	(null)	完整地保存所见页面于单一文件： — MAFF（基于 ZIP）是压缩网页档，可储存除音频与视频外的全部信息 — MHT（Internet Explorer 格式）可助您简单地与 IE 交换文件 还有保存多标签页于单一文件、查询本地网页原始地址等诸多功能！ 
+427	ScrapBook	Gomita	http://amb.vis.ne.jp/mozilla/scrapbook/	(null)	ScrapBook is a Firefox extension, which helps you to save Web pages and easily manage collections. Key features are lightness, speed, accuracy and multi-language support.  Major features are:  * Save Web page * Save snippet of Web page * Save Web site * Organize the collection in the same way as Bookmarks * Full text search and quick filtering search of the collection * Editing of the collected Web page * Text/HTML edit feature resembling Opera's Notes 
+1843	FireBug	Joe Hewitt, johnjbarton, robcee, FirebugWorkingGroup	http://getfirebug.com/	(null)	Firebug 为你的 Firefox 集成了浏览网页的同时随手可得的丰富开发工具。你可以对任何网页的 CSS、HTML 和 JavaScript 进行实时编辑、调试和监控。
+3235	CHM Reader	lonecat	http://sourceforge.net/projects/chmreader/	(null)	此扩展让 Firefox 可以开启 CHM 格式的文档并直接阅读。  安装后，选择“文件 | Open CHM File”即可打开 CHM 文件，按 Ctrl-E，可以在侧栏中显示出该文件的目录和索引。
+4578	Brief	Adam Kowalczyk	http://brief.mozdev.org/	(null)	轻松管理你感兴趣的项目，拥有多种显示方式:只查看未读项目、只查看加为书签的项目、只查看单一订阅或者全个文件夹、只查看标题或者全部内容。使用搜索栏可以快速查找某个项目，通过状态栏图标就能跟踪你的订阅，支持自定义外观，熟悉使用快捷键更能让你在成堆的项目中穿梭。总括上述：Brief 小而精。
+5369	YSlow	Yahoo! Inc.	http://developer.yahoo.com/yslow/	1843	YSlow analyzes web pages and suggests ways to improve their performance based on a set of rules for high performance web pages. YSlow is a Firefox add-on integrated with the Firebug web development tool. YSlow grades web page based on one of three predefined ruleset or a user-defined ruleset. It offers suggestions for improving the page's performance, summarizes the page's components, displays statistics about the page, and provides tools for performance analysis, including Smush.it? and JSLint. 
+7203	HeadingsMap	Rumoroso	http://www.niquelao.net/?page_id=94	(null)	The extension generates an index (or map) of any web document structured with headings (you can access directly to the content by clicking on any of its items). There are some differences from other:  * It shows the headings structure of the main content and of other document embedded through IFRAME element or those which are part of a series of FRAMES (FRAMESET). * It shows all headings in the document, including those hidden with CSS techniques or those without content. * It can warn when there are no headings in the document. * It can warn when there are skipping level in the headings structure. * It is an index for acc_slide (or rumo_slides) and for HTML Slidy (W3C). * When an item is selected, the heading will be highlighted, so you can identify.  So this is useful not only to facilitate navigation to anyone, but also to help webdevelopers, consultants and auditors. 

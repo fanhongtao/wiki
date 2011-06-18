@@ -1,0 +1,5 @@
+# This is a project global ignore file.
+# Local setting is in file .git/info/exclude 
+
+tmp/
+

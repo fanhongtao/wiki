@@ -1,0 +1,44 @@
+[{TableOfContents }]\\
+
+!!!校验HTML
+
+!!为什么要校验
+
+如果HTML文件符合W3C（World Wide Web Consortium）的规范，有以下好处：
+* 在不同的浏览器上得到相同的显示效果
+* 标准的网页加载速度更快
+
+所以建议对所有HTML页面都进行校验，以确保符合HTML规范。
+
+!!在HTML文件头中增加“文件类型定义”
+%%prettify 
+{{{
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+    "http://www.w3.org/TR/html4/loose.dtd">
+}}}
+/%
+或
+%%prettify 
+{{{
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 //EN" 
+    "http://www.w3.org/TR/html4/strict.dtd">
+}}}
+/%
+第一种定义是过渡版本的申明，第二个定义则采用的是严格版本。两个版本定义的区别是：
+* 过渡版本有一个 Transitional 申明，而严格版本则没有。
+* 过渡版本采用 loose.dtd 来进行校验，而严格版本使用 strict.dtd 来进行校验。
+
+下面是对定义中各部分内容进行说明：
+* <!DOCTYPE> 告诉浏览器这是给网页指定一个文件类型
+* html 表示<HTML>是网页的首元素
+* PUBLIC 表示HTML4.01标准是通用的
+* "-//W3C//DTD HTML 4.01 Transitional//EN" 表示我们使用的是HTML 4.01版本，另外，HTML标记是使用英文写的。 Transitional 表示是一个过渡版本。
+* "http://www.w3.org/TR/html4/loose.dtd" 指向一个文件，用这个文件来识别通用的标准。
+
+!!对HTML文件进行校验
+W3C提供了一个免费的在线校验工具。
+
+访问[http://validator.w3.org/]，可以看到有三种校验方式：
+* Validate By URL : 如果网页在互联网上，可以在这里输入网址，然后点击“Check”按钮
+* Validate By File Upload : 点击“browser”按钮，选择计算机上需要校验的HTML文件，然后点击“Check”按钮
+* Validate By Direct Input ：直接在页面上的文本框中输入要检查的HTML内容，然后点击“Check”按钮

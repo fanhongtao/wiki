@@ -1,0 +1,53 @@
+!! Collapsable Boxes
+
+This [JSPWiki Style] is an extension of [How To Create Collapsable Lists].
+It provides collapsable boxes : when closed only the title of the box is visible; 
+when opened the complete box becomes visible. A open/close icon will be shown
+at the right edge of the box, indicating the status of the box.
+
+This is very convenient for info in pages like 
+LeftMenu, LeftMenuFooter, your <username>Favorites, and so on.
+
+! Usage
+
+{{{
+  %%collapsebox
+  ! Title of the box
+  Here is the body of the box
+  * item 1
+  * item 2
+  %%
+}}}
+
+Reality check:
+
+%%collapsebox
+! Box1
+Here is the body of the box
+* item 1
+* item 2
+%%
+
+----
+
+You can also make a collapsible box closed by default (2.8 onwards):
+
+{{{
+  %%collapsebox-closed
+  ! Title of the box
+  Here is the body of the box
+  * item 1
+  * item 2
+  %%
+}}}
+
+%%collapsebox-closed
+! Box1
+Here is the body of the box
+* item 1
+* item 2
+%%
+
+----
+Back to [Editing Pages]
+

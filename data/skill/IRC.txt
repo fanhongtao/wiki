@@ -1,0 +1,27 @@
+!!!IRC
+
+IRC, Internet Relay Chat, is some kind of chat tools.
+
+If you use Firefox, you'd better use [ChatZila|https://addons.mozilla.org/firefox/16/].
+
+!!Basic Concept
+
+
+!!Basic commands
+IRC using a __command line__ way to chat, so we need to remember some basic commands.
+
+One thing need to be remembered is that all the command is started with a slash ('/').
+
+Here is some commands I've ever used.
+
+|| Command || Description || Demo of usage
+| /attach \\ /server | connect to a IRC server | /attach irc.freenode.net \\ /server irc.freenode.net \\  /server freenode
+| /join \\ /j | Join a channel | /join #jspwiki \\ /j #jspwiki
+| /leave | Leave the channel | /leave
+| /whois | Displays information about a user | /whois Dharma
+| /clear | Clear the current view | /clear
+| /away | Leaving away for a while. | /away \\ /away For dinner
+| /back | Back again. | /back
+| /msg | Send a private message to someone | /msg Jack  Hello
+
+All these commands are tested in ChatZila.

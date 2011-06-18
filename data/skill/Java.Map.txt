@@ -1,0 +1,26 @@
+使用entrySet遍历Map时，比使用 keySet 来进行遍历的效率要高。
+
+所以通常情况下，只使用 entrySet。示例代码：
+
+
+%%prettify 
+{{{
+public static String getDbTypeName(int type)
+{
+    Iterator<Map.Entry<String, Integer>> iter = dbTypeMap.entrySet().iterator();
+    while (iter.hasNext())
+    {
+        Map.Entry<String, Integer> entry = iter.next();
+        if (entry.getValue() == type)
+        {
+            return entry.getKey();
+        }
+    }
+    return null;
+}
+}}}
+/%
+
+
+----
+Back to [Java]

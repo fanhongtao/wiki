@@ -1,0 +1,43 @@
+!! Graph Bars
+
+This [JSPWiki Style] translates sets of values into horizontal colored bars.
+This feature is used to visualize the outcome of the search engine.
+But it is also usable inside ordinary wiki pages.
+
+The nice thing about this implementation is that you can specify any color your like;
+there is no need for an external .gif.
+
+!!Usage
+
+{{{
+%%graphBars
+* %%gBar 20 %% apples
+* %%gBar 40 %% peers
+* %%gBar 60 %% bananas
+%%
+}}}
+becomes (when available on this wiki ;-)
+
+%%graphBars
+* %%gBar 20 %% apples
+* %%gBar 40 %% peers
+* %%gBar 60 %% bananas
+%%
+
+Additionally, you can specify the color of the bars as well as the maximum size of the bar
+(expressed in number of characters, default max size is 120).
+
+{{{
+%%graphBars-#e0e0e0-60
+| apples  | %%gBar 20 %% 
+| peers   | %%gBar 40 %% 
+| bananas | %%gBar 60 %%
+%%
+}}}
+becomes
+%%graphBars-#e0e0e0-60
+| apples  | %%gBar 20 %% 
+| peers   | %%gBar 40 %% 
+| bananas | %%gBar 60 %%
+%%
+ 

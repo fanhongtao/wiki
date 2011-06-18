@@ -1,0 +1,16 @@
+!!!out对象
+
+out对象是一个输出流，用来向客户端输出数据。out对象用于各种数据的输出。
+
+out能把结果输出到网页上。out主要是用来控制管理输出的缓冲区(buffer)和输出流(output stream)。
+
+|| 方法 || 描述
+| void clear( ) | 清除输出缓冲区的内容, 
+| void clearBuffer( ) | 清除输出缓冲区的内容
+| void close( ) | 关闭输出流，清除所有的内容
+| int getBufferSize( ) | 取得目前缓冲区的大小(KB)
+| int getRemaining( ) | 取得目前使用后还剩下的缓冲区大小(KB)
+| boolean isAutoFlush( ) | 回传true表示缓冲区满时会自动清除;false表示不会自动清除并且产生异常处理
+
+----
+Back to [JSP.InternalObject]

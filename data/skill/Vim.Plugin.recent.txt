@@ -1,0 +1,29 @@
+!!!recent - 1767
+
+!!介绍
+recent 插件会将最近 xx 个进行了“写”操作的文件名记录在 ~/.vim/recent_files 文件中。
+
+当新打开 VIM 时，插件会自动打开 recent_files 文件，这样，就可以快速打开最近使用过的文件。
+
+使用 help recent 查看 recent 插件的帮助信息。
+
+!!打开文件
+打开 VIM 时，会自动打开 recent_files 文件（也可以使用 Recent 命令手工打开）。
+
+如果想打开一个 recent_files 中记录的文件，只需要将光标移到到该文件对应的行，然后按回车。
+
+可以通过在 .vimrc 中增加如下行来指定每次使用新的Tab页打开文件。
+{{{
+let g:RecentWinmode="newtab"
+}}}
+
+
+!!记住文件
+recent只会自动记录“写”过的文件，不想修改文件，但希望 recent 记录它，可以使用命令
+{{{
+RememberFile
+}}}
+手工将当前打开的文件添加到 ~/.vim/recent_files 文件中。
+
+当然，也可以通过直接编辑 ~/.vim/recent_files 文件中的内容来达到相同的效果。
+

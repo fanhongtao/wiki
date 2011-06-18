@@ -1,0 +1,53 @@
+You can use either of the two tricks to achieve indented text:
+
+!Use the definition list
+
+{{{
+;:Indented text
+}}}
+
+results in 
+
+;:Indented text.
+
+!Use inline CSS
+
+{{{
+%%(margin-left:2em)
+Indented text
+%%
+}}}
+
+Results in:
+
+%%(margin-left:2em)
+Indented text
+%%
+
+The good thing about using the latter form is that you can use it recursively:
+
+{{{
+%%(margin-left:2em)
+Indented text
+%%(margin-left:2em)
+Indented text 2
+%%(margin-left:2em)
+Indented text 3
+%%
+%%
+%%
+}}}
+
+Resulting in:
+
+%%(margin-left:2em)
+Indented text
+%%(margin-left:2em)
+Indented text 2
+%%(margin-left:2em)
+Indented text 3
+%%
+%%
+%%
+
+

@@ -1,0 +1,16 @@
+[{TableOfContents }]\\\
+
+# [Strategy Pattern]
+# [Observer Pattern]
+# [Decorator Pattern]
+# [Factory Pattern]
+# [Sigleton Pattern]
+# [Command Pattern]
+# [Adapter Pattern]
+# [Facade Pattern]
+# [Template Method Pattern]
+# [Iterator Pattern]
+# [Composite Pattern]
+# [State Pattern]
+# [Proxy Pattern]
+# [Compound Pattern]

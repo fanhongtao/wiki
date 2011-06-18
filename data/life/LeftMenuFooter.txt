@@ -1,0 +1,5 @@
+----
+__Referenced by__\\
+[{ReferringPagesPlugin max=20, maxwidth=50}]
+
+[{CurrentTimePlugin format='yyyy-MM-dd HH:mm, z'}]

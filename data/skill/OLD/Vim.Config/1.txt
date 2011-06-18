@@ -1,0 +1,28 @@
+!!!配置Vim
+
+Vim很强大，但需要根据自己的喜好进行配置才能更适合自己。
+
+下面以Windows下的Vim为例进行说明，假设Vim安装在 D:\Program Files\Vim 目录下。
+
+则 $VIM 表示 D:\Program Files\Vim 目录；\\
+$VIMRUNTIME 表示 D:\Program Files\Vim\vim72 目录。
+
+Vim启动时会读取 $VIM/_vimrc 文件，该文件会在安装时自动生成。为了切换环境时方便，通常将自己的相关配置项都单独形成一个文件，然后再 $VIM/_vimrc 文件中引用自己的配置文件。
+
+修改 $VIM/_vimrc ，在原有的 source 语句之后增加一句：
+{{{
+source $VIM/fht.vim
+}}}
+
+在 $VIM 目录下创建一个 fht.vim 的文件，文件内容为：
+{{{
+" 设置“配色方案”
+colorscheme torte
+ 
+" 使用4个空格替换Tab键
+set ex!
+set softtabstop=4
+ 
+set nobackup  " do not keep a backup file
+}}}
+

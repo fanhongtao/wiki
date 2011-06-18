@@ -1,0 +1,6 @@
+!!!网络文章
+
+* [Git中文教程|http://www.bitsun.com/documents/gittutorcn.htm]
+* [Git安装|http://hi.baidu.com/d_life/blog/item/b82a6f161110ea59f2de3241.html]
+
+

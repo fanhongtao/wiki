@@ -1,0 +1,22 @@
+Eclipse是我日常工作中用得最多的软件，最新版本可以从 [http://www.eclipse.org/]获取最新的版本。
+
+由于我经常编写Web应用，所以下载的是“Eclipse IDE for Java EE Developers”版本。
+
+由于Eclipse版本时常会更新，为了便于管理，我采用以下目录结构进行管理：
+* 创建 D:\eclipse 目录
+* 将一个 Eclipse 安装包在 D:\eclipse 目录下解压，得到 D:\eclipse\__eclipse__
+* 将解压后得到的目录改名成带版本号的目录，如： D:\eclipse\__eclipse-rcp-galileo-SR1-win32__
+* 创建 D:\eclipse\plugin 目录，存放自行安装的插件
+* 创建 D:\eclipse\links 目录，保存最新的插件链接情况，当有安装新版本的 Eclipse 时，将 D:\eclipse\links 目录下的内容拷贝到新的版本目录下，如 D:\eclipse\__eclipse-jee-galileo-SR2-win32__\links
+
+最后的目录结构就是：
+{{{
+D:\eclipse
+  |-- eclipse-rcp-galileo-SR1-win32
+  |   |-- configuration
+  |   |-- dropins
+  |   ... // 其它 eclipse-rcp-galileo-SR1-win32 的子目录
+  |-- eclipse-jee-galileo-SR2-win32
+  |-- links
+  |-- plugins
+}}}

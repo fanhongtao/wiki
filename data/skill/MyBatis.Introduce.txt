@@ -1,0 +1,14 @@
+[{TableOfContents }]\\
+
+!!!MyBatis介绍
+!!什么是MyBatis
+MyBatis是一个Java，以前是[Apache|http://apache.org]的一个子项目 iBatis，2010年5月，iBatis的负责人决定将项目从Apache迁移到[Google Code|http://code.google.com/]，为了和以前的项目进行区分，迁移后改名为MyBatis。
+
+!!MyBatis的特点
+与[Hibernate|http://hibernate.org/]不同，MyBatis只提供了“半自动”的封闭，所谓半自动，是指MyBatis只提供了POJO（Plain Old Java Objects）和SQL之间的映射，而SQL语句则需要程序员自己写。
+
+!!相关网站
+MyBatis的网址：[http://mybatis.org/]。
+
+Google Code上的项目：[http://code.google.com/p/mybatis/]，从这里可以下载最新的版本。
+

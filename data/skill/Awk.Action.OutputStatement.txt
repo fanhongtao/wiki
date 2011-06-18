@@ -1,0 +1,37 @@
+[{TableOfContents }]
+
+!!!输出语句
+AWK中提供了两种输出语句：
+! 1. print
+print 的语法格式为：
+{{{
+print [ExpressionList]  [Redirection]  [Expression]
+}}}
+print 语句将 ExpressionList 参数指定的每个表达式的值写至标准输出，每个表达式由 OFS 特殊变量的当前值隔开，且每个记录由 ORS 特殊变量的当前值终止。
+
+可以使用 Redirection 参数重定向输出，此参数可以使用 > （大于号）、>>（双大于号）和|（管道）进行三种输出重定向。Redirection 参数指定如何重定向输出。
+
+当 Redirection 参数是 > 或 >> 时，Expression 参数是文件的路径名称，如果文件不存在，AWK会自动创建相应的文件。> 表示在写文件时，先清空文件的内容， >> 则表示将内容追加在文件后面。
+
+当 Redirection 参数是 ~|  时，Expression 参数是命令的名称，ExpressionList 的结果将作为命令的输入参数。
+
+注：如果 Expression 参数为 Redirection 参数指定一个路径名称，则 Expression 参数将括在双引号中以确保将它当作字符串对待。
+
+! 2. printf
+printf 的语法格式为：
+{{{
+printf  Format [ExpressionList]  [Redirection]  [Expression]
+}}}
+printf 语句将 ExpressionList 参数指定的每个表达式的值以 Format 参数指定的格式写至标准输出。 Redirection 和 Expression 参数的作用与 print 语句中相同。
+
+printf 语句中 Format 参数可以使用以下的修饰符（和C语言中的 printf 语句差不多）：
+|| 修改符 || 含意
+| %c | ASCII字符
+| %d | 整数
+| %e | 浮点数，科学记数法
+| %f | 浮点数，如：123.44
+| %g | awk决定使用哪种浮点数转换 e或 f
+| %o | 八进制数
+| %x （小写的x） | 十六进制数（A-F部分为小写字母）
+| %X（大写的x） | 十六进制数（A-F部分为大写字母）
+

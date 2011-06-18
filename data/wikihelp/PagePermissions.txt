@@ -1,0 +1,29 @@
+!! Description
+
+__Page Permission__ is a permitted action on a particular target page or set of pages:
+
+* view
+* edit
+* comment
+* rename
+* upload
+* delete
+* modify
+
+
+!! Implied Permissions
+
+Certain permissions imply others:
+
+* The "comment" PagePermission implies "view"
+* The "upload" PagePermission implies "view"
+* The "edit" PagePermission implies "view" and "comment"
+* The "modify" PagePermission implies "edit" and "upload"
+* The "delete" PagePermission implies "modify"
+* Up to v2.4, "rename" PagePermission implies "modify". From v2.6 on, this is no longer the case - implies "edit" (see [http://www.jspwiki.org/wiki/NewIn2.6]).
+
+----
+
+For details go to [Wiki.Admin.Security]
+
+

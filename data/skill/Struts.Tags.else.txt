@@ -1,0 +1,9 @@
+!!!!else标签
+else标签必须和[if标签|Struts.tags.if]配合使用。
+
+!!参数
+无。
+
+!!使用举例
+参见[if标签|Struts.tags.if]。
+

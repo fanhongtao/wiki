@@ -1,0 +1,37 @@
+[{TableOfContents }]\\
+
+!!!自定义右键菜单
+
+当安装了WinRar这样的软件后，如果选择一个文件或文件夹，点击鼠标右键，会看到WinRar的相关菜单。
+
+通过修改注册表，我们也可以将自己想要的命令添加到右键菜单中。
+
+!!所有文件类型
+如果想对所有文件都启用，比如，想在Vim的Tab页中打开文件，可以按照下面的步骤进行：
+# 在注册表中找到 __''HKEY_CLASSES_ROOT\*\shell''__ （如果 __''HKEY_CLASSES_ROOT\*''__ 下没有名为 __''shell''__ 的项，需要手工创建一个）。
+# 在 __''HKEY_CLASSES_ROOT\*\shell''__ 下创建一个名为 __''Vim Tab''__ 的项
+# 将 __''Vim Tab''__  项中 __''默认''__ 对应的值填写为 __''&Vim Tab''__  （这一步是为了增加快捷键，如果不需要增加，也可以不执行本步骤）
+# 在 __''HKEY_CLASSES_ROOT\*\shell\Vim Tab''__ 下创建一个名为 __''command''__ 的项，
+# 将 __''command''__ 项中 __''默认''__ 对应的值填写为 __''"D:\Program Files\Vim\vim72\gvim.exe" -p --remote-tab-silent "%1"''__
+
+当想添加其它菜单项时，只需要将第2步的项名和 第3、5步中 “默认” 的取值修改成适当的值即可。
+
+
+!!特定文件类型
+与“所有文件类型”类似，只不过不是找 __''HKEY_CLASSES_ROOT\*\shell''__ 项，而是找 __''HKEY_CLASSES_ROOT\文件类型\shell''__ 。
+
+假设我们需要要将 __''.foo''__ 为后缀的文件和某个软件关联，则先找 __''HKEY_CLASSES_ROOT\.foo\shell''__ ，然后按照上一节的 2~5 步进行操作即可。
+
+
+!!文件夹
+与“所有文件类型”类似，只不过是使用以下两个项中的一个。
+{{{
+[HKEY_CLASSES_ROOT\Drive\Shell]
+
+[HKEY_CLASSES_ROOT\Folder\Shell]
+}}}
+
+!!所有文件、文件夹
+针对 [[HKEY_CLASSES_ROOT\AllFilesystemObjects\shell] 进行设置。
+
+

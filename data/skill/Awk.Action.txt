@@ -1,0 +1,6 @@
+[{TableOfContents }]
+
+!!!AWK操作
+操作在 { } （大括号）中，在括号里可以指定多个操作，但操作间必须以换行字符或分号分隔，且语句以它们出现的顺序处理。操作语句包含：
+* [条件语句|Awk.Action.ConditionalStatement]
+* [输出语句|Awk.Action.OutputStatement]

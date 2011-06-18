@@ -1,0 +1,14 @@
+* [主页|Main]
+* [关于|About]
+* [新闻|News]
+* [最近修改|Recent Changes]
+* [Wiki 礼仪|WikiEtiquette]
+
+* [为什么选择JSPWiki|Why JSPWiki]
+* [JSP Wiki安装|JSPWikiInstall]
+
+* [查找页面|FindPage]
+* [未引用页面|UnusedPages]
+* [未定义页面|UndefinedPages]
+* [页面索引|PageIndex]
+* [系统信息|SystemInfo]

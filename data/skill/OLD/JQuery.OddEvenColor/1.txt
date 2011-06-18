@@ -1,0 +1,46 @@
+!!!实现隔行显示不同的颜色
+
+使用JQuery可以非常容易地实现表格隔行换色和悬停高亮效果。
+
+完整的示例代码如下：
+
+%%prettify 
+{{{
+<html>
+<head>
+<style type='text/css'>
+    tr.title     {background-color: #D6D6D6;}
+    tr.odd       {background-color: #FFFFFF;}
+    tr.even      {background-color: #F0F0F0;}
+    tr.highlight {background-color: #E0E4FE;}
+</style>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $("tbody > tr:even").addClass("even");
+    $("tbody > tr:odd").addClass("odd");   
+    $("tbody > tr").hover(
+        function() {
+            $(this).addClass("highlight");
+        },
+        function() {
+            $(this).removeClass("highlight");
+        }
+    )
+});
+</script>
+<title>使用JQuery实现表格隔行换色和悬停高亮效果</title>
+</head>
+<body>
+    <table border="1">
+    <tbody>
+        <tr><td>row1</td><td>field1-2</td><td>field1-3</td></tr>
+        <tr><td>row2</td><td>field2-2</td><td>field2-3</td></tr>
+        <tr><td>row3</td><td>field3-2</td><td>field3-3</td></tr>
+        <tr><td>row4</td><td>field4-2</td><td>field4-3</td></tr>
+    </tbody>
+</table>
+</body>
+</html>
+}}}
+/%

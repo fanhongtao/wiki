@@ -1,0 +1,53 @@
+!!!if 标签
+如同Java中的if语句一样，if 标签可以单独使用，也可以和 [elseif|Struts.Tags.elseif]标签、[else|Struts.Tags.else]标签组合使用。
+
+!!参数
+|| Name || Required || Default || Evaluated || Type || Description
+| test | true |  | false | Boolean | Expression to determine if body of tag is to be displayed
+
+!!使用举例
+!基本用例
+%%prettify 
+{{{
+<s:if test="%{false}">
+    <div>Will Not Be Executed</div>
+</s:if>
+<s:elseif test="%{true}">
+    <div>Will Be Executed</div>
+</s:elseif>
+<s:else>
+    <div>Will Not Be Executed</div>
+</s:else>
+}}}
+/%
+
+!和单个字符进行比较
+可以在test参数中使用单引号的方式：
+%%prettify 
+{{{
+<s:if test='aStringProperty == "A"'>
+  This works!
+</s:if>
+}}}
+/%
+
+也可以在test参数中使用转义符“\”
+%%prettify 
+{{{
+<s:if test="aStringProperty == \"A\"">
+  This works too!
+</s:if>
+}}}
+/%
+
+!和Session中的自定义属性比较
+如，想判断Session中有无username属性，如果没有，则提示用户还没有登录，可以这样实现：
+%%prettify 
+{{{
+<s:if test="#session.username == null">
+    Not login yet.
+</s:if>
+}}}
+/%
+更多语法说明，参见 [Tag Syntax|Struts.TagSyntax]
+

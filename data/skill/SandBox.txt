@@ -1,0 +1,82 @@
+[{TableOfContents }] \\
+
+
+JSP下载文件
+*[http://www.blogjava.net/beansoft/archive/2007/02/01/97294.html]
+*[http://developer.51cto.com/art/200907/134323.htm]
+
+IBM
+*[改善 Web 2.0 应用程序的性能|http://www.ibm.com/developerworks/cn/web/wa-aj-cache/]
+-----
+
+%%collapse
+
+*OpenSource
+**JSPWiki
+***Plugin
+***CSS
+%%
+
+
+
+[Demo:jsp/request.jsp]
+
+
+你好！
+
+这里是沙盒！
+
+在这里您可以任意编辑！
+
+只需要点击“编辑”链接就可以开始编辑了！
+
+----
+
+%%center
+__Defining global results__
+%%
+%%prettify 
+{{{
+<global-results>
+    <result name="error">/Error.jsp</result>
+    <result name="invalid.token">/Error.jsp</result>
+    <result name="login" type="redirectAction">Logon!input</result>
+</global-results>
+}}}
+/%
+
+----
+|| Defining global results
+| %%prettify {{{
+<global-results>
+    <result name="error">/Error.jsp</result>
+    <result name="invalid.token">/Error.jsp</result>
+    <result name="login" type="redirectAction">Logon!input</result>
+</global-results>
+}}}/%
+
+----
+|| dsabad
+| [{Code lang=html
+
+<global-results>
+    <result name="error">/Error.jsp</result>
+    <result name="invalid.token">/Error.jsp</result>
+    <result name="login" type="redirectAction">Logon!input</result>
+</global-results>
+}]
+
+
+
+----
+%%collapsebox
+!title
+[{Code lang=javascript
+
+/** A JavaScript function */
+function test() {
+  var a = "abc";
+  alert(a);
+}
+}]
+%%

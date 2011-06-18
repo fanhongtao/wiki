@@ -1,0 +1,9 @@
+开发SOAP接口的程序，通常有两种方法：
+# 基于[Apache AXIS2|http://ws.apache.org/axis2/]开发 
+# 硬编码，自己写代码来解析
+
+||编码方式||Client端||Server端
+|AXIS|[SOAP Client With Axis]|[SOAP Server With Axis]
+
+相对而言，硬编码就比较难一些，更适用于对性能要求较高，且SOAP接口相对较固定的情况。\\
+一般也建议先使用AXIS生成Client和Server，然后采用抓包工具抓包，最后再根据抓包的结果来手工编写代码。

@@ -1,0 +1,45 @@
+This page describes how to set up some simple access control scenarios, using the new security features of JSPWiki version 2.4.
+
+[{TableOfContents}]
+
+!!Setting up a Sample Wiki Group
+Suppose you've got a page that you'd like to restrict access to. You've got a page called {{TestSocialCommittee}}, and you'd like to lock it down so that only the {{SocialCommittee}} wiki group can access it. Here's how to do it.
+
+First, make sure you've created a wiki profile. Create a user with these properties:
+* ''login name:'' arj
+* ''wiki name:'' AndrewJaquith
+* ''full name:'' Andrew Jaquith
+
+Next, once you've logged in as arj, create a new wiki group by clicking on the "create group" link ({{NewGroup.jsp}}. Give the group these properties:
+* ''group name:'' SocialCommittee
+* ''members:'' Andrew Jaquith
+
+After you save the group, it will be saved to a group called {{SocialCommittee}}. You can verify that it has the correct membership (you!) by opening the group {{SocialCommittee}} and clicking on the "edit page" link. The URL for this is {{Group.jsp?group=SocialCommittee}}. 
+
+So far so good; we've created the group we need. Now we create our test page and add an ACL to it. Edit the URL at the top of the page so that the right-most part of it reads {{Edit.jsp?page=TestSocialCommittee}}. You should see the editor page, with an empty page (blank content). Add the following text:
+{{{[{ALLOW view SocialCommittee}]
+Only the group SocialCommittee can see this.}}}
+
+Now log out. Try navigating to the {{TestSocialCommittee}} page. Access to the page will be denied, and you will be prompted to log in.
+
+Log in. Try Navigating to {{TestSocialCommittee}} again. You should see the text: {{Only the group SocialCommittee can see this}}..
+
+So there you have it.
+
+!!Granting Expanded Default Privileges to a Wiki Group
+Releases 2.3.83 and higher of JSPWiki include the ability to grant permissions to wiki groups, in addition to (or as a substitute for) entries in each page access control lists. For example, you can grant edit privileges on the page {{Main}} of wiki {{MyWiki}} to the group {{SocialCommittee}} by modifying your {{jspwiki.policy}} file as follows:
+{{{grant signedBy "jspwiki",
+  principal com.ecyrd.jspwiki.auth.GroupPrincipal "SocialCommittee" {
+    permission com.ecyrd.jspwiki.auth.permissions.PagePermission "MyWiki:Main", "edit";
+};}}}
+You can grant permission to collections of pages, too. Here's a permission that allows editing for any page on MyWiki with the prefix "SocialCommittee":
+{{{permission com.ecyrd.jspwiki.auth.permissions.PagePermission "MyWiki:SocialCommittee*", "edit";}}}
+
+!!Designating an Administrator Group
+JSPWiki ships by default without a designated wiki administrator account, although the {{Install.jsp}} installer will create one when you run it. But it's easy to grant administrative privileges to a wiki group. For example, you grant administrative privileges to a wiki group called "WikiAdmins" as follows:
+{{{grant signedBy "jspwiki",
+  principal com.ecyrd.jspwiki.auth.GroupPrincipal "WikiAdmins" {
+    permission com.ecyrd.jspwiki.auth.permissions.AllPermission "JSPWiki";
+};}}}
+
+

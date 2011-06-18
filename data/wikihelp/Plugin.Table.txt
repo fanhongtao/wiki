@@ -1,0 +1,1110 @@
+|Nr |A |< |C |<
+!!Table plugin
+
+This plugin extends JSPWiki's table markup :
+* merge cells horizontally and/or vertically (aka colspan and rowspan)
+* auto-numbering of rows
+* multi-line table markup to ease the entry of large or complex table cells, including nested tables
+* additional formatting for odd/even rows, headers, etc.
+--[DF|DirkFrederickx]
+
+The usage description is also available in German, see [TablePlugin Benutzung].\\
+Eine deutsche Benutzungsbeschreibung siehe auf [TablePlugin Benutzung].
+
+
+%%tabbedSection
+%%tab-TableSyntax
+! Basic markup
+The table plugin is compatible with the standard JSPWiki table syntax :
+* a new line of text starting with a pipe sign '|' indicates the start of 
+  a new table row. 
+* every line corresponds with a horizontal row of the table, containing one 
+  or more table cells.
+** a single pipe signs ('|') starts a new data cell. 
+** a double pipe signs ('||') starts a header cell with different formatting.
+* end the table with a line which does not start with a pipe sign.
+
+! Extended markup
+Following syntax is also supported:
+* use '|<' or '||<' to collapse a cell with the previous cell so 
+  it __spans multiple columns__.
+* use '|^' or '||^' to collapse a cell with the cell above so that 
+  it __spans multiple rows__.
+* use '|( <css-style> ) ' to add specific __formatting__ to a cell.
+* use '#' inside a table cell to display the current row number. 
+  (__auto row numbering__)
+
+Example:
+{{{
+   |Nr |A |< |C |<
+   |#  |a |b |c |(background:yellow;)d
+   |#  |^ |b |^ |(background:yellow;)d
+}}}
+becomes (simulated)
+
+{{
+&nbsp;&nbsp;+----+-------+-------+\\
+&nbsp;&nbsp;| Nr | A &nbsp; &nbsp; | C &nbsp; &nbsp; |\\
+&nbsp;&nbsp;+----+---+---+---+---+\\
+&nbsp;&nbsp;| 1&nbsp; | a | b | c |%%(background:yellow;) d %%|\\
+&nbsp;&nbsp;+----+ &nbsp; +---+ &nbsp; +---+\\
+&nbsp;&nbsp;| 2&nbsp; | &nbsp; | b | &nbsp; |%%(background:yellow;) d %%|\\
+&nbsp;&nbsp;+----+---+---+---+---+\\
+}}
+! Multi-line table editing
+
+The standard table markup of JSPWiki requires you to put every row on a single line without carriage returns.
+
+With the Table plugin, a single ''table row'' and even a single ''table cell'' can be entered on multiple lines.
+
+A multi-line ''table row'' is similar to a bulleted list, where you replace the bullets ('*') with pipes ('|' or '||').
+A blank line indicates the end of a table row.
+{{{
+| These cells
+| will all appear
+| as a single table row
+
+}}}
+It is also possible to put the contents of a single ''table cell'' across multiple lines.
+So it is easy to put lots of text and markup inside a single table cell and still keep your markup readable.
+{{{
+| This cell
+  is put over 2 lines
+| The 2nd cell comes here
+
+}}}
+You can combine muti-line rows with standard wiki table syntax too.
+As long as a single line contains only one table cell, it is assumed to continue on the next line.
+Multi-line rows always need to be terminated with blank lines; for standard wiki table rows you may omit the blank lines. 
+{{{
+| This row has 
+| Two cells
+
+| You can also    | use standard wiki markup.
+| Here is another | table row
+}}}
+
+Of course, you can combine this multi line syntax with the '|<', '|^' and '#' stuff as well.
+
+Example:
+{{{
+   || Heading 1 
+   || Heading 2
+
+   | ''Gobble'' starts a new row! 
+   * and some more text with wiki markup, all in the same table cell
+   |(background:yellow;) Bar
+
+   | [{Image src='some-nice-picture'}]  
+   |<
+}}}
+%%
+%%tab-Usage
+! Usage
+
+{{{
+[{Table <table-parameters>
+
+|| Table Header Example || More... 
+|  Table Data Example   |  More...
+}]
+}}}
+
+Following parameters are supported:
+
+* __rowNumber : <integer>__ , row number starts counting at this value, default = 0 
+  (used in conjunction with '#' syntax)
+* __style : <css-style>__ , add formatting to the table 
+  e.g. {{style:'border=2px solid black;'}}
+* __dataStyle : <css-style>__ , format all data cells 
+  (prefixed by single pipe signs '|')
+* __headerStyle :  <css-style>__ , format all header cells 
+  (prefixed by double pipe signs '||')
+* __evenRowStyle :  <css-style>__  , format the even rows, 
+  e.g. {{evenRowStyle='background: #ffff00;'}}
+* __oddRowStyle :  <css-style>__  . format the odd rows, 
+  e.g. {{oddRowStyle='color: red;'}}
+
+! Change History
+* v0.1 : first version
+* v0.2 : client-side sorting of tables : now handled by [BrushedTemplateSortableTables] / 24 oct 05 
+* v0.3 : removed escape parameter: JSPWiki (v2.4.x) now supports nested plugin calls / jun 06
+%%strike
+* v0.4 : streamlined logic for cell/row processing in order to better support multi-line cells. --[JM|mailto:jmckinney63@gmail.com]
+/%
+
+!Installation Instructions
+
+* Copy {{Table.jar}} to the folder {{/WEB-INF/lib/}} 
+* Modify the plugin searchPath in your {{WEB-INF/jspwiki.properties}} and make
+  sure there are no spaces between the different entries. Example:
+  {{{
+       jspwiki.plugin.searchPath = brushed.jspwiki.tableplugin
+  }}}
+* Restart JSPWiki
+
+%%
+%%tab-Examples
+
+!Example 1 : table with row and column spans
+
+{{{
+[{Table
+
+|Nr |A |< |C |<
+|#  |a |b |c |(background:yellow;)d
+|#  |^ |b |^ |(background:yellow;)d
+}]
+}}}
+
+[{Table 
+
+|Nr |A |< |C |<
+|#  |a |b |c |(background:yellow;)d
+|#  |^ |b |^ |(background:yellow;)d
+}]
+
+!Example 2: table with extra style
+{{{
+[{Table oddRowStyle='background:#f0f0f0;' rowNumber='-1'
+
+|| [THE 15 MOST POPULAR ICE CREAM FLAVORS|http://www.sendicecream.com/15mospopicec.html] 
+||< 
+||< 
+
+|| ||Flavor|| percent preferring
+|#. |Vanilla| 29%
+|#. |Chocolate| 8.9%
+|#. |Butter pecan| 5.3%
+|#. |Strawberry| 5.3%
+|#. |Neapolitan| 4.2%
+|#. |Chocolate chip| 3.9%
+|#. |French vanilla| 3.8%
+|#. |Cookies and cream| 3.6%
+|#. |Vanilla fudge ripple| 2.6%
+|#. |Praline pecan| 1.7%
+|#. |Cherry| 1.6%
+|#. |Chocolate almond| 1.6%
+|#. |Coffee| 1.6%
+|#. |Rocky road| 1.5%
+|#. |Chocolate marshmallow| 1.3%
+|All others|< | 23.7%  
+}]
+Source: International Ice Cream Association, 888 16th St. Washington, D.C., 20006
+}}}
+
+[{Table oddRowStyle='background:#f0f0f0;' rowNumber='-1'
+
+|| [THE 15 MOST POPULAR ICE CREAM FLAVORS|http://www.sendicecream.com/15mospopicec.html] 
+||< 
+||< 
+
+|| ||Flavor|| percent preferring
+|#. |Vanilla| 29%
+|#. |Chocolate| 8.9%
+|#. |Butter pecan| 5.3%
+|#. |Strawberry| 5.3%
+|#. |Neapolitan| 4.2%
+|#. |Chocolate chip| 3.9%
+|#. |French vanilla| 3.8%
+|#. |Cookies and cream| 3.6%
+|#. |Vanilla fudge ripple| 2.6%
+|#. |Praline pecan| 1.7%
+|#. |Cherry| 1.6%
+|#. |Chocolate almond| 1.6%
+|#. |Coffee| 1.6%
+|#. |Rocky road| 1.5%
+|#. |Chocolate marshmallow| 1.3%
+|All others|< | 23.7%  
+}]
+Source: International Ice Cream Association, 888 16th St. Washington, D.C., 20006
+
+!Example 3: table with multi-line editing
+
+{{{
+[{Table style='border:3px solid #cccccc;'
+
+|(text-align:center;font-weight:bold; background:#cccccc;) Hi dear Wiki. 
+|<
+|<
+
+| Date: [{CurrentTimePlugin format='dd:MMM:yyyy'}] 
+| Time: [{CurrentTimePlugin format='hh:mm:ss'}]
+| This page: [{$pagename}] 
+
+| [{Table 
+
+| Nested table | Nested table
+| Nested table | Nested table
+}]
+|<
+|<
+
+}]
+}}}
+
+
+[{Table style='border:3px solid #cccccc;'
+
+|(text-align:center;font-weight:bold; background:#cccccc;) Hi dear Wiki. 
+|<
+|<
+
+| Date: [{CurrentTimePlugin format='dd:MMM:yyyy'}] 
+| Time: [{CurrentTimePlugin format='hh:mm:ss'}]
+| This page: [{$pagename}] 
+
+| [{Table 
+
+| Nested table | Nested table
+| Nested table | Nested table
+}]
+|<
+|<
+
+}]
+
+!Example 4: table with multi-line editing (New Version/Test table)
+
+{{{
+[{Table oddRowStyle='background:#f0f0f0;' rowNumber='1'
+ 
+|| a || d || c || d
+ 
+|#|
+%%tip-MoreInfo
+Here is some more info about tomatoes
+[{Image src='tomato.jpg' width='154' align='center' }]
+/% 
+|<|
+%%tip-MoreInfo
+Here is some more info about tomatoes
+[{Image src='tomato.jpg' width='154' align='center' }]
+/%
+
+|# | b  | [This is a test|test] | d
+
+|#|
+*This is long text
+** With a list of things
+** to do
+| e | [{LocalLink display='Test Header'}]
+|#|
+*This is another long text
+** With another list of things
+** to do
+| e | f
+
+|Code|
+~{~{~{
+*This is another long text
+** With another list of things
+** to do
+~}~}~}
+| e | f
+
+}]
+
+
+!!Test Header
+
+Some text under the header
+}}}
+
+[{Table oddRowStyle='background:#f0f0f0;' rowNumber='1'
+ 
+|| a || d || c || d
+ 
+|#|
+%%tip-MoreInfo
+Here is some more info about tomatoes
+[{Image src='tomato.jpg' width='154' align='center' }]
+/% 
+|<|
+
+%%tip-MoreInfo
+Here is some more info about tomatoes
+[{Image src='tomato.jpg' width='154' align='center' }]
+/%
+
+|# | b  | [This is a test|test] | d
+
+|#|
+*This is long text
+** With a list of things
+** to do
+| e | [{LocalLink display='Test Header'}]
+|#|
+*This is another long text
+** With another list of things
+** to do
+| e | f
+
+|Code|
+{{{
+*This is another long text
+** With another list of things
+** to do
+}}}
+| e | f
+
+}]
+
+
+!!Test Header
+
+Some text under the header
+
+%%
+%%tab-Discussion
+
+! Discussions
+
+%%information
+Please use this tab for any discussion, reporting of bugs (if possible with suggested fixes), new ideas, contributions etc.
+Your contributions are very much appreciated. I will continue to update this plugin, and possibly incorporate your suggestions.
+
+However, please do NOT update the plugin yourself. Cause that way reported bugs will be harder to fix.
+
+-[DF|DirkFrederickx]
+/%
+
+Hello,
+I don't know if this is the right place, 
+but I have trouble to get this TablePlugin to work. 
+I copied the Table.jar to my WEB-INF\lib directory, 
+but if I just use the new Syntax I get normal Tables, 
+not the ones which are described on this page.
+
+Do I have to use a special Syntax or make known that I 
+do want to use the plugin Syntax? 
+Maybe, someone can help me out on this and/or post 
+more detailed installation  instructions.
+
+Thanks a lot,
+Christian
+
+-- What you describe should be sufficient. Just copy the jar and restart the JSPWiki application in your web server.
+--[DF|DirkFrederickx]
+
+----
+I wanted to try the sortable table but I got only a plain looking regular table. Here is what I used:
+{{{
+Table example:
+
+[{Table 
+
+||Name||SKU||title
+|blouse|1234|A piece of clothing
+|oil|234324|Industrial material
+|cake|9987|Delicious foo
+}]
+}}}
+
+The generated html:
+{{{
+  Table example:
+<p><table border='1' class='wikitable sortable' onclick="sortColumn(event)" > 
+<thead>
+<tr>
+<td>Name</td>
+<td>SKU</td>
+<td>title</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>blouse</td>
+<td>1234</td>
+<td>A piece of clothing</td>
+</tr>
+<tr>
+<td>oil</td>
+<td>234324</td>
+<td>Industrial material</td>
+</tr>
+<tr>
+<td>cake</td>
+<td>9987</td>
+<td>Delicious foo</td>
+</tr>
+</tbody>
+</table>
+}}}
+It looks like the plugin did its job but there is still something missing in the CSS/JavaScript part. The html source had no mention of the tablesort.js file.
+
+Any ideas? I did all the extra steps like copying the .js file and updating my .css file.\\
+I am using the latest JSPWiki v2.1.144-alpha with the mrg template. I made the suggested changes to the jspwiki.css, perhaps I should have modified a different .css file?
+
+;:Yep, you are right. I forgot to mention in the install section that you need to add a reference to the {{tablesort.js}}. I updated the [How To Install section|9] -- [DF|DirkFrederickx]
+
+;:The above suggests that we should have a way for JSPWiki to pick up automatically any Javascripts as well, after they have been dropped in /scripts/... --[JanneJalkanen]
+
+;:Thanks DF. I tried your instructions for the mrg template and it didn't work - same old behavior as before. Since the .jsp structure in this template is quite different from the one in the default template I had to make some adaptations, but I ''think'' I did it right... And I agree with Janne, it would be great to have a solution that is transparent to the template you're using! -- [NascifAbousalhNeto]
+
+----
+Hi, I added the table.jar to the web-inf\lib directory, but I try out the table plugin, I get this error - "An unknown exception javax.servlet.jsp.JspException was caught by Error.jsp"
+
+Sometimes, intermittently, the whole page has only one line that says "org.apache.log4j...". Should I copy log4j.jar into the lib directory as well? -- SriramGopalan
+;:Yes, log4j.jar should be in the lib directory. This is normally the case, since it is part of the JSPWiki distribution. --[DF|DirkFrederickx]
+
+Thanks, Dirk. In my case, there is log4j in the lib directory and I still get this error! So, I explicitly added org.apache.log4j to the search path. That error went away, but I got this error - " (class: org/apache/log4j/LogManager, method:  signature: ()V) Incompatible argument to function". Is it possible that log4j version that is shipped with jspwiki 2.0.52 is not compatible with the latest TablePlugin? -- SriramGopalan
+;: Mmm, dont know. The TablePlugin uses the logging functions as used throughout JSPWiki, so I don't understand why this would only give exceptions in the TablePlugin ? Anyway, TablePlugin was developed on a v2.1.xx. BTW, why keep stuck with a v2.0.xx while v2.2.xx is alive and kicking ?  --[DF|DirkFrederickx]
+
+Thanks, Dirk. Once I upgraded to 2.2, most the problems went away. I also formatted the wikitable css to my heart's content. The only snag is whenever I click on a header to sort, the numbers 5 or 6 appear alternately next to the column header! I am assuming that arrows were supposed to appear, but for some reason, I am seeing the numbers 5 or 6! Are there any other images I need to download? - SriramGopalan
+
+;:The arrows are shown if you format 5 or 6 with a webding font. Make sure following css defs are available: --[DF|DirkFrederickx]
+{{{
+  .arrow { font-family: webdings; 
+           font-weight: normal;  // be careful, dont remove
+           color:       black; 
+           overflow:    hidden;
+         }
+}}}
+
+----
+New version of Table plugin loaded, dd. 29 mar 2005 -- [DF|DirkFrederickx]
+
+
+----
+It would be really useful (to me & possibly others) if the auto numbered values would behave the same as numbered bullets (i.e. ## results in 1.1). BTW, the tablesort script has the problems reported above (up/down arrows replaced by chars 5/6) in Mozilla Firefox, works fine in MS IE. 
+--[DW|DaveWolf]
+;:How would you use the ## feature : the # counter is incremented for each new row; what about the second digit of the ## counter ?  The up/down arrows and webdings are not really cross-browser compatible, so I need to change that. Anyway, I am looking into a table-sort solution which could be applied to any wiki table, thus not only a ~TablePlugin tables. --[DF|DirkFrederickx]
+
+I'd want the first digit to remain the same, and allow the second digit to increment starting from <rowNumber>. So, you would see something like:
+|| Id | title
+| # |
+| ## |
+| ## |
+| #  |
+| ## |
+| ## |
+| #  |
+| ## |
+| ### |
+| ### |
+
+And would get:
+|| Id | title
+| 1 |
+| 1.1 |
+| 1.2 |
+| 2  |
+| 2.1 |
+| 2.2 |
+| 3  |
+| 3.1 |
+| 3.1.1 |
+| 3.1.2 |
+
+Each increment of the first digit would occur when a single '#' is found and the counter for each subsequent digit would be reset. [DW|DaveWolf]
+
+----
+
+Excellent Plugin!\\
+
+Just one thing:
+* The tilde (~) for ignoring CamelCase is ignored. Any Ideas?\\
+
+Thanks -- [GP|GregP]
+
+;: This is because it is mixed up with the default escape character of the TablePlugin, being the {{~~}}. Actually, the TablePlugin will skip over any character just after the escape character AND remove that escape character.  An easy way around it, is to use a double {{~~~}} : the TablePlugin will remove the first escape character; and the JSPWiki rendering engine will process the second one. Another approach is to define another escape character, e.g. {{$$$}} or any sequence.\\Of course, the best solution would be that the JSPWiki engine is intelligent enough to support nested plugins (i.e. plugins nested inside the body of a plugin). This is still not the case in the v2.3.x new engine. So long, plugins will have to implement there own escape algorithms - mixing up with default JSPWiki behaviour. Too bad ;-)  (a similar issues was faced by the Forms plugins - which need to include e.g. variables)  --[DF|DirkFrederickx]
+\\
+----
+
+Hi
+
+Is it possible to change the color of a single cell or an entire row?
+
+I use the following css definition which works great, but would like to ''"override"'' the def for a single cell
+
+My table def is as follows
+
+{{{
+[{Table headerStyle : 'background-color: Gold; font-size: 12px; text-align: center; border: 2px ridge #CCCC66;'
+        style:'font-size: 11px; font-weight: bold; width: 100%; border: 2px ridge #CCCC66; background-color: CCCC66;'
+        dataStyle : 'text-align: left;	border: 2px ridge #CCCC66;'
+        evenRowStyle: 'background: #ffff00;'
+        oddRowStyle: 'background: #f0f0f0;'
+}}}
+
+Thanks 
+
+[GWP]
+
+;: Put a %~%(background:red;)  cell-content %~% inside your table cell. Dont know a way to color the complete row. --[DF|DirkFrederickx]
+
+
+----
+Hello,
+
+Does this plug in affect the ability to have pictures inside the table?  I have tried the following and in the table cell the url is rendered and ''not'' the image.  
+
+I have also tried using the image plugin inside this table plug in and that doesnt appear to work either.  What am i doing wrong or is this not possible?
+{{{
+ [{Table 
+        headerStyle : 'background-color: Gold; font-size: 12px; text-align: center; border: 0px;'
+        style:'font-size: 11px; width: 100%; border: 0px; background-color: CCCC66;'
+        dataStyle : 'text-align: left;  border: 0px;'
+        evenRowStyle: 'background: #ffff00;'
+        oddRowStyle: 'background: #f0f0f0;'
+
+|| Heading 1 
+|| Heading 2
+
+
+| [http://www.ecyrd.com/~jalkanen/test.png] | hello
+| [{Image src='my_image_url' link='http://www.bbc.co.uk' width=86 height=27}~]    | 
+
+}] 
+}}}
+
+I need to have a table of images which hyperlink to websites. I would like to have control over this table, such as have no border, span cells etc. Therefore i need a combination of this table plugin and the image plugin.  Can you not currently have 2 plugins working together?
+
+Thanks Sarah
+
+;:You can have nested plugins working, by using the escape character, which defaults to ~~. I updated your example to show how to to this. --[DF|DirkFrederickx]
+
+
+----
+
+Dear All,
+
+I have one simple (but useful) patch into Table.java. This patch makes working nested
+plugins in Table cels, without any escape characters (tested in JSPWiki v2.4.0-beta). :-)
+
+line 191 of Table.java
+
+if( startsWith( "}" + m_escape + "]", sb, i) ) 
+
+replace by
+
+if( startsWith( "}]", sb, i) )
+
+recompile, deploy and there will start working examples like
+
+{{{
+[{Table
+
+| [{Image src='Pics/HP.jpg'}] | [{nbsp count='5'}] | %%()
+\\
+__Electric Energy Utilization__ : \\
+__Electric Energy Production__:
+
+%% }]
+}}}
+
+JK
+
+--[xkrumpha|mailto:xkrumpha@poli.feld.cvut.cz], 28-Apr-2006
+
+;:Tx ! V0.3 has been adjusted accordingly. --[DF|DirkFrederickx], Jun 06
+
+----
+
+Hi Everybody,
+
+How do I get the Table Plugin to work with the 2.4.x release? The content just shows up as text!
+Thank you.
+
+*The TablePlugin still works on v2.4.x. However, in case you have nested plugin calls in your table, you need to escape some chars. Because of the different behaviour of JSPWIki (it actually now supports nested plugins ! )  you need a bit to anticipate its behaviour. You need to escape BOTH the starting [[{ as well as the closing }] plugin brackets. (in the past, it was sufficient to escape the closing brackets only) --[DF|DirkFrederickx]
+*V0.3 has been uploaded!. Plse try with the latest plugin version --[DF|DirkFrederickx], Jun 06
+
+----
+Hi,
+How can I write a pipe character in a cell without making it mark a new cell or writing a # without getting the line number? For example a cell with the content (user|session). As I understand from the change log there was a escape feature that has been removed. Is there a new way to escape characters?
+
+/P
+
+;: Use the tilde to escape the pipe or #. The tilde ~ is the general escape char in JSPWiki. --[DF|DirkFrederickx]
+
+I can get it to work. I tried the ~# out side the table plugin and that worked, but inside the table the tilde is ignored as escape char. See my code below. Any ideas?
+{{{
+[{Table 
+
+| tilde with hash | ~# |
+| tilde with pipe | ~| |
+}]
+}}}
+/P
+
+-- This is a bug. Please test latest JAR. --[DF|DirkFrederickx] 14 May 2007
+
+----
+----
+
+__Nested tables giving Problems__ - [GregP]
+
+__This works:__
+
+{{{
+[{Table style='border:3px solid #cccccc;'
+
+|| a || b || c
+
+| Time: [{CurrentTimePlugin format='hh:mm:ss'}]
+| [{Table 
+
+| Nested table | Nested table
+| Nested table | Nested table
+}]
+| Date: [{CurrentTimePlugin format='dd:MMM:yyyy'}] 
+
+
+| Time: [{CurrentTimePlugin format='hh:mm:ss'}]
+| [{Table 
+
+| Nested table | Nested table
+| Nested table | Nested table
+}]
+| Date: [{CurrentTimePlugin format='dd:MMM:yyyy'}] 
+
+}]
+}}}
+
+__This Doesn't (With a link in a column)__
+
+{{{
+[{Table style='border:3px solid #cccccc;'
+
+|| a || b || c
+
+| Time: [{CurrentTimePlugin format='hh:mm:ss'}]
+| [{Table 
+
+| Nested table | Nested table
+| Nested table | Nested table
+}]
+| Date: [{CurrentTimePlugin format='dd:MMM:yyyy'}] 
+
+
+| Time: [{CurrentTimePlugin format='hh:mm:ss'}]
+| [{Table 
+
+| [Nested table|CamelCase] | Nested table
+| Nested table | Nested table
+}]
+| Date: [{CurrentTimePlugin format='dd:MMM:yyyy'}] 
+
+}]
+}}}
+
+__But is work with a nested zebra table?? - Strange__
+
+{{{
+[{Table style='border:3px solid #cccccc;'
+
+|| a || b || c
+
+| Time: [{CurrentTimePlugin format='hh:mm:ss'}]
+| [{Table 
+
+| Nested table | Nested table
+| Nested table | Nested table
+}]
+| Date: [{CurrentTimePlugin format='dd:MMM:yyyy'}] 
+
+
+| Time: [{CurrentTimePlugin format='hh:mm:ss'}]
+| %%zebra-table 
+
+| [Nested table|CamelCase] | Nested table
+| Nested table | Nested table
+%%
+| Date: [{CurrentTimePlugin format='dd:MMM:yyyy'}] 
+
+}]
+}}}
+
+Any ideas. Thanks for a great plugin - GP 07/06/30
+
+;: Argggh - you found a new bug in a stable plugin ;-)  This error occurs when you combine a nested plugin with a wiki-link in its body.  It would also occur with a tripple nesting for instance.
+Actually, the closing ] is mistakenly seen as the closing }]. Therefore, a part of the body of the nested plugin is just parsed as normal table plugin body, which screws up the rest o the processing. Bugfix upcoming - when time permits. Great catch!--[DF|DirkFrederickx]
+;: Fixed in latest version (v8) of the plugin, dd 6 July 07, --[DF|DirkFrederickx]
+
+----
+----
+
+__Mutli-Line, Single-line mixing problematic__
+
+Hi, why wont the following work?
+
+{{{
+[{Table 
+
+|| a || d || c || d || long text || e || f || long text2 || g
+
+| a | b  | c | d
+| This is long text\\
+* With a list of things
+** to do
+| e | f
+| This is some more long text\\
+* With a list of things
+** to do
+| g
+
+| a | b  | c | d
+| This is long text\\
+Some more long text\\
+Yet more\\
+| e | f
+| This is long text\\
+Some more long text\\
+Yet more\\
+| g
+
+}]
+}}}
+
+There seems to be an either or scenario here?
+
+I would expect it to iterate over the pipes until it find a blank line and each pipe is equal to a column?
+I need this to de-clutter my tables
+
+Please help!!! I love this plugin but this and the previous issues are holding me back
+
+Thanks GregP
+
+;: GregP,  when starting a new row, you should either choose for the single line syntax (standard wiki) or multi-line syntax (table plugin). You can't mix up both syntaxes on a single row. --[DF|DirkFrederickx]
+
+
+
+----
+
+Hi, just starting trying to use this plugin and have a question, which may be my usage. I have the following
+{{{
+[{Table  headerStyle  : 'background-color: Blue; text-align: center;'
+         dataStyle    : 'text-align: center;'
+         evenRowStyle : 'background: #c6c6c6;'  
+         oddRowStyle  : 'background:#dddddd;'
+
+||Started || Ended
+|6/6/2006 | 6/20/2006
+|6/20/2006 | 7/4/2006
+|7/4/2006 | 7/18/2006
+|7/18/2006 | 8/1/2006
+}]
+}}}
+but the alternating colors do not appear to work in Firefox.  It seems fine in IE7.  Both the odd and even styles get rendered in the cell: so a td entry has one style for text-align, one for even background and one for odd background.
+
+Here's the results below:
+{{{      
+<table border='1' class='wikitable'> 
+<tr>
+<th style="background-color: Blue; text-align: center;">Started </th>
+<th style="background-color: Blue; text-align: center;"> Ended</th>
+</tr>
+<tr>
+<td style="text-align: center; ">6/6/2006 </td>
+<td style="text-align: center; "> 6/20/2006</td>
+</tr>
+<tr>
+
+<td style="text-align: center; " style="background:#dddddd;" style="background: #c6c6c6;">6/20/2006 </td>
+<td style="text-align: center; " style="background:#dddddd;" style="background: #c6c6c6;"> 7/4/2006</td>
+</tr>
+<tr>
+<td style="text-align: center; ">7/4/2006 </td>
+<td style="text-align: center; "> 7/18/2006</td>
+</tr>
+<tr>
+<td style="text-align: center; " style="background:#dddddd;" style="background: #c6c6c6;">7/18/2006 </td>
+<td style="text-align: center; " style="background:#dddddd;" style="background: #c6c6c6;"> 8/1/2006</td>
+
+</tr>
+</table>
+}}}
+Am I doing something wrong?
+
+--[Mike Miller|mailto:mike.miller@jda.com], 15-Jun-2006
+
+;:Seems like a bug.  Look at line 326 in the java code and you'll see that odd and even styles are applied to the same row. I will fix this in the next upload. Tx for pointing out. --[DF|DirkFrederickx]
+
+
+----
+
+
+
+Unless you updated the attached source code - line 326 looks fine.  Line 323 checks r%2 == 0 and line 326 check the not equal condition.  That should fine as far as I can tell.
+
+--Mike Miller, 20-Jun-2006
+
+;;I already uploaded the fixed version, both java and jar. Sorry for the confusion. --[DF|DirkFrederickx]
+
+Thanks for the quick response.  FYI...I tried the new version but am still having problems.  Works in IE7, but it appears that Firefox does not like the multiple style= entries for the td rows.  If I save the rendered html and combine style="text-align: center; " __and__ style="background:#dddddd;" into style="text-align: center; background:#dddddd;" for each td entry, then Firefox works.
+
+;:Fixed in latest version dd. 22 june 06 -- now also Firefox is happy.  --[DF|DirkFrederickx]
+
+;:Works like a CHAMP! Gotta love the open-source community!
+
+
+----
+I use InsertAttachment to add a table to one of my wiki pages. The attachment is just a text file with the regular "|" table syntax and it works fine.
+
+I tried to "nest" the call to the InsertAttachment plugin inside a call TablePlugin the result is empty. Is the support for nested plugins only on the cell level or should it also work for the entired table?
+
+Thanks,\\
+-- [NascifAbousalhNeto] 26-Jun-2006
+
+----
+Is there a place where older versions (e.g., version 002) are kept?  I'm using
+JSPWiki 2.2.33 and need to use the Image plugin inside the Table plugin.
+
+Thanks,\\
+[BillCutshall] 18-July-2006
+
+Oops, answered my own question.  They're archived on the wiki.  Click on the "paper clip"!
+
+----
+I am wanting to place an image inside a table cell, however, this is resulting in a grey line along the
+left side of the image.  Also, this is forcing the table row to be taller than I would like it to be.  Has anyone else
+had this happen and found a way to resolve it?  I would guess it has something to do with the fact that imageplugin is
+creating a table within a table....but the border is set to '0' so I don't see why there would be the line on the left.
+
+Thanks,\\BuildMonkey August 2, 2006
+
+
+
+
+----
+
+Hi there,
+
+if I understood it right, the following three syntaxes should produce the same result:
+{{{
+[{Table
+
+|#
+|bla
+
+|#
+|bla
+}]
+}}}
+
+{{{
+[{Table
+
+|#|bla
+|#|bla
+}]
+}}}
+
+{{{
+[{Table
+
+|#
+|bla
+
+|#|bla
+}]
+}}}
+
+But, in example 1 and 3, you can see that the {{#}} isn&rsquo;t interpreted correctly when using the &ldquo;one line per column&rdquo; syntax. The number just won&rsquo;t show up. But nevertheless, the number is increased, as you can see in the third example. Is this a bug?
+
+--[Candid Dauth], 14-Aug-2006
+
+;:I cant reproduce your problem. In my wiki, the 3 cases render exactly the same, with numbering correctly inserted. --[DF|DirkFrederickx]
+
+----
+
+Hi there,
+
+How can I specify that a column is only 200px or 20% (as an example) wide?  Or even set the table width to be something fixed?  My problem is that a cell that contains a string that is long, it stretches the column clear across the page.
+
+Thoughts?
+
+Matt 
+;:Currently, the plugin has no support for Column styles. The only way to do this is to add a style to each of the cells in that particular column. --[DF|DirkFrederickx] For example:
+{{{
+  | a |(width:200px;) b
+  | C |(width:200px;) D
+
+}}}
+
+Thanks for this plugin. it works fine when I created table from the wiki editor. But my use case is that I will generate the wiki text from the shell script as page.txt. I copy this file in to wiki data dir, while trying to access from wiki, it fails to display with following exception in the wiki log
+{{{
+ Plugin failed while executing:
+java.lang.StringIndexOutOfBoundsException: String index out of range: -1
+        at java.lang.AbstractStringBuilder.substring(AbstractStringBuilder.java:886)
+        at java.lang.StringBuffer.substring(StringBuffer.java:417)
+        at brushed.jspwiki.tableplugin.Table$TableCell.registerEnd(Table.java:500)
+        at brushed.jspwiki.tableplugin.Table.processTable(Table.java:220)
+        at brushed.jspwiki.tableplugin.Table.execute(Table.java:94)
+        at com.ecyrd.jspwiki.plugin.PluginManager.execute(PluginManager.java:380)
+        at com.ecyrd.jspwiki.parser.PluginContent.getText(PluginContent.java:88)
+        at org.jdom.output.XMLOutputter.printTextRange(XMLOutputter.java:1054)
+        at org.jdom.output.XMLOutputter.printContentRange(XMLOutputter.java:989)
+        at org.jdom.output.XMLOutputter.outputElementContent(XMLOutputter.java:445)
+        at com.ecyrd.jspwiki.render.XHTMLRenderer.getString(XHTMLRenderer.java:61)
+        at com.ecyrd.jspwiki.render.RenderingManager.getHTML(RenderingManager.java:254)
+        at com.ecyrd.jspwiki.render.RenderingManager.getHTML(RenderingManager.java:295)
+        at com.ecyrd.jspwiki.WikiEngine.textToHTML(WikiEngine.java:1373)
+        at com.ecyrd.jspwiki.WikiEngine.getHTML(WikiEngine.java:1319)
+        at com.ecyrd.jspwiki.tags.InsertPageTag.doWikiStartTag(InsertPageTag.java:117)
+        at com.ecyrd.jspwiki.tags.WikiTagBase.doStartTag(WikiTagBase.java:85)
+        at org.apache.jsp.templates.sunweb.PageContent_jsp._jspx_meth_wiki_InsertPage_0(
+PageContent_jsp.java:1080)
+        at org.apache.jsp.templates.sunweb.PageContent_jsp._jspService(PageContent_jsp.j
+ava:255)
+}}}
+I am using 2.4.87, if I edit this page in the wiki and save it, then it works fine
+any idea, what is missing?
+TIA
+
+;:An approach that works for me (although a little more complicated) is to have your script use the web interface. Instead of pushing the file to the data repository, attach it to a page in the wiki and then use te InsertAttachment plugin in your target page. I use the Ruby Mechanize library to automate the iteration with the wiki. -- NascifAbousalhNeto, 2-Feb-2007
+
+----
+!Problems with Link References inside Table Plugin Tables
+Table Plugin with JSPWiki 2.2.33 
+
+I started using the Table Plugin and noticed that links to wiki inside these tables pages do not know their referring pages (ie referenced by became nobody).  Having a look at the source, it looks like a weakness in the plugin framework in that plugins are asked to generate HTML and can't provide other info (such as link references).  Am I missing something?
+
+I did find a workaround which required changes to the plugin Table.java:
+{{{
+         m_result.append( m_engine.textToHTML( m_context, 
+                                               aBody.substring( cell.start, 
+                                                                cell.end ) ) );
+}}}
+becomes
+{{{
+         m_result.append( m_engine.textToHTML( m_context, 
+                                               aBody.substring( cell.start, 
+                                                                cell.end ),
+                                               (StringTransmutator)m_context.getVariable("translator.localLinkHook"),
+                                               (StringTransmutator)m_context.getVariable("translator.localLinkHook")));
+}}}
+
+and to WikiEngine.java (3 lines added):
+
+{{{
+  private String textToHTML( WikiContext context, 
+                               String pagedata, 
+                               StringTransmutator localLinkHook,
+                               StringTransmutator extLinkHook,
+                               StringTransmutator attLinkHook,
+                               boolean            parseAccessRules ) 
+  {
+        context.setVariable("translator.localLinkHook", localLinkHook);
+        context.setVariable("translator.extLinkHook", extLinkHook);
+        context.setVariable("translator.attLinkHook", attLinkHook);
+        ...
+}}}
+- Paulj 14/Sept/2007
+;: The jspwiki plugin framework has currently no api to declare internal plugin text as ordinary parse-able wiki markup. So this shortcoming applies to all jspwiki plugins. Plse log your suggestion as improvement request on jspwiki bugzilla, cause IMHO this is really a useful feature. --[DF|DirkFrederickx]
+
+----
+
+I'm having issues with the Table plugin on JSPWiki version 2.6.3.  I made sure my plugin.searchPath looks like:
+jspwiki.plugin.searchPath = brushed.jspwiki.tableplugin within the jspwiki.properties file.  It's unable to find the plugin when referenced.  What could be the issue?  Am I missing something?
+
+-Rick Mattier [2008-07-09]
+;: Make sure you have no hidden blanks on that line. --[DF|DirkFrederickx]
+
+----
+
+I'm having the same issues described for the 2.6.3 version in the JSPWiki v2.6.4... and as I can see in this wiki (which is JSPWiki v2.8.0-beta-7) it doesn't work either (as you can see in the ''Examples tab'') :(
+
+-Raúl Herranz (25 - sept - 2008)
+%%quote
+It is normal that this plugin doesn't work on jspwiki.org cause it is not part of the standard jspwiki installation. Please check out whether the plugin is properly installed: copy the jar into the /lib directory, adjust the  plugin-path in the properties file. --[DF|DirkFrederickx], 28 Sep 08
+/%
+
+
+----
+
+The attachment Table.jar doesn't contain any class files.
+--
+Carl Hagenmaier
+
+--AnonymousCoward, 02-Oct-2008 22:33
+
+----
+
+I dropped the latest Table.java into my JSPWiki 2.6.4 installation and had some issues with CSS formatting in tables.  After digging through the source I tracked down the culprit.
+
+It looks like the {{registerStart()}} method sets {{cssBracket}} equal to 1 when the opening brace is detected.  It does this by checking the NEXT character in the buffer.  When the next character is processed (which is the opening brace for the css markup), {{cssBracket}} is then incremented again to a value of 2.  Because of this, the rest of the markup for that table row is considered css markup and is simply displayed on the screen.  If you remove/comment the line (listed below), the css markup works as expected and the table is rendered properly.
+
+{{{
+  if (aCursor + 1 < sb.length())
+  {
+    char c = sb.charAt(aCursor + 1);
+
+    if (c == '<') {
+      colspan = true;
+      aCursor++;
+    }
+    else if (c == '^') {
+      rowspan = true;
+      aCursor++;
+    }
+    else if (c == '(') {
+      cssStyle = true;
+      cssBracket = 1;          // this statement needs to be removed
+      aCursor++;
+    }
+  }
+}}}
+
+-- [Joseph Hobbs|jhobbs] November 4th, 2008
+
+;:The cssBracket variable counts the number of open (brackets) to find the end of the css definition. So putting it at 1 in this part of the code is ok. At least, this is working properly at my installation. Could you please share the markup which is given you an error.  --[DF|DirkFrederickx]
+
+In this case, I pulled the markup directly off the examples tab of this Wiki page.  Example 1 is the first place I noticed the issue.  After tossing in some debug statements I came across the scenario.  This is what I see
+
+*The plugin detects a pipe and fires registerStart.
+*Register start checks current position + 1 and detects open parenthesis and sets cssBracket to 1
+*when next character is processed, it's the opening parenthesis registerStart just looked at, but fires handleCss anyways.
+*handleCss increments cssBracket by 1, setting it to 2.
+*eventually the closing parenthesis is detected, but the sum of decrements gets cssBracket down to 1 only.  Therefore the rest of the content is identified as css and not table markup.
+
+I do see where the code increments aCursor.  If this increment would apply to the original position variable (i) then the code would work fine because the parenthesis would not be processed causing the increment.  But since it's being passed by value, the increment doesn't change the original integer.  It looks like the new integer is being returned to the calling method as well, but it's not being assigned to i.  Maybe this was the original intention?
+
+Not sure if the J2EE container has any influence here...  I'm running in WebSphere Application Server 6.1.0.15 at the moment.
+
+-- [Joseph Hobbs|jhobbs] 11/5/2008
+
+;:Can you please test with v8 of the TablePlugin.jar. I noticed that the latest version of this plugin has been changed; the original version seems not to have this bug. --[DF|DirkFrederickx]
+
+I took a look at v8 of Table.java and it looks like it's setting the counter {{i}} to the returned cursor value, which would avoid the issue of processing the open parenthesis twice.  You can see this on lines 141, 234, and 245 of the source.  With v9 of Table.java, it looks like the {{i =}} have been removed (lines 218 and 250).  Due to this, the master counter {{i}} doesn't know it has been incremented.
+
+-- [Joseph Hobbs|jhobbs] 11/6/2008
+
+I reviewed the differences between Dirk's v8 and John's v9 in more detail. It looks like v9 was completely refactored (code style and all) which makes it extremely difficult to determine exactly what funtional changes were made. When modifying someone elses code, please practice a little code etiquette. Don't refactor someones code because it doesn't match your style. Work within the confines of their style and make only necessary changes. If code does need to be refactored, don't add functionality at the same time!
+
+v9 has also introduced at least one bug regarding css handling where the updated counter isn't being assigned back to {{i}}. I don't think v9 is ready for prime-time yet. I recommend v9 be removed from the site and revert back to v8 as the latest. The posted Table.java plugin should be a proven copy that has been fully tested.
+
+With that said, I think the functional changes in v9 are valuable and should be revisited in a more controlled edit.
+
+-- [Joseph Hobbs|jhobbs] 11/6/2008 
+
+I've found the problem with %~%table-filter combined with TablePlugin. May be the problem is in %~%table-filter style, I'm not sure. Please, look to the sample below:
+{{{
+%%table-filter
+[{Table
+
+||A     ||B    ||C 
+|group1 |name1 |v1
+|^      |name2 |v2
+|group2 |name3 |v3
+}]
+}}}
+If you look to the result you will see that filter for the first column contains values ''group1'', ''group2'', and ''name2'' which is not correct. So merged cells seems to be incorrectly interpreted by %~%table-filter.
+
+-- Matvey Kazakov, 2009-02-20
+
+;: This is correct. The table-filter assumes all rows of the table have the same number of cells. --[DF|DirkFrederickx]
+
+Anyone know which JSPWIKI versions work with latest version of TablePlugin (v0.3)?
+
+-- Bruce Rosenquist, 2009-06-24
+;:The plugin is compatible with v2.4.xx, v2.6.xx and v2.8.xx.  --[DF|DirkFrederickx]
+
+%%
+%%
+
+
+----
+Original Page: [http://www.jspwiki.org/wiki/TablePlugin] , version: 115
+

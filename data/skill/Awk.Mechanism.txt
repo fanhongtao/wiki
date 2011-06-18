@@ -1,0 +1,77 @@
+[{TableOfContents }]
+
+!!!AWK运行机制
+
+!!AWK机制介绍
+一个AWK程序由一个或多个 pattern、action 语句组成，action 写在大括号里面。不同的 pattern、action 语句之间使用换行或分号来分隔。这样，AWK程序大致就形如：
+{{{
+pattern   { action }
+pattern   { action }
+......
+user-function
+}}}
+
+可以这样理解，pattern 是条件，action是动作。对待处理文件中的每一条记录，AWK会依次判断是否满足各个 pattern，如果满足，则执行对应的 action。一个 pattern、action 处理完后，会接着处理下一个 pattern、action ，直到将 AWK 程序中所有的 pattern、action 对处理完为止，这样才算对一条记录处理完毕。
+
+pattern 或 action 可以被省略，但不能同时被省略:
+* 如果 pattern 被省略，则对于输入文件的每一条记录，action都会被执行。
+* 如果 action （包括大括号）被省略，则系统缺省会输出满足 pattern 的行。相当于action 是 { print $0 }
+
+在action中，可以出现 if 、for 这样的分支、循环语句，所以，AWK具有一定的编程能力。
+
+AWK会根据所指定的记录分隔符（RS），将待处理文件分隔成多个记录（record，通常一个记录就对应于文件中的一行）。再根据指定的字段分隔符（FS，缺省时是space，包括空格和tab），将每一行分隔成多个字段（field）。在AWK中，使用 $1、$2 ……、$n 来访问各个字段，而 $0 则表示整个记录。假设待处理文件内容为：
+{{{
+This is a dog.
+That is an apple.
+}}}
+如果使用缺省的RS和FS（分别是换行符和space），则AWK会先读取一行，“This is a dog.”，然后将其分成四个字段“this”、“is”、“a”和“dog.”。
+
+AWK在将一条记录分隔成多个字段后，才会依照 pattern 在awk文件中出现的顺序依次匹配各个 pattern。在一个patten匹配成功后，就会执行相应的action。可以参考下面的“完整的AWK流程”一节。
+
+user-function是用户自定义的函数，可以放在AWK中的任意位置，我的建议是放在文件尾，这样比较好查看：打开一个AWK文件，首先看到的是业务的逻辑；看到最后，才需要涉及到相应的功能函数。
+
+!!完整的AWK流程
+可以使用下面的伪码来表示完整的AWK处理流程：
+%%prettify 
+{{{
+for (i = 0; i <启动参数中 -v Assignment 数目; i++)
+{
+    执行第 i 个 -v Assignment，为相应的变量赋值
+}
+
+for (i = 0; i < BEGIN模式的数目; i++)
+{
+    处理第i个BEGIN模式对应的操作
+}
+
+for (i = 0; i < 启动参数中 File 及 Assignment 参数的总个数; i++)
+{
+    if (第 i 个参数是 Assignment)
+    {
+        执行对应的Assignment，为相应的变量赋值
+        continue;
+    }
+
+    打开第i个参数对应的待处理文件
+    while ( not 文件结束)
+    {
+        根据RS，从待处理文件中读取一条记录
+        根据FS，将读取的记录分隔成不同的字段
+        for (j = 0; j < pattern的数目; j++)
+        {
+            if (第j个pattern匹配成功) //如果没有指定pattern,则总是匹配成功
+            {
+                执行对应的action     //如果没有指定action,缺省为 print $0
+            }
+        }  // 所有pattern匹配结束
+    }  // 一个文件处理结束
+}  // 所有文件都处理结束
+
+for (i = 0; i < END模式的数目; i++)
+{
+    处理第i个END模式对应的操作
+}
+}}}
+/%
+
+从上面的流程中可以看出，在AWK中，有三种不同优先级别的模式，按照优先级从高到低，依次是：BEGIN模式、普通模式（除了BEGIN和END之外的其它模式）、END模式。同一优先级的多个模式，AWK是执照在AWK文件中出现的先后顺序执行的。不同优先级的模式可以在AWK文件中按照任意顺序放置。

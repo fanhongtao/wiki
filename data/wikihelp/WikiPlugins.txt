@@ -1,0 +1,53 @@
+Since v1.6.3 you can now define your own plugins.  These are just
+simply Java classes that implement the
+''com.ecyrd.jspwiki.plugin.WikiPlugin'' interface and can be found from
+somewhere in your class path.  The plugins work so that when you write
+a special code on the Wiki page, the plugins are invoked and their
+output is inserted into the page, verbatim.
+
+The form is:
+
+  [[{INSERT <plugin class> WHERE <param1=value1>,<param2=value2>,...}]
+
+You can also use a shortcut: instead of using {{[[{INSERT com.ecyrd.jspwiki.plugin.RecentChangesPlugin}} you can also use {{[[{INSERT RecentChangesPlugin}]}}.  This works only with the plugins that come with JSPWiki, though.
+
+In addition, you can now (since 1.9.30) omit even the "INSERT", so the shortest possible version for plugins becomes:
+
+[[{CurrentTimePlugin}]
+
+If a parameter contains spaces, you can use single quotes (') around the parameter.  Like this:
+
+In the examples on the plugin documentation pages these forms are used interchangeably.
+
+[[{INSERT CurrentTimePlugin format='dd MM yyyy'}]
+
+!!JSPWiki Core Plugins
+
+JSPWiki ships out-of-the-box with a variety of plugins, some of these implement significant functionality of the wiki.\\
+These JSPWiki Core Plugins are available in all out-of-the-box installations. 
+
+The following is a list of the core plugins:
+* [Abstract Referral Plugin] 
+* [Counter] - Insert a simple counter on a page.
+* [Current Time Plugin] - Show the current time.
+* [Groups Plugin] 
+* [If Plugin]
+* [Image] - Have deep control over how an image is placed on the page.
+* [Index Plugin] - Index of all pages.
+* [Insert Page] - Inserts a portion of another page.
+* [List Locks Plugin] - Lists page locks.
+* [Page View Plugin]
+* [Recent Changes Plugin] - Displays the recent changes.
+* [Referred Pages Plugin] - Lists pages that are referred to by this page. (outgoing links)
+* [Referring Pages Plugin] - Lists pages that refer to this page. (incoming links)
+* [Search Plugin]
+* [Sessions Plugin]
+* [Table Of Contents] - Generates a table of contents
+* [Undefined Pages Plugin] - Lists pages that are missing.
+* [Unused Pages Plugin] - Lists pages that have been orphaned.
+* [Vote Plugin]
+* [Weblog Archive Plugin] - Displays a list to older weblog entries.
+* [Weblog Entry Plugin] - Makes a "new entry" link.
+* [Weblog Plugin] - Builds a weblog. 
+* [Wiki Forms Plugin]
+----

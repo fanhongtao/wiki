@@ -1,0 +1,9 @@
+!!!Vim相关网站
+
+%%sortable
+|| 网站地址 || 说明
+| [http://www.vim.org/] | Vim官方网站
+| [http://hotoo.github.com/vimwiki/Vim.html] | 闲耘的个人网站
+| [http://easwy.com/blog/] | 易水博客
+| [http://www.vimer.cn/] | Vimer的程序世界。个人网站。介绍一些Vim的使用技巧，也。
+/%

@@ -1,0 +1,11 @@
+JSP内置对象
+
+# [request对象|JSP.InternalObject.request]
+# [response对象|JSP.InternalObject.response]
+# [session对象|JSP.InternalObject.session]
+# [application对象|JSP.InternalObject.application]
+# [out对象|JSP.InternalObject.out]
+# [page对象|JSP.InternalObject.page]
+# [config对象|JSP.InternalObject.config]
+# [exception对象|JSP.InternalObject.exception]
+# [pageContext对象|JSP.InternalObject.pageContext]

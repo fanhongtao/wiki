@@ -1,0 +1,64 @@
+[{TableOfContents }]\\
+
+!!!H2实践
+!!启动H2数据库
+H2数据库有3种使用模式：内嵌模式、服务器模式 和 混合模式。考虑到在实际使用时，除了自己写的程序会连接到数据库之外，通常还会通过一个通用的数据库访问工具连接到数据库以便观察执行结果。所以我们选择以服务器模式启动数据库。
+
+H2安装包中没有提供以服务器模式启动数据库的脚本，需要自己写一个。
+启动脚本 start_h2.bat
+%%prettify 
+{{{
+@REM Using the fellowing command for help
+@REM java -cp h2*.jar org.h2.tools.Server -?
+@REM      -web  -webAllowOthers
+@REM      -tcpAllowOthers
+@REM      -ifExists
+@start java -cp h2-*.jar org.h2.tools.Server -tcp -baseDir "%USERPROFILE%\h2"
+@if errorlevel 1 pause
+}}}
+/%
+启动参数说明：
+%%sortable
+|| 参数  || 用途
+| -tcp  | 表示支持 TCP 模式进行访问，所有程序都可以通过TCP连接方式访问到数据库；
+| -tcpAllowOthers | 允许其它机器上的进程访问H2数据库。缺少情况下，只允许本机上的进程访问H2数据库。\\使用本参数会有安装隐患，通常不建议使用。
+| -baseDir | 是指定H2数据库的存放路径。这里指定的是“%USERPROFILE%\h2”。 缺省情况下，每个H2数据库都对应磁盘上的一个文件，将其统一存放比较好进行管理。
+| -ifExists | 只有数据库存在时才能建立连接。缺省情况下，如果指定的数据库不存在，会自动创建一个。\\如果设置了 *AllowOthers 参数，建议也将此参数打开，防止在系统中生成不必要的数据库。
+/%
+
+
+与之配套的停止脚本 stop_h2.bat
+%%prettify 
+{{{
+@REM Using the fellowing command for help
+@REM java -cp h2*.jar org.h2.tools.Server -?
+@REM      -web  -webAllowOthers
+@REM      -tcpAllowOthers
+@REM      -ifExists
+@start java -cp h2-*.jar org.h2.tools.Server -tcpShutdown "tcp://localhost"
+@if errorlevel 1 pause
+}}}
+/%
+
+!! 连接数据库
+通过在 JDBC URL 指定不同的格式，可以连接不同模式的H2数据库，具体描述请参见[Database URL Overview|http://www.h2database.com/html/features.html#database_url]
+
+示例代码：
+%%prettify 
+{{{
+import java.sql.*;
+public class Test {
+    public static void main(String[] a)
+            throws Exception {
+        Class.forName("org.h2.Driver");
+        Connection conn = DriverManager.
+            getConnection("jdbc:h2:tcp://localhost/dharma", "sa", "");
+        // add application code here
+        conn.close();
+    }
+}
+}}}
+/%
+上面的例子，通过TCP方式连接到本机上的一个名为 dharma 的数据库。
+
+

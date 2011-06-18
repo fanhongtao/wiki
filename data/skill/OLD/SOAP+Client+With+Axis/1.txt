@@ -1,0 +1,43 @@
+[{TableOfContents }] \\\
+
+!!!开发前的准备
+||事项||操作
+|修改PATH| 将 %AXIS2_HOME%\bin 目录加入用户的可执行文件搜索路径 PATH 
+
+!!!开发Client的基本流程
+开发流程：
+# 在Eclise中创建Java工程，将%AXIS2_HOME%\lib目录下的所有jar加入Build Path中
+# 由WSDL文件生成客户端接口代码，如： WSDL2Java.bat -uri EchoService.wsdl
+# 将生成的src目录和build.xml加入工程
+# 自己编写调用客户端接口的代码，实现一个调用操作，本例中的EchoClient.java
+
+示例代码
+%%prettify 
+{{{
+// 生成Stub对象
+EchoServiceStub stub = new EchoServiceStub("http://localhost:18080/axis2/services/EchoService");
+
+// 设置为重用Client
+Options options = stub._getServiceClient().getOptions();
+options.setProperty(HTTPConstants.REUSE_HTTP_CLIENT, "true");
+
+// 创建连接管理器
+MultiThreadedHttpConnectionManager conmgr = new MultiThreadedHttpConnectionManager();
+
+// 设置每个主机的最大并行连接数
+conmgr.getParams().setDefaultMaxConnectionsPerHost(10);
+
+// 创建HttpClient的实例
+HttpClient httpClient = new HttpClient(conmgr);
+ConfigurationContext configurationContext =
+    stub._getServiceClient().getServiceContext().getConfigurationContext();
+configurationContext.setProperty(HTTPConstants.CACHED_HTTP_CLIENT, httpClient);
+
+// 调用EchoService接口，并对返回值进行处理
+EchoServiceStub.EchoStringInput req = new EchoServiceStub.EchoStringInput();
+req.setEchoInput("Message ");
+EchoServiceStub.EchoStringResponse rsp = stub.echoOperation(req);
+System.out.println(rsp.getEchoResponse());
+}}}
+/%
+

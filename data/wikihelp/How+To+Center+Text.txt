@@ -1,0 +1,33 @@
+This
+
+{{{
+%%(text-align:center)
+!This text is centered.
+%%
+}}}
+
+produces this
+
+%%(text-align:center)
+!This text is centered.
+%%
+
+----
+
+You can center tables too:
+{{{
+%%center
+|This|is|my|table
+%%
+}}}
+
+produces this 
+
+%%center
+|This|is|my|table
+%%
+
+----
+
+Back to [Editing Pages], [JSPWiki Styles]
+

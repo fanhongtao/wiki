@@ -1,0 +1,17 @@
+!!split
+在使用String.split方法分隔字符串时，采用的是正则表达式。
+如：
+String data = "Australia, Fiji, New Zealand , Papua New Guinea";
+String[] countries = data.split("\\s*,\\s*");
+在分隔时，会自动删除逗号前后的空格。
+
+----
+
+如果用“.”或 “|” 作为字符串的分隔符，不能用String.split(".")这样的形式，必须使用两个"\"进行转义。如：
+{{{
+String.split("\\.");
+String.split("\\|");
+}}}
+
+----
+Back to [Java]

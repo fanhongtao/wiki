@@ -1,0 +1,113 @@
+[{TableOfContents }]\\
+
+!!样式的执行顺序
+样式可以在多种地方定义，如果定义的地方有冲突，则按照优先级从高到低的顺序为：
+# Inline styles （内联样式）
+# Embedded styles （嵌入样式） 
+# Linked styles （链接样式）
+# Imported styles （输入样式）
+# Default browser styles（缺省浏览器样式）
+
+!!内联方式
+举例
+%%prettify 
+{{{
+<html>
+    <body>
+        <h1 style="color: green; font-family: impact">Head Style</h1>
+        <p style="background: yellow; font-family: courier">Paragraph Style</p>
+    </body>
+</html>
+}}}
+/%
+显示的大致效果如下：
+%%(color: green; font-family: impact; font-size: 1.5em) 
+Head Style
+%%
+%%(background: yellow; font-family: courier)
+Paragraph Style
+%%
+
+!!嵌入方式
+举例
+%%prettify 
+{{{
+<html>
+    <head>
+        <style type="text/css">
+        <!--
+            h1 { color: green; font-family: impact }
+            p { background: yellow; font-family: courier }
+        -->
+        </style>
+    </head>
+    <body>
+        <h1>Head Style</h1>
+        <p>Paragraph Style</p>
+    </body>
+</html>
+}}}
+/%
+
+TYPE="text/css" 设定采用MIME类型，这样以来，不支持CSS的浏览器可以忽略样式表。\\
+有些老的浏览器在设定了TYPE="text/css" 属性时也不能忽略样式表继续执行下面的命令，而且还会显示样式表的代码。使用注释标签(<!-- 和 -->)则可以避免发生这种情况。\\
+
+!!链接方式
+举例
+%%prettify 
+{{{
+<html>
+    <head>
+        <link rel=stylesheet href="mystyles.css" type="text/css">
+    </head>
+    <body>
+        <h1>Head Style</h1>
+        <p>Paragraph Style</p>
+    </body>
+</html>
+}}}
+/%
+在HREF属性中可以选择使用绝对或相对URL。\\
+
+将CSS的内容单独形成一个文本文件，起名mystyles.css 。文件内容如下： 
+{{{
+h1 { color: green; font-family: impact }
+p { background: yellow; font-family: courier } 
+}}}
+
+%%information
+从易于维护的角度，建议在开发中采用链接方式，将CSS定义成单独的文件。
+%%
+
+!!输入外部样式表
+
+输入外部样式表的方法同链接的方法类似。不同之处在于链接法不能同其它方法结合使用，但输入法则可以。例： 
+%%prettify 
+{{{
+<html>
+    <head>
+        <style type="text/css">
+        <!--
+            @import url(mystyles.css);
+            h1 { color: orange; font-family: impact }
+        -->
+        </style>
+    </head>
+    <body>
+        <h1>Head Style</h1>
+        <p>Paragraph Style</p>
+    </body>
+</html>
+}}}
+/%
+
+在本例中，浏览器首先输入 mystyles.css 的规则 ( @import 必须打头), 然后加入内嵌的规则从而为这个网页产生规则集合。\\
+请注意，对于h1在外部样式表文件和内嵌的样式表中都设定了规则。在两者冲突的情况下，以内嵌样式为准。所以文字显示效果如下： 
+%%(color: orange; font-family: impact; font-size: 1.5em)
+Stylesheets: The Tool of the Web Design Gods
+%%
+
+%%warning
+在写代码时，建议将 @import 写在内嵌样式之前。\\
+如果将上面的例子中，内嵌的 h1 定义放在 @import 之前，则在 Firefox3.5 中不能显示出mystyles.css中定义的 p 的的样式。
+%%

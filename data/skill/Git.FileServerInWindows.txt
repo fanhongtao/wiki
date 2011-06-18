@@ -1,0 +1,15 @@
+!!!Windows下搭建基于文件协议的Git服务器
+
+假设已经有一个名为 project 的Git目录，只需要通过下面两行命令可以在Windows共享服务器上快速搭建起一个Git Server：
+{{{
+git clone --bare project project.git
+xcopy /e project.git \\sharedir\project.git
+}}}
+第一个命令是将本地的Git仓库转换成用于服务器上的仓库。\\
+第二个命令则是将转换后得到的目录拷贝到服务器上。当然也可以不使用xcopy而是通过资源管理器来进行拷贝。
+
+然后就可以使用如下命令从服务器上获取最新的代码了：
+{{{
+git clone //sharedir/project.git
+}}}
+

@@ -1,0 +1,10 @@
+!!!How To Link To External Files
+
+
+{{{
+[External Readme File|file:///c:\files\readme.html]
+}}}
+
+Note that Firefox, by default, will disable file:// URLs on pages from a network (http:, https: or ftp:) source, for security reasons. To modify this setting, type "about:config" in the address bar of Firefox. This gives you access to the config. Alter the security.checkloaduri value to false.
+
+

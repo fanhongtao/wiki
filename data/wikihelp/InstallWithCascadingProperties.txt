@@ -1,0 +1,56 @@
+当在一个Tomcat中配置多个JSP Wiki实例时，会发现很多配置项都是共用的。如：Wiki的IP地址、保存Wiki的Home目录等。为了减少维护的工作量，从JSP Wiki 2.5.21 版本开始，就提供了一种叫做“cascading properties”的配置方式。下面就如何使用 cascading properties 方式进行配置进行说明：
+
+!!准备工作
+1、从 JSPWiki.war 中折出缺省的配置文件 jspwiki.properties
+{{{
+unzip -j JSPWiki.war WEB-INF/jspwiki.properties -d .
+}}}
+
+2、将 jspwiki.properties 移到 wiki/cfg 目录下，改名为 template.properties
+{{{
+mv WEB-INF/jspwiki.properties ${HOME}/wiki/cfg/template.properties
+}}}
+
+3、在template.properties定义常见的变量及其它值，如增加以下内容
+%%prettify 
+{{{
+var.wikiurl = http://10.168.67.113:18080
+var.wikipath = /home2/fht/wiki
+}}}
+/%
+同时，将原有的配置项的值，使用定义的变量进行替换。附件提供了一个修改后的template.properties例子。
+
+
+!!安装一个Wiki实例
+假设要安装一个 WikiHelp 的实例。\\
+
+1、在 ${TOMCAT_HOME}/conf/Catalina/localhost/wiki.wikihelp.xml 内容为
+%%prettify 
+{{{
+<?xml version="1.0" encoding="UTF-8"?>
+<Context docBase="/home2/fht/wiki/app/JSPWiki.war" reloadable="true">
+    <Parameter name="jspwiki.propertyfile"
+        value="/home2/fht/wiki/cfg/wiki.wikihelp.properties"
+        override="false"/>
+    <Parameter name="jspwiki.propertyfile.cascade.1"
+        value="/home2/fht/wiki/cfg/template.properties"
+        override="false"/>
+</Context>
+}}}
+/%
+
+2、在 wiki/cfg 目录下生成一个实例的配置文件 wiki.wikihelp.properties
+{{{
+var.appname = WikiHelp
+var.wikiname = wikihelp
+}}}
+
+3、将附件的 template.tar.gz 在 wiki/data 目录下解压，然后解压后得到的 template 目录改名为 wikihelp 目录。
+{{{
+cd ${HOME}/wiki/data
+gunzip -cf template.tar.gz | tar -xvf -
+mv template wikihelp
+}}}
+\\
+
+参考文档：[InstallingJSPWikiStepByStep|http://doc.jspwiki.org/2.4/wiki/InstallingJSPWikiStepByStep]

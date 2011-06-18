@@ -1,0 +1,290 @@
+[原文|http://doc.jspwiki.org/2.4/wiki/InstallingJSPWikiStepByStep]
+
+附录在下面是为了方便不能访问外网的同学。
+----
+
+
+[{TableOfContents}]
+\\ 
+%%information
+Just a minor word of warning - if you're just looking for your first JSPWiki installation, it's probably better to use the simple installation instructions from the README file.  The following instructions assume some basic understanding of J2EE applications and their installation.
+%%
+
+!!! Single or Multiple Wiki Step by Step Installation Tutorial
+
+This is a step-by-step tutorial intended to help people like me, which is not familiar with Tomcat and JSPWiki, who wants to configure a __multiple Wiki__ server in an organized way that makes installation, maintenance and upgrades easier. Note that this tutorial also works if you want to install a __single Wiki__. Following it will let you prepared if you need to create more Wikis. I will put the configuration files outside Tomcat's folders when possible. The reason is when we need to upgrade, it will be very easy.
+
+!! Requirements
+
+Let's suppose we want to create 3 Wikis.
+
+* Wiki1, stored in {{/wikis/wiki1}}
+* Wiki2, stored in {{/wikis/wiki2}}
+* Wiki3, stored in {{/wikis/wiki3}}
+
+Each Wiki will have it's own property file.
+
+* Wiki1 - {{/etc/wikis/wiki1.properties}}
+* Wiki2 - {{/etc/wikis/wiki2.properties}}
+* Wiki3 - {{/etc/wikis/wiki3.properties}}
+
+And each Wiki will have it's own group and user database files.
+
+* Wiki1 - {{/etc/wikis/groupdatabase-wiki1.xml}}, {{/etc/wikis/userdatabase-wiki1.xml}}
+* Wiki2 - {{/etc/wikis/groupdatabase-wiki2.xml}}, {{/etc/wikis/userdatabase-wiki2.xml}}
+* Wiki3 - {{/etc/wikis/groupdatabase-wiki3.xml}}, {{/etc/wikis/userdatabase-wiki3.xml}}
+
+!! Downloading and unpacking JSPWiki
+
+First, let's download JSPWiki and unzip it in a temporary folder. I'm using the latest stable build (2.4.53). Note that after unziping the main file, i will enter {{JSPWiki}} folder. All next steps will assume we are inside this folder.
+
+{{{
+cd /tmp
+wget http://www.ecyrd.com/~jalkanen/JSPWiki/2.4.53/JSPWiki-2.4.53-bin.zip
+unzip JSPWiki-2.4.53-bin.zip
+cd JSPWiki
+ls -lh
+}}}
+
+If we look into JSPWiki folder, we will see a file called {{JSPWiki.war}}. Technically, a WAR file is a ZIP file. Inside this file is the JSPWiki application itself. I will use this file as the single base file for all Wikis on this server. So, the first thing we need to do is to copy this file to some final place. I chose the folder {{/wikis}}, but you can put it anywhere, EXCEPT in the {{webapps}} folder of your Tomcat home ({{/usr/local/apache-tomcat-5.5.17/webapps}} in my case).
+
+{{{
+mkdir /wikis
+cp JSPWiki.war /wikis
+}}}
+
+Now, we need to create and edit the properties file for each Wiki. These properties files will tell where the Wiki content will be stored, where the temporary files will be created and much more. Inside {{JSPWiki.war}} there is a default properties file, so i will use it. I will extract it from {{JSPWiki.war}} file and make one copy for each Wiki.
+
+{{{
+mkdir /etc/wikis
+unzip -j JSPWiki.war WEB-INF/jspwiki.properties -d .
+cp jspwiki.properties /etc/wikis/wiki1.properties
+cp jspwiki.properties /etc/wikis/wiki2.properties
+cp jspwiki.properties /etc/wikis/wiki3.properties
+}}}
+
+I will also extract the default user and group database files and copy them to each Wiki.
+
+{{{
+unzip -j JSPWiki.war WEB-INF/groupdatabase.xml -d .
+unzip -j JSPWiki.war WEB-INF/userdatabase.xml -d .
+cp groupdatabase.xml /etc/wikis/groupdatabase-wiki1.xml
+cp userdatabase.xml /etc/wikis/userdatabase-wiki1.xml
+cp groupdatabase.xml /etc/wikis/groupdatabase-wiki2.xml
+cp userdatabase.xml /etc/wikis/userdatabase-wiki2.xml
+cp groupdatabase.xml /etc/wikis/groupdatabase-wiki3.xml
+cp userdatabase.xml /etc/wikis/userdatabase-wiki3.xml
+}}}
+
+Now, we need to edit the properties files to set the configuration for each Wiki. I will not show the entire property file, but just the most important properties that need to be changed. Inside {{jspwiki.properties}} file there are comments of what each property does. Read them carefully, specially the properties below.
+
+* File {{/etc/wikis/wiki1.properties}}
+
+{{{
+jspwiki.applicationName = Wiki1
+jspwiki.baseURL=http://yourhost/wiki1/
+jspwiki.fileSystemProvider.pageDir = /wikis/wiki1/
+jspwiki.workDir = /tmp/wiki1/
+jspwiki.basicAttachmentProvider.storageDir = /wikis/wiki1/
+jspwiki.xmlGroupDatabaseFile = /etc/wikis/groupdatabase-wiki1.xml
+jspwiki.xmlUserDatabaseFile = /etc/wikis/userdatabase-wiki1.xml
+log4j.appender.FileLog.File = /tmp/wiki1/jspwiki.log
+}}}
+
+* File {{/etc/wikis/wiki2.properties}}
+
+{{{
+jspwiki.applicationName = Wiki2
+jspwiki.baseURL=http://yourhost/wiki2/
+jspwiki.fileSystemProvider.pageDir = /wikis/wiki2/
+jspwiki.workDir = /tmp/wiki2/
+jspwiki.basicAttachmentProvider.storageDir = /wikis/wiki2/
+jspwiki.xmlGroupDatabaseFile = /etc/wikis/groupdatabase-wiki2.xml
+jspwiki.xmlUserDatabaseFile = /etc/wikis/userdatabase-wiki2.xml
+log4j.appender.FileLog.File = /tmp/wiki2/jspwiki.log
+}}}
+
+* File {{/etc/wikis/wiki3.properties}}
+
+{{{
+jspwiki.applicationName = Wiki3
+jspwiki.baseURL=http://yourhost/wiki3/
+jspwiki.fileSystemProvider.pageDir = /wikis/wiki3/
+jspwiki.workDir = /tmp/wiki3/
+jspwiki.basicAttachmentProvider.storageDir = /wikis/wiki3/
+jspwiki.xmlGroupDatabaseFile = /etc/wikis/groupdatabase-wiki3.xml
+jspwiki.xmlUserDatabaseFile = /etc/wikis/userdatabase-wiki3.xml
+log4j.appender.FileLog.File = /tmp/wiki3/jspwiki.log
+}}}
+
+!! Deploying The JSPWiki Webapps to Tomcat
+
+The last step is to tell Tomcat that these Wikis exists, where are its base {{JSPWiki.war}} file and where are their properties files. I will create one configuration file for each Wiki.
+
+You can directly save these files in the directory {{<tomcat home>/conf/<engine>/<host>}}. In my server installation, this directory is {{/usr/local/apache-tomcat-5.5.17/conf/Catalina/localhost}}.
+
+* File {{/usr/local/apache-tomcat-5.5.17/conf/Catalina/localhost/wiki1.xml}}
+
+{{{
+<Context path="/wiki1" docBase="/wikis/JSPWiki.war" debug="0">
+  <Parameter name="jspwiki.propertyfile"
+    value="/etc/wikis/wiki1.properties"
+    override="false"/>
+</Context>
+}}}
+
+* File {{/usr/local/apache-tomcat-5.5.17/conf/Catalina/localhost/wiki2.xml}}
+
+{{{
+<Context path="/wiki2" docBase="/wikis/JSPWiki.war" debug="0">
+  <Parameter name="jspwiki.propertyfile"
+    value="/etc/wikis/wiki2.properties"
+    override="false"/>
+</Context>
+}}}
+
+* File {{/usr/local/apache-tomcat-5.5.17/conf/Catalina/localhost/wiki3.xml}}
+
+{{{
+<Context path="/wiki3" docBase="/wikis/JSPWiki.war" debug="0">
+  <Parameter name="jspwiki.propertyfile"
+    value="/etc/wikis/wiki3.properties"
+    override="false"/>
+</Context>
+}}}
+
+Alternatively, you can leave these files outside of the Tomcat installation and use Tomcat Manager application to deploy the XML deployment files from some location on the application server.  You will need to specify the ''XML Configuration file URL:'' using the file scheme URL, eg: {{file:/etc/wikis/wiki1.xml.  You also need to specify the ''Context Path (optional):   '', even though it is noted as optional and already specified in the XML file itself...
+
+At this point, the main configuration is done and the Wikis are supposed to work when you restart Tomcat, but i will show some optional steps that should be done to make life easier.
+
+!! Installing the Core Pages
+
+JSPWiki Team created some usefull pages called "core pages" to be used in a new Wiki. These default pages will help you in administrative tasks, will provide an index to your Wiki and much more... We need to extract these pages inside the content folder of each Wiki.
+
+{{{
+unzip JSPWiki-corepages.zip -d /wikis/wiki1
+unzip JSPWiki-corepages.zip -d /wikis/wiki2
+unzip JSPWiki-corepages.zip -d /wikis/wiki3
+}}}
+
+Now, if everything is ok, we need just to restart Tomcat and start to play with our Wikis:
+
+{{{
+/usr/local/apache-tomcat-5.5.17/bin/shutdown.sh
+/usr/local/apache-tomcat-5.5.17/bin/startup.sh
+}}}
+
+Open a browser and, supposing the IP of your server is 192.168.0.1, type:
+
+* http://192.168.0.1:8080/wiki1
+* http://192.168.0.1:8080/wiki2
+* http://192.168.0.1:8080/wiki3
+
+!! Creating the Group and User Admin
+
+The first task we should do is to create an user called {{Admin}} and a group with the same name. Click on "Log in", and then at "Join Wiki<n> Wiki". Create the {{Admin}} user. After that you will be logged as {{Admin}}. Now click on "Create group" and create the {{Admin}} group. Don't forget to add the {{Admin}} user as a member of this group. Make this step for each Wiki (or make it for the first Wiki and copy the group and user database files to the others).
+
+!! Configuring the main policy file
+
+A __very important task__ is to show Tomcat where the file {{jspwiki.policy}} lives. The reason is Tomcat reads JUST ONE {{jspwiki.policy}} file, no matter how many Wikis you have. So, if we don't do this in a multi-wiki environment, Tomcat will choose one random {{jspwiki.policy}} file inside one of the Wikis, making it very hard for us to change the policy, as we will need to guess which one to change or change them all. I will extract the needed files and copy them to {{/etc/wikis}}. I will also tell Tomcat how to find them, setting {{CATALINA_OPTS}} environment variable. In my Fedora server, i will put this export command in the file {{/etc/profile}}, this way it will be loaded at boot time. Check how to do that in your Linux distribution.
+
+{{{
+unzip -j JSPWiki.war WEB-INF/jspwiki.jaas
+unzip -j JSPWiki.war WEB-INF/jspwiki.jks
+unzip -j JSPWiki.war WEB-INF/jspwiki.policy
+cp jspwiki.jaas /etc/wikis
+cp jspwiki.jks /etc/wikis
+cp jspwiki.policy /etc/wikis
+export CATALINA_OPTS="-Djava.security.policy=/etc/wikis/jspwiki.policy"
+}}}
+
+* File {{/etc/profile}}
+
+{{{
+... previous stuff ...
+
+export CATALINA_OPTS="-Djava.security.policy=/etc/wikis/jspwiki.policy"
+}}}
+
+As we are working with multiple Wikis, there is at least a small but important change we need to do in {{jspwiki.policy}}. In the last 8 lines, you will see a permission granted 2 times to "JSPWiki" ({{permission com.ecyrd.jspwiki.auth.permissions.AllPermission "JSPWiki"}}). "JSPWiki" is the name of the Wiki where the role {{Admin}} and the user {{Admin}} will have all permissions. To make this grant work for our Wikis, replace "JSPWiki" with "*". So, the last 8 lines will be like this:
+
+{{{
+grant signedBy "jspwiki",
+  principal com.ecyrd.jspwiki.auth.GroupPrincipal "Admin" {
+    permission com.ecyrd.jspwiki.auth.permissions.AllPermission "*";
+};
+grant signedBy "jspwiki",
+  principal com.ecyrd.jspwiki.auth.authorize.Role "Admin" {
+    permission com.ecyrd.jspwiki.auth.permissions.AllPermission "*";
+};
+}}}
+
+!! Upgrading to a new JSPWiki version
+
+Just download and unzip the new JSPWiki version in a temporary folder, copy the new {{JSPWiki.war}} file to {{/wikis/JSPWiki.war}}, stop Tomcat, delete the temporary folders and start it again. You will have all your Wikis upgraded!
+
+!! Deleting the temporary folders
+
+While installing JSPWiki for the first times, i had some problems related to Tomcat cached files. It seems it stores some files in the cache that can make you nuts if you are not used to it. So i created a procedure to clear everything that could be cached when i needed to test some different configuration or reinstall JSPWiki. I hope that with this tutorial you just have to install JSPWiki one time, but there is the procedure if you need. (__Watch out if have other applications other than JSPWiki running under Tomcat. Maybe you can break them__).
+
+{{{
+# Stop Tomcat
+/usr/local/apache-tomcat-5.5.17/bin/shutdown.sh
+# Delete the "work" folder
+rm /usr/local/apache-tomcat-5.5.17/work -rf
+# Delete the content of the "temp" folder
+rm /usr/local/apache-tomcat-5.5.17/temp/* -rf
+# Delete the temporary Wiki folders 
+rm /tmp/wiki1 -rf
+rm /tmp/wiki2 -rf
+rm /tmp/wiki3 -rf
+# Delete the Wiki folders inside Tomcat's webapps folder (they will be recreated automatically)
+rm /usr/local/apache-tomcat-5.5.17/webapps/wiki1 -rf
+rm /usr/local/apache-tomcat-5.5.17/webapps/wiki2 -rf
+rm /usr/local/apache-tomcat-5.5.17/webapps/wiki3 -rf
+# Start Tomcat
+/usr/local/apache-tomcat-5.5.17/bin/startup.sh
+}}}
+
+
+----
+!! Using cascading- and variable-properties for reducing administration
+__Problem:__\\
+if you want to change a jspwiki.properties-value (e.g allowHTML) you have to change the value in every jspwiki.properties file (wiki1.properties, wiki2.properties, ...).\\
+
+
+
+
+
+
+
+
+
+
+
+\\
+__Solution: cascading-properties__\\
+* you have one complete master jspwiki.properties file with all keys/values (wiki1.properties)
+* the other property-file includes only the differential keys (jspwiki.applicationName=wiki2, jspwiki.fileSystemProvider.pageDir = /wikis/wiki2/, ...)
+* change /usr/local/apache-tomcat-5.5.17/conf/Catalina/localhost/wiki2.xml
+{{{ 
+<Context path="/wiki2" docBase="/wikis/JSPWiki.war" debug="0">
+  <Parameter name="jspwiki.propertyfile.cascade.1" 
+             value="/etc/wikis/wiki2.properties" />
+
+</Context>
+}}}
+* Now the master jspwiki.properties file is in the war-file. If you want more master.properties use another context-parameter (increment the cascade number).
+\\
+\\
+__Problem:__\\
+if you want to move your full wiki-installation to a different folder, you have to update a lot of hardcoded folderpaths in your jspwiki.properties (e.g. /wikis/wiki2/, /wikis/wiki2/attachments/, /wikis/wiki3/, /wikis/wiki3/attachments/, ...)\\
+\\
+__Solution: jspwiki.properties variables__
+* declare a variable (e.g. basedir) in your jspwiki.properties and use this variable instead of the hardcoded basepath
+{{{
+var.basedir = /wikies
+...
+jspwiki.fileSystemProvider.pageDir = $basedir/wiki1/
+jspwiki.basicAttachmentProvider.storageDir = $basedir/wiki1/attachments
+}}}

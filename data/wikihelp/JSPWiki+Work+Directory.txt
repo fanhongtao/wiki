@@ -1,0 +1,13 @@
+JSPWiki places all sorts of files in its work directory.
+
+* {{refmgr.ser}} - this is a cache file for ReferenceManager.
+* {{attach-tmp}} - this is where all uploaded files are stored while they are being uploaded
+* {{lucene}} - Lucene puts its caches there
+* {{refmgr-attr}} - This is where page attributes are stored temporarily.
+
+It is not a good idea to mess with these files, but if you are seeing anything strange, you can always try and delete all these files (then restart JSPWiki) to see if it helps.
+
+----
+
+[StubArticle]
+

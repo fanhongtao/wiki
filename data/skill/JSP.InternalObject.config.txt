@@ -1,0 +1,16 @@
+!!!config对象
+
+config 对象实现于javax.servlet.ServletConfig 接口，该实例代表该JSP 的配置信息。
+
+事实上，JSP 页面通常无须配置，也就不存在配置信息。因此，该对象更多地在Servlet 中有效。
+
+它共有下列四种方法：
+
+|| 方法 || 描述
+| String getInitParameter(name) | 获取参数的值？
+| Enumeration getInitParameterNames( ) | 获取参数列表
+| ServletContext getServletContext( ) | 获取Servlet的Context
+| Sring getServletName( ) | 获取Servlet的名字
+
+----
+Back to [JSP.InternalObject]

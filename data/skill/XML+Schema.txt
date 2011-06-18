@@ -1,0 +1,133 @@
+[{TableOfContents }] \\\
+
+!!!Schema简介
+Schema是DTD的替代物，用于对XML文件的格式进行描述。\\
+Schema自身也是一个XML文件，为了和其所描述的XML文件进行区分，通常使用 .xsd 作为文件后缀。一个Schema文件通常使用如下格式：
+%%prettify 
+{{{
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <!-- 自己的定义 -->
+</xsd:schema>
+}}}
+/%
+
+!!!Schema类型定义
+
+在Schema中的：
+* 简单类型（simple types）不能有子元素和属性；
+* 复杂类型（complex types）可以有子元素和属性。
+
+!!简单类型
+通过 xsd:simpleType 定义简单类型，通过 restriction 指定类型的基本取值，如：
+%%prettify 
+{{{
+<xsd:simpleType>
+    <xsd:restriction base="xsd:positiveInteger">
+        <xsd:maxExclusive value="100"/>
+    </xsd:restriction>
+</xsd:simpleType>
+}}}
+/%
+
+另外，还可以通过正则表达式来限制新类型的取值范围，如：
+%%prettify 
+{{{
+<xsd:simpleType name="SKU">
+  <xsd:restriction base="xsd:string">
+    <xsd:pattern value="\d{3}-[A-Z]{2}"/>
+  </xsd:restriction>
+</xsd:simpleType>
+}}}
+/%
+
+还可以定义枚举类型，如：
+%%prettify 
+{{{
+<xsd:simpleType name="USState">
+  <xsd:restriction base="xsd:string">
+    <xsd:enumeration value="AK"/>
+    <xsd:enumeration value="AL"/>
+    <xsd:enumeration value="AR"/>
+    <!-- and so on ... -->
+  </xsd:restriction>
+</xsd:simpleType>
+}}}
+/%
+
+
+!!复杂类型
+通过 xsd:complexType 定义复杂类型，在定义复杂类型时，使用 xsd:element 定义该类型下的子元素，使用 xsd:attribute 定义元素的属性，如
+%%prettify 
+{{{
+<xsd:complexType name="USAddress" >
+    <xsd:sequence>
+        <xsd:element name="name"   type="xsd:string"/>
+        <xsd:element name="street" type="xsd:string"/>
+        <xsd:element name="city"   type="xsd:string"/>
+        <xsd:element name="state"  type="xsd:string"/>
+        <xsd:element name="zip"    type="xsd:decimal"/>
+    </xsd:sequence>
+    <xsd:attribute name="country" type="xsd:NMTOKEN" fixed="US"/>
+</xsd:complexType>
+}}}
+/%
+上面的例子定义了一个“USAddress”类型，如果XML文件中某个元素是这种类型，则该元素必须有五个子元素（分别是：name、street、city、state 和 zip）和一个属性（属性名为 country）。“USAddress”类型的元素必须按照定义的顺序提供这五个元素，而属性country则是可选的，但如果有属性country，其值必须为“US”。
+
+注意：因为属性不可能有子元素，所以所有的属性都只能是被定义为简单类型。
+
+
+!!!Schema元素定义
+!!定义元素
+通过 xsd:element 定义元素，如：
+%%prettify 
+{{{
+<xsd:element name="comment" type="xsd:string"/>
+<xsd:element name="shipTo" type="USAddress"/>
+}}}
+/%
+在定义元素时，需要指定元素的类型，不管是简单类型还是复杂类型，都使用 type 进行指定。
+
+有时候，也可以通过引用的方式定义一个新的元素，如：
+%%prettify 
+{{{
+<xsd:element ref="comment" minOccurs="0"/>
+}}}
+/%
+引用了一个之前已经定义好的 comment 元素。通常，ref 必须引用一个全局的元素，即：定义在 schema 下，而不是某个复杂类型下的元素。
+
+!!定义出现次数
+!元素的出现次数
+在定义元素时，可以通过 minOccurs、maxOccurs 来指定元素出现的次数。\\
+如：minOccurs="0" 表示元素可以省略（不出现），maxOccurs 取值为正整数或“unbounded”（表示不限制出现次数）。\\
+minOccurs 和 maxOccurs的缺省取值都为1，如果没有指定 minOccurs 和 maxOccurs，则表示该元素能且只能出现一次。\\
+
+!属性的出现次数
+和元素不同，属性最多只能出现一次，所以属性采用了另外一种方式来指定其是否出现：通过 use 来指定属性的次数。use的取值为：required（表示必须出现）、optional（表示可选）或 prohibited（）。如：
+%%prettify 
+{{{
+<xsd:attribute name="partNum" type="SKU" use="required"/>
+}}}
+/%
+
+“元素”和“属性”都可以通过default来指定缺省值，但两者有细微的区分。\\
+“属性”只有use的取值为“optional”时，才能设置default。对于有default的属性，如果在XML文件中不出现，则取值为default指定的值，如果出现，则使用XML文件中的值。\\
+对于有default的“元素”，如果在XML文件中出现，但没有指定值，则最终取值为default指定的值，如果在XML文件中出现并且有值，则使用XML文件中的值，如果不在XML文件中出现，__则该元素没有值__。\\
+\\
+“元素”和“属性”都可以通过fix来设置为固定的值。注意，fix和default是互斥的。\\
+
+|__Elements__ \\(minOccurs, maxOccurs) \\fixed, default | __Attributes __\\use, fixed,\\ default | Notes
+|(1, 1) -, - | required, -, - | element/attribute must appear once, it may have any value
+|(1, 1) 37, - | required, 37, - | element/attribute must appear once, its value must be 37
+|(2, unbounded) 37, - | n/a | element must appear twice or more, its value must be 37; in general, minOccurs and maxOccurs values may be positive integers, and maxOccurs value may also be "unbounded"
+|(0, 1) -, - | optional, -, - | element/attribute may appear once, it may have any value
+|(0, 1) 37, -| n/a | element may appear once, if it does not appear it is not provided; if it does appear and it is empty, its value is 37; if it does appear and it is not empty, its value must be 37
+|n/a | optional, 37, - | attribute may appear once, if it does appear its value must be 37, if it does not appear its value is 37
+|(0, 1) -, 37 | n/a | element may appear once; if it does not appear it is not provided; if it does appear and it is empty, its value is 37; otherwise its value is that given
+|n/a | optional, -, 37 | attribute may appear once; if it does not appear its value is 37, otherwise its value is that given
+|(0, 2) -, 37 | n/a | element may appear once, twice, or not at all; if the element does not appear it is not provided; if it does appear and it is empty, its value is 37; otherwise its value is that given; in general, minOccurs and maxOccurs values may be positive integers, and maxOccurs value may also be "unbounded"
+|(0, 0) -, - | prohibited, -, - | element/attribute must not appear
+
+Note that neither minOccurs, maxOccurs, nor use may appear in the declarations of global elements and attributes. 
+
+

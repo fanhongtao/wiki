@@ -1,0 +1,20 @@
+!! Description
+
+__Wiki Permission__ is a permitted action on a particular wiki:
+
+*login
+*createGroups
+*createPages
+*editPreferences
+*editProfile
+
+!! Implied Permissions
+
+Certain permissions imply others:
+
+* The "createGroups" WikiPermission implies "createPages"
+
+----
+
+For details go to [Wiki.Admin.Security]
+

@@ -1,0 +1,36 @@
+[{TableOfContents }]\\
+
+!!!taglist
+vim + ctags + taglist 组合可以作为Source Insight等代码查看/编写工具的替代品。
+
+!!安装及使用ctags
+# 从 [http://ctags.sourceforge.net/] 下载最新的 ctags 版本 5.8。
+# 将 ctags 加入 PATH，以便后期可以直接使用，同时这也是 taglist 插件所需要的
+# 在所要查看代码所在目录或其父目录执行如下命令 __ ctags -R * __ 生成 tags 文件，其中，-R参数表示包括子目录
+
+!!安装taglist插件
+# 从 VIM 网站上下载[taglist|http://www.vim.org/scripts/script.php?script_id=273]
+# 安装完成后，在 vimrc 文件中增加以下定义
+{{{
+let Tlist_Show_One_File = 1            "不同时显示多个文件的tag，只显示当前文件的
+let Tlist_Exit_OnlyWindow = 1          "如果taglist窗口是最后一个窗口，则退出vim
+let Tlist_Use_Right_Window = 1         "在右侧窗口中显示taglist窗口 
+" 使用F9打开或关闭taglist窗口
+map <silent> <F9> :TlistToggle<cr>
+}}}
+
+!!查看代码
+* 进入vim
+* 执行“:set tags”命令指定所要使用的tags文件，如
+{{{
+:set tags=d:\temp\ctag\tags
+}}}
+表示使用d:\temp\ctag目录下名为tags文件。
+
+常用命令
+|| 命令 || 功能
+| :tag main     | 打开tag值为 main 的文件
+| :ts[[elect][[!] [[ident] | 查询并显示匹配ident字符串的tag文件
+| :[[count]tn[[ext][[!] | 跳转到后count个匹配tag的文件, count缺省为1
+| :[[count]tp[[revious][[!] | 跳转到前count个匹配tag的文件, count缺省为1
+

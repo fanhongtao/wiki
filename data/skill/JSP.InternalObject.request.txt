@@ -1,0 +1,53 @@
+!!!request对象
+
+该对象封装了用户提交的信息，通过调用该对象相应的方法可以获取封装的信息，即使用该对象可以获取用户提交信息。
+
+request 对象包含所有请求的信息，如：请求的来源、标头、cookies和请求相关的参数值等等。
+
+request 对象实现javax.servlet.http.HttpServletRequest接口的，所提供的方法可以将它分为四大类：
+
+!!1.储存和取得属性方法
+
+|| 方法 || 描述
+| void setAttribute(String name, Object value) | 设定name属性的值为value
+| Enumeration getAttributeNames() | 取得所有属性名称
+| Object getAttribute(String name) | 取得name 属性的值
+| void removeAttribute(String name) | 移除name 属性的值
+
+!!2.取得请求参数的方法
+
+|| 方法 || 描述
+| String getParameter(String name) | 取得name 的参数值
+| Enumeration getParameterNames( ) | 取得所有的参数名称
+| String[] getParameterValues(String name) | 取得所有name 的参数值
+| Map getParameterMap( ) | 取得一个请求参数的Map
+
+!!3.能够取得请求HTTP 报头的方法
+
+|| 方法 || 描述
+| String getHeader(String name) | 取得name 的报头
+| Enumeration getHeaderNames() | 取得所有的标头名称
+| Enumeration getHeaders(String name) | 取得所有name 的报头
+| int getIntHeader(String name) | 取得整数类型name 的报头
+| long getDateHeader(String name) | 取得日期类型name 的报头
+| Cookie [] getCookies( ) | 取得与请求有关的cookies
+
+!!4.其他的方法
+
+|| 方法 || 描述
+| String getContextPath( ) | 取得Context 路径(即站点名称)
+| String getMethod( ) | 取得HTTP 的方法(GET、POST)
+| String getProtocol( ) | 取得使用的协议 HTTP/1.1、HTTP/1.0 )
+| String getQueryString( ) | 取得请求的参数字符串，不过，HTTP的方法必须为GET
+| String getRequestedSessionId( ) | 取得用户端的Session ID
+| String getRequestURI( ) | 取得请求的URL，但是不包括请求的参数字符串
+| StringBuffer getRequestURL( ) | 取得请求的URL，但是不包括请求的参数字符串
+| String getRemoteAddr( ) | 取得用户的IP 地址
+| String getRemoteHost( ) | 取得用户的主机名称
+| int getRemotePort( ) | 取得用户的主机端口
+| String getRemoteUser( ) | 取得用户的名称
+| void getCharacterEncoding( ) | 获取编码格式
+| void setCharacterEncoding(String encoding) | 设定编码格式，用来解决窗体传递中文的问题
+
+----
+Back to [JSP.InternalObject]

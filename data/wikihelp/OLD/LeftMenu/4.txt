@@ -1,0 +1,9 @@
+JSP Wiki
+* [安装|Install]
+* [权限|Permissions]
+* [插件|Plugins]
+
+Wiki
+* [About Wiki]
+
+* [最近修改|Recent Changes]

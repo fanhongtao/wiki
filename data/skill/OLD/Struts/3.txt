@@ -1,0 +1,9 @@
+Struts是[Apache软件基金会（ASF）|http://apache.org/]赞助的一个开源项目，通过采用Java Servlet／JSP技术，实现了基于Java EE Web应用的Model-View-Controller〔MVC〕设计模式的应用框架〔Web Framework〕。
+
+----
+Struts 相关的文档
+* [转换Struts自带的文档|Struts.Doc.Convert]
+* [配置Struts|Struts.Configure]
+* [Struts标签|Struts.Tags]
+
+

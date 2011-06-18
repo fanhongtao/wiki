@@ -1,0 +1,26 @@
+Wiki pages are edited using a special markup, called [WikiMarkup].  The following pages cover the basics.
+
+* [TextFormattingRules] lists all the different markup
+* [JSPWiki Styles]
+* [FAQFormatting]
+__
+HOW TO__:
+
+* [How To Indent Text]
+* [How To Create Lists]
+* [How To Create Tables]
+* [How To Create Comment Boxes]
+* [How To Color Text]
+* [How To Center Text]
+* [How To Align Text In Table Cells]
+* [How To Use Text Styles]
+* [How To Use Variables]
+* [How To Show Date And Time]
+* [How To Create Collapsable Lists]
+* [How To Create Collapsable Boxes]
+* [How To Create Sortable Tables]
+* [How To Create Tabbed Sections]
+* [How To Create Graph Bars]
+* [How To Create Zebra Tables]
+* [How To Link To External Files]
+

@@ -1,0 +1,62 @@
+Applying style sheet classes on WikiPages
+
+
+A CSS style can be defined in a style sheet (probably ''.../templates/default/jspwiki.css'', unless you have defined your own template in ''jspwiki.properties''). JSPWiki comes with some [pre-defined styles|JSPWikiStyles].
+
+To apply a CSS style use this notation:
+
+|| Wiki notation || Effect
+|{{{
+%%stylename
+...
+%%
+}}}|{{{start styled section using class stylename
+content: normal WikiNotation to be styled
+close styled section
+}}}
+
+
+
+!Applying in-line CSS styles
+
+The notation for in-line CSS drops the ''stylename'' parameter, replacing it with style definitions surrounded by parantheses:
+
+|| Wiki notation || Effect
+|{{{
+This is normal text.
+%%(color:red)This text is red.%%
+This is normal text again.
+}}}|This is normal text.\\%%(color:red)This text is red.%% \\This is normal text again.
+
+
+
+!Examples
+[HowToColorText] [HowToCenterText]
+
+----
+!Caveats
+
+%%( background-color: #c0c0ff; border: 1px dotted black; padding: 1em; )
+Inline CSS definitions are supported on wikipages starting with JSPWiki version 2.1.38. For block usage a div tag is rendered, for inline usage a span tag.
+%%
+
+
+%%prettify
+{{{
+/** A JavaScript function */
+function test() {
+  var a = "abc";
+}
+}}}/%
+
+It is not possible to assign CSS code to a variable and have the CSS be rendered where it is inserted.  For example, the following will not work:
+
+{{{
+[{SET red='%%(color:red)RED%%'}]
+[{$red}]
+}}}
+
+And to prove it:
+
+[{SET red='%%(color:red)RED%%'}]
+[{$red}]

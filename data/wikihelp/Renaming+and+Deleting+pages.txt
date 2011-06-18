@@ -1,0 +1,23 @@
+!Renaming pages
+
+To rename a page, click on the "Page Info" -link of that page.  If you have sufficient access rights, you will see a box with a title "Rename page", and the name of the page.  Type in a new name, and click on "Rename".  This will change the page name.
+
+If you check the "Update referrers" -box, then JSPWiki will change the text of all of the pages which contain a link to the page you are about to rename, so all the links will still be correct.
+
+However, note that "Update referrers" will cause a large number of updates in the [recent changes] list, so be careful when you use it!
+
+!Deleting pages and attachments
+
+To delete a page, click on the "Page Info" -link of that page.  Similarly to the Rename functionality, you will see a button which says "Delete this page", if you have sufficient access rights.  Clicking it will remove the page.
+
+To delete an attachment click on the picture of the paperclip; that will take you to the attachment info page, then click on "Delete attachment".
+
+%%warning
+Deleting a page is not recoverable without any administrative help - and even that relies of backups being run! Do not delete a page lightly!
+%%
+
+%%information
+A good idea is to give delete rights to an admin only.  This is the default security policy setting in v2.4; see [Wiki.Admin.Security#SecurityPolicies].  Users can then tag pages for deletion by tagging the page with the text {{{[DELETEME]}}}.  The admin can then go to the page [DELETEME], and look at the list of pages which refer to it, and go it through periodically.
+%%
+
+

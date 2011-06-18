@@ -1,0 +1,6 @@
+Please tag a page with the tag {{{[RefactorMe]}}}, if the page seems to be a bit too much of a mess, and might require some editing.
+
+The following pages are asking for refactoring:
+
+[{ReferringPagesPlugin exclude='DocMain'}]
+

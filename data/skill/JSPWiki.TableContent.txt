@@ -1,0 +1,151 @@
+!!!编写Table形式的内容
+[{TableOfContents }] \\
+
+!!普通表格
+JSPWiki中，使用||表示表头，|表示表格单元。
+
+如代码
+{{{
+|| Name || Age
+| Jack | 15
+| Tom | 16
+| Rose | 17
+}}}
+对应表格为
+|| Name || Age
+| Jack | 15
+| Tom | 16
+| Rose | 17
+
+其中，“||”或“|”与内容之间的空格是为了查看源代码时好看而增加的。
+
+!!表格中使用自增的序号
+可以使用JSPWiki提供的[Counter|JSPWiki:Counter] 来实现计数。如：
+{{{
+|| Serial || Name || Age
+| [{Counter}] | Jack | 15
+| [{Counter}] | Tom | 16
+| [{Counter}] | Rose | 17
+}}}
+对应的表格为：
+|| Serial || Name || Age
+| [{Counter}] | Jack | 15
+| [{Counter}] | Tom | 16
+| [{Counter}] | Rose | 17
+
+!!支持排序
+通过 %~%sortable  ...  /~% 来实现为表格增加排序功能，如：
+{{{
+%%sortable
+|| Name || Age
+| Jack | 15
+| Tom | 16
+| Rose | 17
+/%
+}}}
+将得到以下表格：
+%%sortable
+|| Name || Age
+| Jack | 15
+| Tom | 16
+| Rose | 17
+/%
+
+||支持下拉选择
+通过 %~%table-filter  ...  /~% 来实现为表格增加排序功能，如：
+{{{
+%%table-filter
+|| Name || Age
+| Jack | 15
+| Tom | 16
+| Rose | 17
+| Alice | 17
+/%
+}}}
+将得到以下表格：
+%%table-filter
+|| Name || Age
+| Jack | 15
+| Tom | 16
+| Rose | 17
+| Alice | 17
+/%
+
+!!实现表格隔行变色
+通过 %~%zebra-table  ...  /~% 来实现为表格增加排序功能，如：
+{{{
+%%zebra-table
+|| Name || Age
+| Jack | 15
+| Tom | 16
+| Rose | 17
+| Alice | 17
+/%
+}}}
+将得到以下表格：
+%%zebra-table
+|| Name || Age
+| Jack | 15
+| Tom | 16
+| Rose | 17
+| Alice | 17
+/%
+
+%~%sortable 、%%table-filter 和 %~%zebra-table 可以联合起来使用，如：
+{{{
+%%sortable
+%%table-filter
+%%zebra-ffe0e0-ffff80
+|| Name || Age
+| Jack | 15
+| Tom | 16
+| Rose | 17
+| Alice | 17
+/%
+/%
+/%
+}}} 
+
+得到以下的表格：
+%%sortable
+%%table-filter
+%%zebra-ffe0e0-ffff80
+|| Name || Age
+| Jack | 15
+| Tom | 16
+| Rose | 17
+| Alice | 17
+/%
+/%
+/%
+
+!!使用 Table 插件
+除了上面介绍JSPWiki自带的表格功能之外，还可以使用 [Table插件|JSPWiki:TablePlugin]
+
+Table插件支持使用 “#” 实现序号（类似于 Counter ），还可以实现单元格合并的效果。我认为这也是需要Table插件的最主要的原因。如：
+{{{
+[{Table
+
+|Nr |A |< |C |<
+|#  |a |b |c | d
+|#  |^ |b |^ | d
+}]
+}}}
+将得到以下表格：
+[{Table
+
+|Nr |A |< |C |<
+|#  |a |b |c | d
+|#  |^ |b |^ | d
+}]
+
+%%warning
+在Table插件生成的表格中，引用其它页面的链接不会被JSPWiki识别为Reference。 \\
+即：在被引用页面的“Referenced by”中，不会有Table插件的页面。
+/%
+
+!! 总结
+
+* 如果不需要使用单元格合并的功能，就使用JSPWiki自带的表格功能。
+* 如果表格字段中需要引用其它页面，并且希望该引用被JSPWiki正确识别为Reference，就使用JSPWiki自带的表格功能。
+* 如果需要使用单元格合并的功能，就使用Table插件。

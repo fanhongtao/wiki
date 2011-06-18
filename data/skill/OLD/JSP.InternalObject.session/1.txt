@@ -1,0 +1,27 @@
+!!!session对象
+
+session对象表示目前个别用户的会话(session)状况。
+
+session对象实现javax.servlet.http.HttpSession接口，HttpSession接口所提供的方法
+
+!!1.储存和取得属性方法
+
+|| 方法 || 描述
+| Enumeration getAttributeNames() | 取得所有属性名称
+| Object getAttribute(String name) | 取得name 属性的值
+| void removeAttribute(String name) | 移除name 属性的值
+| void setAttribute(String name, Object value) | 设定name属性的值为value
+
+!!2.其它方法
+
+|| 方法 || 描述
+| long getCreationTime() | 取得session产生的时间，单位是毫秒
+| String getId() | 取得session 的ID
+| long getLastAccessedTime() | 取得用户最后通过这个session送出请求的时间
+| long getMaxInactiveInterval() | 取得最大session不活动的时间，若超过这时间，session 将会失效
+| void invalidate() | 取消session对象，并将对象存放的内容完全抛弃
+| boolean isNew() | 判断session是否为"新"的
+| void setMaxInactiveInterval(int interval) | 设定最大session不活动的时间，若超过这时间，session 将会失效
+
+----
+Back to [JSP.InternalObject]

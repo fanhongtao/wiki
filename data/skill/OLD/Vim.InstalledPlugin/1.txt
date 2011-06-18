@@ -1,0 +1,11 @@
+%%sortable
+|| ID || Name || Score
+| 39 | [matchit|Vim.Plugin.matchit] | 4
+| 152 | [ShowMarks|Vim.Plugin.ShowMarks] | 4
+| 197 | [genutils|Vim.Plugin.genutils] | 3
+| 521 | [mru|Vim.Plugin.mru] | 4
+| 1706 | [MakrsBrowser|Vim.Plugin.MakrsBrowser] | 4
+| 1767 | [recent|Vim.Plugin.recent] | 5
+| 2332 | [pathogen|Vim.Plugin.pathogen] | 5 
+/%
+

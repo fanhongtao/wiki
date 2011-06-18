@@ -1,0 +1,94 @@
+!!!The Code2Html Plugin
+
+Original Page: [JSPWiki:Code2Html] , version: 50
+
+----
+
+This plugin using the jEdit(jedit.org)'s syntax engine to parse source code and rederered it to HTML output, it supports up to 130 different syntaxes as much as the jEdit supports. 
+
+
+!Install
+To install, simply unzip [CodePluginBin.zip|http://www.jspwiki.org/attach/Code2Html/CodePluginBin.zip] and [jeditsyntax.zip|http://www.jspwiki.org/attach/Code2Html/jeditsyntax.zip] to your JSPWiki web app install dir . This will create or overwrite the following files:
+
+| {{WEB-INF/lib/Code2Html.jar}} | Jar file with the plugin class, and a {{jspwiki_module.xml}} file
+| {{WEB-INF/lib/beansoft_lib.jar}} | Utility classes used by the plugin
+| {{WEB-INF/lib/jeditsyntax.jar}} | The JEdit library used to parse the code
+| {{WEB-INF/classes/code2html.properties}} | Property file for the plugin
+| {{WEB-INF/classes/modes/*}} | Directory containing the language files
+
+If you had a custom CSS file defined in {{jspwiki.properties}} with the {{codeplugin.cssPath}} parameter, then you will have to set the parameter {{cssPath}} in {{WEB-INF/classes/code2html.properties}}. The {{codeplugin.cssPath}} parameter in {{jspwiki.properties}} is no longer used.
+
+Since the Code2Html jar file contains a {{jspwiki_module.xml}} file, you no longer have to set the {{jspwiki.plugin.searchPath}} property in {{jspwiki.properties}}.
+
+If you are upgrading from an earlier version, you will have to manually delete the {{Code.class}} files from {{WEB-INF/classes}} and {{WEB-INF/classes/beansoft/jspwiki/plugins}}.
+
+!Usage:
+{{{
+[{Code lang='language name' src='attachment file src' version='attachment file version'
+file = 'file path of local file system(on the server)' encoding='UTF-8,etc' showsrc='true/false'
+<CR or LN, just a empty line here>
+--- The source code body here, might have multi lines. ---
+}]
+}}}
+Parameters:
+
+* __lang__(optional):language name, default value is java, remember don't use values that not exists in the language list:
+{{{
+java jsp actionscript ada95 antlr apacheconf apdl applescript asp aspect-j assembly-m68k assembly-macro32 
+assembly-r2000 assembly-parrot assembly-x86 awk b batch bbj bcel beanshell bibtex c chill cil cobol coldfusion
+c++ c# css cvs-commit d doxygen dsssl embperl erlang eiffel factor forth fortran foxpro freemarker gettext groovy
+haskell hex html i4gl icon idl inform inno-setup ini interlis io javascript jcl jhtml jmk latex lilypond lisp 
+literate-haskell lotos lua mail makefile maple ml modula3 moin mqsc netrexx nqc nsis2 objective-c objectrexx 
+occam omnimark pascal patch perl php pike pl-sql pl1 pop11 postscript powerdynamo povray prolog progress 
+properties psp ptl pvwave pyrex python rebol redcode relax-ng-compact renderman-rib rd rest rhtml rpm-spec 
+rtf ruby rview s+ s# sas scheme sgml shellscript shtml slate smalltalk sdl/pr smi-mib sqr squidconf 
+svn-commit swig tcl texinfo tex text tpl transact-sql twiki uscript vbscript velocity verilog vhdl xml xsl zpt
+}}}
+
+*__source code__ (optional), is putting in the body of that Tag(all JSPWiki Plugin supports a special parameter called '_body'), the first line must be an empty line.
+
+* __src__(optional):the attachment's src on the wiki, might with full path or not, eg: Code2Html/Code.java or Code.java
+
+* __version__(optional):only in case you use a src, then this will specify the attachment's version, default is latest, eg: 0,1
+
+* __file__(optional):file path on the local file system you want to read, eg: c:\\\\My.java or c:/My.java, by default this is not opened
+
+* __encoding__(optional):the content's encoding of attachment or local file, default to server file system's encoding
+
+* __showsrc__(optional):whether display the file/attachment's src to the output, default value is "true"
+
+We load the code content in following sequence:
+_body > src > file
+
+* __Security issue__:
+If you want let the plugin to read the local file system, please edit
+ code2html.properties and change following line:
+{{{
+allowReadLocalFile = false
+to
+allowReadLocalFile = true
+}}}
+
+Eg:
+{{{
+[{Code lang=javascript
+
+/** A JavaScript function */
+function test() {
+  var a = "abc";
+  alert(a);
+}
+}]
+}}}
+
+The result like this:
+
+[{Code lang=javascript
+
+/** A JavaScript function */
+function test() {
+  var a = "abc";
+  alert(a);
+}
+}]
+

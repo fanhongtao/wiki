@@ -1,0 +1,32 @@
+!!!切换Dynamic Web Project的名字
+
+在创建一个Dynamic Web Project后，有时候会希望更换其名字，如：
+* 创建一个工程作为 Template 工程，从而减少新工程的设置时间
+* 原工程名不合理，需要修改。
+
+普通的Java Project，只需要修改工程所在目录下的 .project 中的 name 元素的内容，如：
+%%prettify 
+{{{
+ <name>Demo</name>
+}}}
+/%
+
+而 Dynamic Web Project 除了需要修改 .project 之外，还需要修改 .settings/org.eclipse.wst.common.component 文件
+
+下面示例文件中三处出现“Demo”的地方，都需要进行修改。
+%%prettify 
+{{{
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="Demo">
+        <wb-resource deploy-path="/" source-path="/WebContent"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <property name="java-output-path" value="/Demo/build/classes"/>
+        <property name="context-root" value="Demo"/>
+    </wb-module>
+</project-modules>
+}}}
+/%
+
+在修改完成之后，在Eclipse中刷新工程即可。
+

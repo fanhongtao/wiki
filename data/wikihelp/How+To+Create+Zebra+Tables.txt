@@ -1,0 +1,70 @@
+!! Brushed Template Zebra Table
+
+This [JSPWiki Style] renders alternate row coloring for large tables. 
+You can do this by enclosing the table inside %~%zebra-table %~% tags. 
+
+! Usage 
+
+Put a %~%zebra-table around the table you would like to color. 
+You can now also specify the odd and/or even colors using 
+[html hex color|http://html-color-codes.com/] values or 
+[HTMLColorNames] like ''aqua, black, blue, fuchsia, gray, green, lime, maroon, 
+navy, olive, purple, red, silver, teal, white, yellow'' and ''transparent''. 
+
+{{{
+%%zebra-table ... %%
+%%zebra-<colorOdd> ... %%
+%%zebra-<colorOdd>-<colorEven> ... %%
+
+%%zebra-table 
+|| column-head1 || column-head2 
+| cell-data | cell data ##Test1 ##Test2
+| cell-data | cell data 
+| cell-data | cell data 
+%% 
+}}} 
+
+You can see the result here: 
+
+
+* normal table
+|| column-head1 || column-head2 
+| cell-data | cell data 
+| cell-data | cell data 
+| cell-data | cell data 
+
+
+* zebra table with odd rows styled according to jspwiki.css
+%%zebra-table 
+|| column-head1 || column-head2 
+| cell-data | cell data 
+| cell-data | cell data 
+| cell-data | cell data 
+| cell-data | cell data 
+| cell-data | cell data 
+%% 
+
+
+* zebra table with odd rows colored %%(background:#33ff99;) ''#33ff99'' %%.
+%%zebra-33ff99
+|| column-head1 || column-head2 
+| cell-data | cell data 
+| cell-data | cell data 
+| cell-data | cell data 
+| cell-data | cell data 
+| cell-data | cell data 
+%% 
+
+
+* zebra table with %%(background:#33ff99;) odd %% and %%(background:#99ff33;) even %% rows colored
+%%zebra-33ff99-99ff33
+|| column-head1 || column-head2 
+| cell-data | cell data 
+| cell-data | cell data 
+| cell-data | cell data 
+| cell-data | cell data 
+| cell-data | cell data 
+%% 
+
+
+

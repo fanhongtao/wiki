@@ -1,0 +1,77 @@
+[{TableOfContents }]\\
+
+!!!Struts标签
+The Struts 2 Tags can be divided into two types: __Generic Tags__ and __UI Tags__ .
+
+!!Generic Tags
+Generic tags are used for controlling the execution flow when the pages render.\\
+Generic tags are classified into Control Tags and Data Tags.
+%%tabbedSection 
+%%tab-ControlTags
+The Control Tags are used for flow control, such as if, else and iterate.
+* [if|Struts.Tags.if]
+* [elseif|Struts.Tags.elseif]
+* [else|Struts.Tags.else]
+* [append|Struts.Tags.append]
+* [generator|Struts.Tags.generator]
+* [iterator|Struts.Tags.iterator]
+* [merge|Struts.Tags.merge]
+* [sort|Struts.Tags.sort]
+* [subset|Struts.Tags.subset]
+/%
+%%tab-DataTags
+The Data Tags are used for data manipulation or creation, such as bean, push, and i18n.
+* [a|Struts.Tags.a]
+* [action|Struts.Tags.action]
+* [bean|Struts.Tags.bean]
+* [date|Struts.Tags.date]
+* [debug|Struts.Tags.debug]
+* [i18n|Struts.Tags.i18n]
+* [include|Struts.Tags.include]
+* [param|Struts.Tags.param]
+* [property|Struts.Tags.property]
+* [push|Struts.Tags.push]
+* [set|Struts.Tags.set]
+* [text|Struts.Tags.text]
+* [url|Struts.Tags.url]
+/%
+/%
+
+!!UI Tags
+UI Tags display data in rich and reusable HTML.\\
+UI Tags are of two types __Form Tags__ and __Non-Form Tags__ .
+
+%%tabbedSection 
+%%tab-FormTags
+Form Tags provide all form-related UI output, such as form, textfield, and select.
+* [checkbox|Struts.Tags.checkbox]
+* [checkboxlist|Struts.Tags.checkboxlist]
+* [combobox|Struts.Tags.combobox]
+* [doubleselect|Struts.Tags.doubleselect]
+* [head|Struts.Tags.head]
+* [file|Struts.Tags.file]
+* [form|Struts.Tags.form]
+* [hidden|Struts.Tags.hidden]
+* [label|Struts.Tags.label]
+* [optiontransferselect|Struts.Tags.optiontransferselect]
+* [optgroup|Struts.Tags.optgroup]
+* [password|Struts.Tags.password]
+* [radio|Struts.Tags.radio]
+* [reset|Struts.Tags.reset]
+* [select|Struts.Tags.select]
+* [submit|Struts.Tags.submit]
+* [textarea|Struts.Tags.textarea]
+* [textfield|Struts.Tags.textfield]
+* [token|Struts.Tags.token]
+* [updownselect|Struts.Tags.updownselect]
+/%
+%%tab-Non-FormTags
+Non-Form Tags provide all non-form-related UI output, such as a, div, and tabbedPanel. 
+* [actionerror|Struts.Tags.actionerror]
+* [actionmessage|Struts.Tags.actionmessage]
+* [component|Struts.Tags.component]
+* [div|Struts.Tags.div]
+* [fielderror|Struts.Tags.fielderror]
+/%
+/%
+

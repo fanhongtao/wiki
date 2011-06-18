@@ -1,0 +1,97 @@
+本页面介绍如何安装[JSPWiki|http://www.jspwiki.org/]
+[{TableOfContents }]
+!!!安装前的准备
+要安装JSPWiki，需要有：
+*Java 5 或 更高的版本
+*实现了Servlet 2.4 的Web Server，如：[Tomcat|http://tomcat.apache.org/] 5.5 或更高版本。
+*[下载|http://www.jspwiki.org/wiki/JSPWikiDownload]一个JSPWiki安装包。
+
+!!!单一Wiki实例
+如果只想在机器上安装一个Wiki的实例，那就比较简单了，下面以在Windows下安装JSPWiki 2.8.2为例进行说明。
+!!配置步骤
+#下载JSPWiki安装包：JSPWiki-2.8.2-bin.zip 。
+#将安装包在一个临时目录（D:\temp）解压，然后将解压后得到的 JSPWiki.war 放到${TOMCAT_HOME}\webapps目录。如果想在访问时使用 wiki（或其它名字）而不是JSPWiki，则将 JSPWiki.war 改名为 wiki.war。
+#启动Tomcat，然后通过 http://<myhost>/JSPWiki/Install.jsp 来访问安装页面（如果第二步将JSPWiki.war改名为了 wiki.war，则通过 http://<myhost>/wiki/Install.jsp 进行访问）。
+#回答安装页面上的几个问题。
+#记录下Admin的密码，然后重启Tomcat。
+#通过 http://<myhost>/JSPWiki （或第2步中改名后的路径）来访问Wiki的内容。
+
+!!安装页面的问题
+!基本信息
+[{Image src='InstallJSPWiki_Basic.gif' align='center'}]\\
+
+“应用程序名称”会显示在浏览器的标题上，如下图中的红色框中的“JSPWiki”：
+[{Image src='InstallJSPWiki_AppName.jpg' align='center'}]\\
+“基本URL”就是访问Wiki时所使用的URL地址，如：http://10.0.0.1/JSPWiki/ ，需要注意的事，URL地址不要使用 http://localhost 或 http://127.0.0.1 这样的本地IP，同时需要以"/"结尾，否则其它人访问时就会有问题。
+“页面存储”是存放Wiki页面及其附件的目录。为了方便后期维护，建议使用Web容器以外的目录，如：D:\Wiki\Data 。
+
+
+!高级设置
+[{Image src='InstallJSPWiki_Advance.gif' align='center'}]\\
+配置“日志文件”和“工作目录”，同样的，建议配置为Web容器以外的目录，如：\\
+将“日志文件”配置为 D:\Wiki\Tmp\jspwiki.log \\
+将“工作目录”配置为 D:\Wiki\Tmp
+
+!!!其它说明
+如果在使用Tomcat，需要修改 ${TOMCAT_HOME}\conf\server.xml 中的 Connector 元素，增加 URIEncoding="UTF-8"，以便可以正确解析WikiName中的汉字，修改后的Connector类似：
+%%prettify 
+{{{
+<Connector port="8080" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="8443" URIEncoding="UTF-8"/>
+}}}
+/%
+
+!!!多Wiki实例
+多Wiki实例是指在同一个Server上同时部署一个以上的Wiki实例。可以参考 [InstallingJSPWikiStepByStep]
+
+!!!UNIX环境下快速安装Wiki
+
+!!安装Tomcat
+1、将Tomcat安装包解压，然后修改Tomcat的 conf/server.xml 文件，将字符集指定为“UTF-8”（见上文）\\
+2、在${TOMCAT_HOME}/bin 目录下，创建一个 env.cshrc 文件，内容如下
+{{{
+setenv JAVA_HOME /opt/jdk1.6.0_13/bin
+setenv JRE_HOME /opt/jdk1.6.0_13/jre
+setenv PATH ${JAVA_HOME}:$PATH
+}}}
+其中，“/opt/jdk1.6.0_13”需要根据自己机器上Java的路径进行修改。\\
+
+* 当想启动Tomcat时，进入 ${TOMCAT_HOME}/bin，执行命令 source env.cshrc，然后再执行./startup.sh 。
+* 当想停止Tomcat时，进入 ${TOMCAT_HOME}/bin，执行命令 source env.cshrc，然后再执行./shutdown.sh 。
+
+!!安装JSPWiki实例
+JSPWiki提供了很多插件，而插件需要安装在 WEB-INF/lib 目录下。如果在一台机器上安装了多个Wiki实例，就需要手工拷贝多次，比较繁琐。所以希望通过快速部署，一次搞定。\\ 
+
+安装规划：下面以安装一个名为 Huawei 的wiki进行说明，该Wiki会涉及到以下文件/目录：
+|| 路径名/文件名 || 用途
+| ${TOMCAT_HOME}/conf/Catalina/localhost/wiki.huawei.xml | 工程文件\\为了与其它工程明显区分开，建议以 wiki.xxx.xml 的形式进行命名。
+| ${HOME}/app/app/JSPWiki.war | JSPWiki安装包，可被多个Wiki实例复用。\\需要与 wiki.huawei.xml 中配置的值对应
+| ${HOME}/app/cfg/wiki.huawei.properties | Huawei Wiki 的配置文件。\\需要与 wiki.huawei.xml 中配置的值对应
+| ${HOME}/app/data/huawei/ | Huawei Wiki 的内容保存目录。\\需要与 wiki.huawei.properties 中配置的值对应
+
+操作步骤：\\
+# 在Windows下，通过WinRar图形界面打开JSP的WAR文件，将需要安装的插件拖入 WEB-INF/lib
+# 在Unix用户的${HOME}目录下创建一个wiki目录，进入wiki目录，再创建 app、bak、cfg目录，并将附件 unix.tar.gz 在 wiki 目录下解压
+# 将修改后的 WAR 包放在 wiki/app 目录下
+# 在${TOMCAT_HOME}/conf/Catalina/localhost 目录下创建一个名为 wiki.huawei.xml 的XML文件，文件内容如下。
+# 在 wiki/cfg 目录下编辑对应的配置文件，上面举例的工程对应的配置文件是 wiki.huawei.properties 。一个简单的方法是执行 wiki/unix 目录下的 prop.sh 脚本生成该文件。
+# 将附件 template.tar.gz 解压到 wiki/data 目录下，然后将目录重命名为 huawei
+\\
+说明：前3步是安装第一个Wiki实例时才需要执行的，安装后继的Wiki实例时，只用从第4步开始执行。
+
+%%warning
+安装前需要先停止 Tomcat，等安装成功后，再重启Tomcat，否则可能会导致之前安装的Wiki被误删除！
+%%
+
+wiki.huawei.xml文件的内容
+{{{
+<?xml version="1.0" encoding="UTF-8"?>
+<Context docBase="/home2/fht/wiki/app/JSPWiki.war" reloadable="true">
+    <Parameter name="jspwiki.propertyfile"
+        value="/home2/fht/wiki/cfg/wiki.huawei.properties"
+        override="false"/>
+</Context>
+}}}
+其中，/home2/fht/需要替换成自己用户的${HOME}目录的绝对路径。\\
+

@@ -1,0 +1,16 @@
+!!!exception对象
+
+exception对象是 java.lang.Throwable 的实例，该实例代表其他页面中的异常和错误。
+
+只有当页面是错误处理页面，即编译指令page 的isErrorPage 属性为true 时，该对象才可以使用。
+
+exception提供的三个方法：
+
+　　getMessage( )
+
+　　getLocalizedMessage( )
+
+　　printStackTrace(new java.io.PrintWriter(out))
+　　
+----
+Back to [JSP.InternalObject]

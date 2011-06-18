@@ -1,0 +1,6 @@
+* [主页|Main]
+* [新闻|News]
+
+* [About Wiki]
+
+* [最近修改|Recent Changes]

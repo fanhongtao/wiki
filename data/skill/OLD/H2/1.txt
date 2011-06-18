@@ -1,0 +1,10 @@
+!!!H2
+
+H2是一款纯Java编写的轻量级的数据库。网址：[http://www.h2database.com]
+
+H2数据库采用了商业好友的License，可以“免费”在商业程序中使用。
+
+----
+H2 相关的文档
+* [H2实践|H2.Practice]
+

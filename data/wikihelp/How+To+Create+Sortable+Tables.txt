@@ -1,0 +1,36 @@
+!! Sortable wiki tables
+
+This [JSPWiki Style] allows you to make tables sortable by enclosing them inside a %~%sortable block.\\
+Just click the column header and your table is sorted without round-trip to the server.
+
+!Usage
+
+Enclose your tables in %~%sortable tags.
+Make sure your table starts with a row of all header cells ( wikisyntax: ~|~| ).
+Now move your the mouse over one of the clickable header cells.
+You'll see a tool-tip and a changed mouse pointer.
+Click the column header to sort, clicking again will reverse the sort order.
+The sort algorithm will auto-guess the data type of your column -- date, numeric or string -- 
+and adjust the sorting algorithm accordingly !
+
+{{{
+%%sortable
+|| Title || Author || Published   || Edition
+| book1  |  zappy  |  25-Feb-2005 |  5
+| book2  |  happy  |  25-Jan-2005 |  19
+| book3  |  pappy  |  23-Mar-2005 |  06
+| book4  |  dappy  |  21-Apr-2005 |  199
+| book5  |  rappy  |  25-Jul-2005 |  017
+%%
+}}}
+
+Reality check:
+%%sortable
+|| Title || Author || Published   || Edition
+| book1  |  zappy  |  25-Feb-2005 |  5
+| book2  |  happy  |  25-Jan-2005 |  19
+| book3  |  pappy  |  23-Mar-2005 |  06
+| book4  |  dappy  |  21-Apr-2005 |  199
+| book5  |  rappy  |  25-Jul-2005 |  017
+%%
+

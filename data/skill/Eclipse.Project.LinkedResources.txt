@@ -1,0 +1,54 @@
+Eclipse工程中涉及到的的源文件、Lib库通常都是放在工程所在的目录中。
+
+但有些特殊情况，如：多个工程公用代码、lib目录时，为了节省配置库上的空间，会将这些公共资源抽取出来，存放在其它的目录下。\\
+如果不采用链接，就只能先将从配置库取出的最新版本拷贝至工程对应的目录下，但后期配置更新时会比较麻烦。\\
+此时，就需要借助LinkedResources这种机制，将外部的资源链接到工程中。链接以后，从配置库上取最新的版本后，在Eclipse中刷新工程就可以同步更新，不需要手工进行拷贝。\\
+
+操作方法如下：
+
+1、对于源代码，可以在“Java Build Path”界面中的“Source” Tab页中，点击“Link Source”按钮，通过界面进行配置；
+
+2、对于lib目录这样的资源，Eclipse中没有提供相应的链接手段（至少我没有找到）。但我们可以通过手工修改 .project 文件的方式来实现。
+
+-----
+
+假设存在以下目录结构：
+{{{
+D:\SVN
+  |-- Project1
+  |    |-- src
+  |    |-- WebContent
+  |-- Common
+       |-- lib
+}}}
+
+当在D:\workspace 下创建工程 test 后，修改 D:\workspace\test\.project 文件，增加相关的link内容，修改后的示例如下：
+
+%%prettify 
+{{{
+<projectDescription>
+    ... // 其它内容
+    <linkedResources>
+        <link>
+            <name>src</name>
+            <type>2</type>
+            <location>D:/SVN/Project1/src</location>
+        </link>
+        <link>
+            <name>WebContent</name>
+            <type>2</type>
+            <location>D:/SVN/Project1/WebContent</location>
+        </link>
+        <link>
+            <name>WebContent/WEB-INF/lib</name>
+            <type>2</type>
+            <location>D:/SVN/Common/lib</location>
+        </link>
+    </linkedResources>
+</projectDescription>
+}}}
+/%
+
+注意：上面的例子中，WebContent 和 WebContent/WEB-INF/lib 分别指向了两个不同的链接目录。
+
+

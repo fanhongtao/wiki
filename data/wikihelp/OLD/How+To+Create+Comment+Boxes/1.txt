@@ -1,0 +1,43 @@
+%%commentbox
+Commentbox at the top right of the page
+
+__see also__\\
+[DontCreateMe]
+%%
+
+This at the beginning of this page
+{{{
+%%commentbox
+Commentbox at the top right of the page
+
+__see also__\\
+[DontCreateMe]
+%%
+}}}
+
+produces the commentbox at the top right of is page.
+
+This in the middle of the text
+{{{
+%%commentbox
+Commentbox in the middle of the page
+
+__see also__\\
+[DontCreateMe]
+%%
+}}}
+
+%%commentbox
+Commentbox in the middle of the page
+
+__see also__\\
+[DontCreateMe]
+%%
+
+shows a comment somewhere at the right side. 
+
+----
+Back to [Editing Pages], [JSPWiki Styles]
+
+
+

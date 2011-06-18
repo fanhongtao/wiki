@@ -1,0 +1,112 @@
+[{TableOfContents }]\\
+
+!!!在Struts中使用资源文件
+
+在实现界面的国际化时，通常是将不同语言的词汇写在资源文件（Resource Bundle）中。
+
+!!Resource Bundle Search Order
+
+Resource bundles are searched in the following order:
+# ActionClass.properties
+# Interface.properties (every interface and sub-interface)
+# BaseClass.properties (all the way to Object.properties)
+# ModelDriven's model (if implements ModelDriven), for the model object repeat from 1
+# package.properties (of the directory where class is located and every parent directory all the way to the root directory)
+# search up the i18n message key hierarchy itself
+# global resource properties
+
+----
+Package Hierarchy
+
+while traversing the package hierarchy, Struts 2 will look for a file package.properties:
+{{{
+com/
+  acme/
+    package.properties
+    actions/
+      package.properties
+      FooAction.java
+      FooAction.properties
+}}}
+If FooAction.properties does not exist, com/acme/action/package.properties will be searched for, if not found com/acme/package.properties, if not found com/package.properties, etc. 
+
+----
+Global Resources
+
+在 struts.properties 或 struts.xml 中定义 struts.custom.i18n.resources 。\\
+下面的例子中就是定义在 struts.xml 中。
+
+
+!!Using Resource Bundle
+There are several ways to access the message resources, including getText, the text tag, and the i18n tag.
+
+!Using getText from a Tag
+To display i18n text, use a call to getText in the property tag, or any other tag, such as the UI tags. (The getText technique is especially useful for labels of UI tags.)
+%%prettify 
+{{{
+<s:property value="getText('some.key')" />
+}}}
+/%
+
+!Using the text tag
+The text tag retrieves a message from the default resource bundle.
+%%prettify 
+{{{
+<s:text name="some.key" />
+
+<s:text name="some.invalid.key" >
+    The Default Message That Will Be Displayed
+</s:text>
+}}}
+/%
+
+!Using the I18n tag
+The i18n tag pushes an arbitrary resource bundle on to the value stack. Other tags within the scope of the i18n tag can display messages from that resource bundle.
+%%prettify 
+{{{
+<s:i18n name="some.package.bundle" >
+    <s:text name="some.key" />
+</s:i18n>
+}}}
+/%
+
+!Using the Key attribute of UI Tags
+The key attribute of most UI tags can be used to retrieve a message from a resource bundle:
+%%prettify 
+{{{
+<s:textfield key="some.key" name="textfieldName"/>
+}}}
+/%
+
+!!Example
+下面的例子中，使用了全局的资源文件。
+
+1、在 struts.xml 文件中增加 
+%%prettify 
+{{{
+<constant name="struts.custom.i18n.resources" value="jsptest"/>
+}}}
+/%
+
+2、在 src 目录下创建资源。\\
+英文资源文件 jsptest_en.properties，文件内容为：
+{{{
+message=Hello,  Mr. Fan
+}}}
+
+中文资源文件 jsptest_zh.properties，文件内容为：
+{{{
+message=\u4F60\u597D\uFF0C \u8303\u5148\u751F
+}}}
+
+3、在 JSP 文件中引用 message 
+%%prettify 
+{{{
+<s:property value="getText('message')" />
+}}}
+/%
+
+为了减少国际化时出现乱码的情况，根据所有 JSP、JS、CSS 文件都使用使用 UTF-8 格式编码。JSP中的pageEncoding等都需要设置成 UTF-8，JSP的例子参见[Struts 基本配置|Struts.Configure.Simple]中的JSP页面。
+
+----
+Back to [Struts.Configure]

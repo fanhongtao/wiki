@@ -1,0 +1,17 @@
+!!!Re-commit
+
+!Scenario
+When you remembered what you just committed is incomplete, or you misspelled your commit message, or both. 如果在commit之后，发现少提交的内容不正确、不完整，或者是log message拼写错了。希望能够将上一次提交的内容修改一下后再重新提交。
+
+!Step
+%%prettify 
+{{{
+$ git commit ...
+$ git reset --soft HEAD^      (1)
+$ edit                        (2)
+$ git commit -a -c ORIG_HEAD  (3)
+}}}
+/%
+# Leaves working tree as it was before "reset", copies the old head to .git/ORIG_HEAD, and set HEAD to the latest but one commit. reset命令本身会将HEAD的内容拷贝到 .git/ORIG_HEAD中，通过--soft参数，不修改工作目录下的内容，通过HEAD^，将HEAD设置为commit前的状态。
+# Make corrections to working tree files. 修改文件，或通过 git add 将漏加的文件添加到index中
+# Redo the commit by starting with its log message. If you do not need to edit the message further, you can give -C option instead. 基于前一次提交的信息再次提交内容。如果不需要修改message，则可以使用 -C 选项。当然，也可以重新使用 git commit -m message 来提交，不使用前一次提交的相关信息。
