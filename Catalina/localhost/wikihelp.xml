@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context docBase="E:/Git/wiki/app/JSPWiki.war" reloadable="true">
+    <Parameter name="jspwiki.propertyfile"
+        value="E:/Git/wiki/cfg/wiki.wikihelp.properties"
+        override="false"/>
+    <Parameter name="jspwiki.propertyfile.cascade.1"
+        value="E:/Git/wiki/cfg/template.properties"
+        override="false"/>
+</Context>
+
