@@ -1,1 +1,8 @@
 * [awk]
+* [bash]
+* [samba]
+* [svn]
+* [Time Management]
+* [User Management]
+
+

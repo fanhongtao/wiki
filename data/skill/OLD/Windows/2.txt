@@ -2,4 +2,4 @@ Windows操作系统使用技巧：
 ----
 * [右键菜单|Windows.RightMenu]
 * [发送到|Windows.SendTo]
-* [WIN 7设置睡眠时间|Windows.SleepTimeForWin7]
+

@@ -1,0 +1,154 @@
+!!! 一、常用命令
+!!创建用户
+使用 useradd 
+{{{
+useradd -g users -s /bin/bash -d /home/fht -m  fht
+}}}
+* -g users 指定用户为 users 组
+* -s /bin/bash 将用户登录的SHELL设置成 bash
+* -d /home/fht 指定用户的$HOME目录
+* -m 如果用户的$HOME目录不存在，则自动创建相应的目录
+* fht 用户名为 fht
+
+用户的SHELL设置成bash，但登录时并没有生效（明显的证明就是 ls 时没有使用不同颜色区分文件、目录）。可能的原因是，创建用户时没有将 /etc/skel 目录下的相关文件，特别是 .profile 文件，拷贝到用户的 $HOME 目录下。此时需要手工进行拷贝。然后重新登录。 
+
+!!删除用户
+{{{
+userdel -r fht
+}}}
+-r 表示删除用户的同时，将用户的$HOME（及其子目录）一并删除。
+
+
+-----
+下面的内容摘自[http://fedora.linuxsir.org/main/?q=node/91]
+
+!!! 二、用户(user）和用户组（group）概念
+!! 用户（user）的概念
+Linux 是真正意义上的多用户操作系统，所以我们能在Linux系统中建若干用户（user）。比如我们的同事想用我的计算机，但我不想让他用我的用户名登录，因为我的用户名下有不想让别人看到的资料和信息（也就是隐私内容）这时我就可以给他建一个新的用户名，让他用我所开的用户名去折腾，这从计算机安全角度来说是符合操作规则的；
+
+当然用户（user）的概念理解还不仅仅于此，在Linux系统中还有一些用户是用来完成特定任务的，比如nobody和ftp 等，我们访问LinuxSir.Org 的网页程序，就是nobody用户；我们匿名访问ftp 时，会用到用户ftp或nobody ；如果您想了解Linux系统的一些帐号，请查看 /etc/passwd 。
+
+!! 用户组（group）的概念
+用户组（group）就是具有相同特征的用户（user）的集合体；比如有时我们要让多个用户具有相同的权限，比如查看、修改某一文件或执行某个命令，这时我们需要用户组，我们把用户都定义到同一用户组，我们通过修改文件或目录的权限，让用户组具有一定的操作权限，这样用户组下的用户对该文件或目录都具有相同的权限，这是我们通过定义组和修改文件的权限来实现的；
+
+举例：我们为了让一些用户有权限查看某一文档，比如是一个时间表，而编写时间表的人要具有读写执行的权限，我们想让一些用户知道这个时间表的内容，而不让他们修改，所以我们可以把这些用户都划到一个组，然后来修改这个文件的权限，让用户组可读，这样用户组下面的每个用户都是可读的；
+
+用户和用户组的对应关系是：一对一、多对一、一对多或多对多；
+
+* 一对一：某个用户可以是某个组的唯一成员；
+* 多对一：多个用户可以是某个唯一的组的成员，不归属其它用户组；比如beginner和linuxsir两个用户只归属于beginner用户组；
+* 一对多：某个用户可以是多个用户组的成员；比如beginner可以是root组成员，也可以是linuxsir用户组成员，还可以是adm用户组成员；
+* 多对多：多个用户对应多个用户组，并且几个用户可以是归属相同的组；其实多对多的关系是前面三条的扩展；理解了上面的三条，这条也能理解；
+
+!!! 三、用户（user）和用户组（group）相关的配置文件、命令或目录
+!! 1、与用户（user）和用户组（group）相关的配置文件
+!1）与用户（user）相关的配置文件
+* /etc/passwd 注：用户（user）的配置文件；
+* /etc/shadow 注：用户（user）影子口令文件；
+
+! 2）与用户组（group）相关的配置文件
+* /etc/group 注：用户组（group）配置文件；
+* /etc/gshadow 注：用户组（group）的影子文件；
+
+!! 2、管理用户（user）和用户组（group）的相关工具或命令
+! 1）管理用户（user）的工具或命令
+%%sortable
+|| 命令 || 说明
+| useradd  | 添加用户	
+| adduser | 添加用户
+| passwd  | 为用户设置密码
+| usermod | 修改用户命令，可以通过usermod 来修改登录名、用户的家目录等等；
+| pwcov | 同步用户从/etc/passwd 到/etc/shadow 
+| pwck | pwck是校验用户配置文件/etc/passwd 和/etc/shadow 文件内容是否合法或完整；
+| pwunconv | 是pwcov 的立逆向操作，是从/etc/shadow和 /etc/passwd 创建/etc/passwd ，然后会删除 /etc/shadow 文件；
+| finger | 查看用户信息工具
+| id | 查看用户的UID、GID及所归属的用户组
+| chfn | 更改用户信息工具
+| su | 用户切换工具
+| sudo | sudo 是通过另一个用户来执行命令（execute a command as another user），su 是用来切换用户，然后通过切换到的用户来完成相应的任务，但sudo 能后面直接执行命令，比如sudo 不需要root 密码就可以执行root 赋与的执行只有root才能执行相应的命令；但得通过visudo 来编辑/etc/sudoers来实现；
+| visudo | visodo 是编辑 /etc/sudoers 的命令；也可以不用这个命令，直接用vi 来编辑 /etc/sudoers 的效果是一样的；
+| sudoedit | 和sudo 功能差不多；
+/%
+
+! 2）管理用户组（group）的工具或命令
+%%sortable
+|| 命令 || 说明
+| groupadd | 添加用户组；
+| groupdel | 删除用户组；
+| groupmod | 修改用户组信息
+| groups | 显示用户所属的用户组
+| grpck | 
+| grpconv | 通过/etc/group和/etc/gshadow 的文件内容来同步或创建/etc/gshadow ，如果/etc/gshadow 不存在则创建
+| grpunconv | 通过/etc/group 和/etc/gshadow 文件内容来同步或创建/etc/group ，然后删除gshadow文件
+/%
+
+!! 3、/etc/skel 目录
+/etc/skel目录一般是存放用户启动文件的目录，这个目录是由root权限控制，当我们添加用户时，这个目录下的文件自动复制到新添加的用户的家目录下；/etc/skel 目录下的文件都是隐藏文件，也就是类似.file格式的；我们可通过修改、添加、删除/etc/skel目录下的文件，来为用户提供一个统一、标准的、默认的用户环境；
+
+/etc/skel 目录下的文件，一般是我们用useradd 和adduser 命令添加用户（user）时，系统自动复制到新添加用户（user）的家目录下；如果我们通过修改 /etc/passwd 来添加用户时，我们可以自己创建用户的家目录，然后把/etc/skel 下的文件复制到用户的家目录下，然后要用chown 来改变新用户家目录的属主；
+
+!! 4、/etc/login.defs 配置文件
+/etc/login.defs 文件是当创建用户时的一些规划，比如创建用户时，是否需要家目录，UID和GID的范围；用户的期限等等，这个文件是可以通过root来定义的；
+
+比如Fedora 的 /etc/logins.defs 文件内容；
+{{{
+# *REQUIRED*
+#   Directory where mailboxes reside, _or_ name of file, relative to the
+#   home directory.  If you _do_ define both, MAIL_DIR takes precedence.
+#   QMAIL_DIR is for Qmail
+#
+#QMAIL_DIR      Maildir
+MAIL_DIR        /var/spool/mail  注：创建用户时，要在目录/var/spool/mail中创建一个用户mail文件；
+#MAIL_FILE      .mail
+
+# Password aging controls:
+#
+#       PASS_MAX_DAYS   Maximum number of days a password may be used.
+#       PASS_MIN_DAYS   Minimum number of days allowed between password changes.
+#       PASS_MIN_LEN    Minimum acceptable password length.
+#       PASS_WARN_AGE   Number of days warning given before a password expires.
+#
+PASS_MAX_DAYS   99999   注：用户的密码不过期最多的天数；
+PASS_MIN_DAYS   0       注：密码修改之间最小的天数；
+PASS_MIN_LEN    5       注：密码最小长度；
+PASS_WARN_AGE   7       注：
+
+#
+# Min/max values for automatic uid selection in useradd
+#
+UID_MIN                   500  注：最小UID为500 ，也就是说添加用户时，UID 是从500开始的；
+UID_MAX                 60000   注：最大UID为60000；
+
+#
+# Min/max values for automatic gid selection in groupadd
+#
+GID_MIN                   500   注：GID 是从500开始；
+GID_MAX                 60000
+
+#
+# If defined, this command is run when removing a user.
+# It should remove any at/cron/print jobs etc. owned by
+# the user to be removed (passed as the first argument).
+#
+#USERDEL_CMD    /usr/sbin/userdel_local
+
+#
+# If useradd should create home directories for users by default
+# On RH systems, we do. This option is ORed with the -m flag on
+# useradd command line.
+#
+CREATE_HOME     yes   注：是否创用户家目录，要求创建；
+}}}
+
+!! 5、/etc/default/useradd 文件
+通过useradd 添加用户时的规则文件
+{{{
+# useradd defaults file
+GROUP=100
+HOME=/home  注：把用户的家目录建在/home中；
+INACTIVE=-1  注：是否启用帐号过期停权，-1表示不启用；
+EXPIRE=   注：帐号终止日期，不设置表示不启用；
+SHELL=/bin/bash  注：所用SHELL的类型；
+SKEL=/etc/skel   注： 默认添加用户的目录默认文件存放位置；也就是说，当我们用adduser添加用户时，用户家目录下的文件，都是从这个目录中复制过去的；
+}}}
+

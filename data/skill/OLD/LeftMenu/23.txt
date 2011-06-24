@@ -1,8 +1,5 @@
 * [常用网站|FreqVisitedWebSite]
 
-__C & C++技术__
-* [C语言基本知识|C.Basic]
-
 __Java技术__
 * [Java]
 * [JSP]

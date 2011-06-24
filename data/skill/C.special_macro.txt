@@ -1,0 +1,104 @@
+[{TableOfContents }] \\
+
+!!! 几个特殊的宏
+
+!! 1. #——字符串
+假如希望在字符串中包含宏参数，ANSI C允许这样作，在类函数宏的替换部分，#符号用作一个预处理运算符，它可以把语言符号转化程字符串。例如，如果x是一个宏参量，那么#x可以把参数名转化成相应的字符串。该过程称为字符串化（stringizing）.
+%%prettify 
+{{{
+#incldue <stdio.h>
+#define PSQR(x) printf("the square of" #x "is %d.\n",(x)*(x))
+int main(void)
+{
+    int y =4;
+    PSQR(y);
+    PSQR(2+4);
+    return 0;
+}
+}}}
+/%
+
+输出结果：
+{{{
+the square of y is 16.
+the square of 2+4 is 36.
+}}}
+
+第一次调用宏时使用“y”代替#x；第二次调用时用“2+4"代#x。
+ 
+
+!! 2. ##——连接两个参数
+ ##运算符可以使用类函数宏的替换部分。另外，##还可以用于类对象宏的替换部分。这个运算符把两个语言符号组合成单个语言符号。例如：
+%%prettify 
+{{{
+#define XNAME(n) x##n
+}}}
+/%
+
+这样宏调用：
+{{{
+XNAME(4)
+}}}
+展开后得到 “x4”。
+
+程序：
+%%prettify 
+{{{
+#include <stdio.h>
+#define XNAME(x) x##4
+#define PXN(n) printf("x"#n" = %d\n",x##n)
+int main(void)
+{
+    int XNAME(1)=12;//int x1=12;
+    PXN(1);//printf("x1 = %d\n", x1);
+    return 0;
+}
+}}}
+/%
+
+%%prettify 
+{{{
+#include <iostream>
+using namespace std;
+
+#define TEST(pid) (cout<<para##pid<<endl);
+#define TEST2(p) (cout<<#p<<endl);
+int main()
+{
+    int para3 = 3;
+    int para2 = 2;
+    TEST(2);    //<==>cout<<para2<<endl;
+    TEST(3);    //<==>cout<<para3<<endl;
+
+    TEST2(test)        //<==>cout<<"test"<<endl;
+    TEST2("test2");    //<==>cout<<""test2""<<endl;
+    system("pause");
+    return 0;
+}
+}}}
+/%
+
+!! 3. 可变宏 ...和_ _VA_ARGS_ _
+实现思想就是宏定义中参数列表的最后一个参数为省略号（也就是三个点）。这样预定义宏_ _VA_ARGS_ _就可以被用在替换部分中，以表示省略号代表什么。比如：
+%%prettify 
+{{{
+#define PR(...) printf(_ _VA_ARGS_ _)
+PR("hello");-->printf("hello");
+PR("weight = %d, shipping = $.2f",wt,sp);
+    -->printf("weight = %d, shipping = $.2f",wt,sp);
+}}}
+/%
+
+省略号只能代替最后面的宏参数。
+ 
+!! 4、__FILE__ 宏
+在预编译时会替换成当前的源文件名　
+
+!! 5、__LINE__宏
+在预编译时会替换成当前的行号　　
+
+!! 6、 __FUNCTION__
+宏在预编译时会替换成当前的函数名称
+
+----
+原文：[http://blogold.chinaunix.net/u3/116362/showart_2533059.html]

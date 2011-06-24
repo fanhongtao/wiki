@@ -1,6 +1,5 @@
 [{TableOfContents }]\\
 
-!!!配置分级
 维护仓库级配置（repository options）或全局配置（global options）。
 
 根据配置信息的级别不同，保存在三个不同的文件中：
@@ -8,9 +7,6 @@
 * 全局配置（global options），也叫用户级配置，保存在 ~/.gitconfig 文件中。（Windows用户则是 %userprofile%/.gitconfig）
 * 系统级配置保存在 $(prefix)/etc/gitconfig 文件中。
 
-
-!!!相关操作
-!!增加配置
 {{{
 $ git config --global user.name "Fan Hongtao"
 $ git config --global user.email fanhongtao@gmail.com
@@ -21,19 +17,3 @@ $ git config --global user.email fanhongtao@gmail.com
         name = Fan Hongtao
         email = fanhongtao@gmail.com
 }}}
-如果在文件中原来已经有同名的配置项，则会使用新的值覆盖原有的值（相当于修改配置项）
-
-!!查看配置
-通过 -l 参数查看现有的配置项。通过下面的命令可以查看全局的配置项。
-{{{
-$ git config --global -l
-}}}
-
-!!删除配置
-删除全局配置项中的 user.name
-{{{
-$ git config --global --unset user.name
-}}}
-
-
-

@@ -1,0 +1,19 @@
+
+!!创建用户
+使用 useradd 
+{{{
+useradd -g users -s /bin/bash -d /home/fht -m  fht
+}}}
+* -g users 指定用户为 users 组
+* -s /bin/bash 将用户登录的SHELL设置成 bash
+* -d /home/fht 指定用户的$HOME目录
+* -m 如果用户的$HOME目录不存在，则自动创建相应的目录
+* fht 用户名为 fht
+
+用户的SHELL设置成bash，但登录时并没有生效（明显的证明就是 ls 时没有使用不同颜色区分文件、目录）。可能的原因是，创建用户时没有将 /etc/skel 目录下的相关文件，特别是 .profile 文件，拷贝到用户的 $HOME 目录下。此时需要手工进行拷贝。然后重新登录。 
+
+!!删除用户
+{{{
+userdel -r fht
+}}}
+-r 表示删除用户的同时，将用户的$HOME（及其子目录）一并删除。
