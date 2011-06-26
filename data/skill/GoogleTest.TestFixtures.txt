@@ -1,0 +1,35 @@
+!! Test Fixtures
+如果一些用例都需要访问相同的资源，则可以使用 Test Fixture 来简化测试代码。
+
+使用Test Fixture的方法：
+! 定义一个继承自 testing::Test 的类
+* 在该类的 SetUp() 方法中初始化资源
+* 在该类的 TearDown() 方法中回收资源
+%%prettify 
+{{{
+class BufferTest : public ::testing::Test {
+  protected:
+    virtual void SetUp() {
+    buffer_.size = 1024;
+    buffer_.buf = malloc(buffer_size);
+  }
+
+  virtual void TearDown() {
+    free(buffer_.buf);
+  }
+
+  Buffer buffer_;
+};
+}}}
+/%
+
+! 使用宏 TEST_F 定义测试用例
+%%prettify 
+{{{
+TEST_F(test_case_name, test_name) {
+ ... test body ...
+}
+}}}
+/%
+注意，在 TEST_F 的 test_case_name ，必须是对应的类（如前面的 BufferTest）
+的名字。否则 Google Test就不知道和那个类对应了。

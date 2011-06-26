@@ -1,0 +1,77 @@
+[{TableOfContents }]\\
+
+!!! Assertions
+Google Test提供了两类比较方式：
+* ASSERT_* : 当比较失败时，产生一个严重的错误(fatal failures) ，会中断当前函数。
+* EXPECT_* : 当比较失败时，产生一个普通的错误(nonfatal failures)，当前函数会继续执行。（意味着一个函数可能会生成多个错误）。
+
+!! Basic Assertions
+These assertions do basic true/false condition testing.
+|| Fatal assertion || Nonfatal assertion || Verifies
+| ASSERT_TRUE(condition); | EXPECT_TRUE(condition); | condition is true
+| ASSERT_FALSE(condition); | EXPECT_FALSE(condition); | condition is false
+
+!! Binary Comparison
+This section describes assertions that compare two values.
+|| Fatal assertion || Nonfatal assertion || Verifies
+| ASSERT_EQ(expected, actual); | EXPECT_EQ(expected, actual); | expected == actual
+| ASSERT_NE(val1, val2); | EXPECT_NE(val1, val2); | val1 != val2
+| ASSERT_LT(val1, val2); | EXPECT_LT(val1, val2); | val1 < val2
+| ASSERT_LE(val1, val2); | EXPECT_LE(val1, val2); | val1 <= val2
+| ASSERT_GT(val1, val2); | EXPECT_GT(val1, val2); | val1 > val2
+| ASSERT_GE(val1, val2); | EXPECT_GE(val1, val2); | val1 >= val2
+
+!! String Comparison
+
+The assertions in this group compare two C strings. If you want to compare two string objects, use EXPECT_EQ, EXPECT_NE, and etc instead.
+|| Fatal assertion || Nonfatal assertion || Verifies
+| ASSERT_STREQ(expected_str, actual_str); | EXPECT_STREQ(expected_str, actual_str); | the two C strings have the same content
+| ASSERT_STRNE(str1, str2); | EXPECT_STRNE(str1, str2); | the two C strings have different content
+| ASSERT_STRCASEEQ(expected_str, actual_str); | EXPECT_STRCASEEQ(expected_str, actual_str); | the two C strings have the same content, ignoring case
+| ASSERT_STRCASENE(str1, str2); | EXPECT_STRCASENE(str1, str2); | the two C strings have different content, ignoring case
+
+!! Explicit Success and Failure
+These three assertions do not actually test a value or expression. Instead, they generate a success or failure directly. Like the macros that actually perform a test, you may stream a custom failure message into the them.
+{{{
+SUCCEED();
+}}}
+Generates a success. This does NOT make the overall test succeed. A test is considered successful only if none of its assertions fail during its execution.
+
+Note: SUCCEED() is purely documentary and currently doesn't generate any user-visible output. However, we may add SUCCEED() messages to Google Test's output in the future.
+
+| FAIL(); | ADD_FAILURE(); |ADD_FAILURE_AT("file_path", line_number);
+
+FAIL() generates a fatal failure, while ADD_FAILURE() and ADD_FAILURE_AT() generate a nonfatal failure. These are useful when control flow, rather than a Boolean expression, deteremines the test's success or failure. For example, you might want to write something like:
+
+%%prettify 
+{{{
+switch(expression) {
+  case 1: ... some checks ...
+  case 2: ... some other checks
+  ...
+  default: FAIL() << "We shouldn't get here.";
+}
+}}}
+/%
+
+
+!! Exception Assertions
+These are for verifying that a piece of code throws (or does not throw) an exception of the given type:
+
+|| Fatal assertion || Nonfatal assertion || Verifies
+| ASSERT_THROW(statement, exception_type); | EXPECT_THROW(statement, exception_type); |  statement throws an exception of the given type
+| ASSERT_ANY_THROW(statement); | EXPECT_ANY_THROW(statement); | statement throws an exception of any type
+| ASSERT_NO_THROW(statement); | EXPECT_NO_THROW(statement); | statement doesn't throw any exception
+Examples:
+
+%%prettify 
+{{{
+ASSERT_THROW(Foo(5), bar_exception);
+
+EXPECT_NO_THROW({
+  int n = 5;
+  Bar(&n);
+});
+}}}
+/%
+

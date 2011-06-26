@@ -1,0 +1,21 @@
+
+!! main 函数
+
+Google Test最后会将所有测试用例打包生成一个可执行文件。一个最简单的 main 函数如下。
+
+%%prettify 
+{{{
+#include <iostream>
+
+#include "gtest/gtest.h"
+
+GTEST_API_ int main(int argc, char **argv) {
+  std::cout << "Running main() from gtest_main.cc\n";
+
+  testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}
+}}}
+/%
+如果认为写一个main函数还是比较麻烦的话，可以直接使用 Google Test 预先生成的一个包含main函数的库 gtest_main 。该库的代码就是上面的main函数，可以满足简单的测试要求。
+

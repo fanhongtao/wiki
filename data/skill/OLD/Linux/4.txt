@@ -1,6 +1,5 @@
 * [awk]
 * [bash]
-* [dos2unix]
 * [find]
 * [samba]
 * [svn]
