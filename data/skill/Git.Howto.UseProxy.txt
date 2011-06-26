@@ -1,0 +1,15 @@
+[{TableOfContents }] \\
+
+!!!Git设置HTTP代理
+
+!!通过 git config 命令设置
+{{{
+git config --global http.proxy http://proxyserver:80
+}}}
+
+!!通过环境变量
+设置环境变量 http_proxy 
+{{{
+export http_proxy=http://proxyserver:80
+}}}
+设置环境变量后，不只是Git，其它程序　(如 curl, wget)　也都可以配置的proxy访问外网。

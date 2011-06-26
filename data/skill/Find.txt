@@ -1,0 +1,19 @@
+[{TableOfContents }] \\
+
+!!!find
+
+!! How To
+! Grep string in all the files in a directory and it's sub-directories.
+{{{
+find . -type f -printf "\"%p\"\n" | xargs grep string
+}}}
+Without''-printf'', the shell will complain "xargs: unmatched single quote", if there is a single qoute in the file name.
+
+! Delete '.svn' directories
+{{{
+rm -rf `find . -type d -name .svn`
+}}}
+or 
+{{{
+find . -iname ".svn" -type d -print0 | xargs -0 rm -r
+}}}

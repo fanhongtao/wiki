@@ -1,0 +1,29 @@
+!!!创建仓库（Create Repository）
+
+通常情况下，我们将纯仓库的目录使用 .git 作为后缀。
+
+!! Windows下搭建Git最小步骤
+* 将一个包含 '.git' 目录的工作目录 my_project 克隆为一个纯仓库，
+* 然后将 my_project.git 目录拷贝到服务器上的某个共享目录下即可。
+{{{
+    git clone --bare project project.git
+    xcopy /e project.git  \\sharedir\project.git
+}}}
+
+!! 创建一个纯仓库的通用步骤
+
+{{{
+    $mkdir my_project.git
+    $cd my_project.git
+    $git init --bare
+}}} 
+
+!! 创建一个仓库的通用步骤
+
+{{{
+    $mkdir my_project
+    $cd my_project
+    $git init
+}}} 
+
+

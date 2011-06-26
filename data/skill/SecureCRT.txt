@@ -1,0 +1,9 @@
+What is SecureCRT for short?
+
+Answer comes from website of SecureCRT: ''SecureCRT for Windows and Mac provides rock-solid terminal emulation for computing professionals, raising productivity with advanced session management and a host of ways to save time and streamline repetitive tasks. SecureCRT provides secure remote access, file transfer, and data tunneling for everyone in your organization.''
+
+Website of SecureCRT [http://www.vandyke.com/products/securecrt/].
+
+----
+
+* [Color setting of SecureCRT|SecureCRT.Color]

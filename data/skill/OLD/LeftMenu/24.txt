@@ -27,7 +27,6 @@ __工具软件__
 * [Vim]
 * [Wireshark]
 * [Git]
-* [SecureCRT]
 
 __OS__
 * [Linux]

@@ -1,0 +1,11 @@
+!!!如何将一个仓库中的内容推送到另一个仓库？
+
+{{{
+git clone git@originserver:~git/project.git       从原始服务器克隆一份。
+git remote add gitserver git@gitserver:~git/project.git  增加一个名为 gitserver 的远端仓库
+git push gitserver master  将本地的 master 分支的内容提交到 gitserver 
+}}}
+
+注意：Git 缺省的远端仓库命名为 origin。某些命令缺省会访问该服务器。
+
+所以自己手工添加服务器名时，注意不要使用 origin，除非是想让其成为缺省的服务器

@@ -1,0 +1,36 @@
+!!! SecureCRT Color
+The default color of SecureCRT is not good enough. I like the color of [PuTTY|http://www.chiark.greenend.org.uk/~sgtatham/putty/]. So I change the color setting of SecureCRT by the value from PuTTY.
+
+Open menu "Options" -> "Global Options ...", then "Terminal" -> "Appearance" -> "ANSI Color"
+
+|| Color || R || G || B
+| Default Foreground | 187 | 187 | 187
+| Default Bold Foreground | 255 | 255 | 255
+| Default Background | 0 | 0 | 0
+| Default Bold Background | 85 | 85 | 85
+| Cursor Text | 0 | 0 | 0
+| Cursor Color | 0 | 255 | 0
+| ANSI Black | 0 | 0 | 0
+| ANSI Black Bold | 85 | 85 | 85
+| ANSI Red | 187 | 0 | 0
+| ANSI Red Bold | 255 | 85 | 85
+| ANSI Green | 0 | 187 | 0
+| ANSI Green Bold | 85 | 255 | 85
+| ANSI Yellow | 187 | 187 | 0
+| ANSI Yellow Bold | 255 | 255 | 85
+| ANSI Blue | 0 | 0 | 187
+| ANSI Blue Bold | 85 | 85 | 255
+| ANSI Magenta | 187 | 0 | 187
+| ANSI Magenta Bold | 255 | 85 | 255
+| ANSI Cyan | 0 | 187 | 187
+| ANSI Cyan Bold | 85 | 255 | 255
+| ANSI White | 187 | 187 | 187
+| ANSI White Bold | 255 | 255 | 255
+
+
+The setting is stored in ''Config/Global.ini''. You can use the fellowing value the replace what is in Global.ini.
+{{{
+B:"ANSI Color RGB"=00000040
+ 00 00 00 00 bb 00 00 00 00 bb 00 00 bb bb 00 00 00 00 bb 00 bb 00 bb 00 00 bb bb 00 bb bb bb 00
+ 55 55 55 00 ff 55 55 00 55 ff 55 00 ff ff 55 00 55 55 ff 00 ff 55 ff 00 55 ff ff 00 ff ff ff 00
+}}}

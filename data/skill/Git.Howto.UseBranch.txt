@@ -1,0 +1,33 @@
+[{TableOfContents }]\\
+
+!!!使用分支
+
+!! 创建分支
+''git checkout -b issue53'' 创建一个名为 issue53 的分支，并将当前工作目录切换到issue53分支。该命令等同于下面两条命令
+|| 命令 || 说明
+| git branch issue53 | 创建一个名为 issue53 的分支
+| git checkout issue53 | 将工作目录切换成 issue53 分支
+
+
+!!合并分支
+合并分支：先切换到待合入的目标分支，再执行''git merge''
+|| 命令 || 说明
+| git checkout master | 切换到 master 分支
+| git merge hotfix | 将 hotfix 分支上的内容合并到 master 分支上
+| git branch -d hotfix | 删除 hotfix 分支（因为其内容已经在master上了）
+
+!!分支管理
+|| 命令 || 说明
+| git branch | 列出所有分支，当前分支前有一个星号（*）
+| git branch -v | 列出所有分支，及各分支最后一次commit信息
+| git branch --merged | 列出已经与当前分支合并的分支
+| git branch --nomerged | 列出尚未与当前分支合并的分支
+
+!!远程分支
+使用命令 ''git push 远程仓库名  分支名[[:远端分支名]'' 来管理远程分支
+|| 命令 || 说明
+| git push origin master | 取本地的master分支，更新到 origin 上的 master
+| git push origin master:br1 | 取本地的master分支，更新到 origin 上的 br1 分支
+| git push origin :br1 | 删除远端的 br1 分支（命令的含意为：取一个本地的空分支，更新br1）
+
+

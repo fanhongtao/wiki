@@ -1,6 +1,5 @@
 * [awk]
 * [bash]
-* [find]
 * [samba]
 * [svn]
 * [Time Management]
