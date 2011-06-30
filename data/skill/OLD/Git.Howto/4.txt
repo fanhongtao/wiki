@@ -6,5 +6,4 @@
 
 * [将一个仓库的内容推送到另一个仓库|Git.Howo.PushToAnotherRepo]
 * [Re-Commit 重新提交|Git.Howto.Recommit]
-* [添加空目录到Git|Git.Howto.AddEmptyDirectory]
 

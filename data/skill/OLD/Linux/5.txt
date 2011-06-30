@@ -4,11 +4,7 @@
 * [find]
 * [samba]
 * [svn]
-
-----
-
 * [Time Management]
 * [User Management]
-* [text|Linux.text]
 
 

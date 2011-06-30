@@ -1,0 +1,30 @@
+[{TableOfContents }] \\
+
+!! change from str-a to str-b in all files
+{{{
+sed -i "s/oldstring/newstring/g" `grep -rl oldstring path`
+     ^  ^                     ^  ^ ^    ^^
+     7  5                     6  1 2    34
+}}}
+The numbers are interpreted as follows:
+
+1. ` `, means execute a command, 'grep', and use it's result as input of 'sed' command.
+
+2. grep oldstring path, grep the string from all files in the path.
+
+3. -r, means grep recursive, include all the sub-director.
+
+4. -p, means print only name of FILEs containing matches.
+
+5. s/oldstring/newstring/, means change from 'oldstring' to 'newstring',
+
+6. g, means change all matches, even if 
+
+7. -i, means edit files in place. replace the input file directly.
+
+!! convert file's encoding
+{{{
+iconv -f GB2312 -t UTF-8 x.c > y.c
+}}}
+change file __x.c__'s encoding from GB2312 to UTF-8, and write the result into file __y.c__.
+
