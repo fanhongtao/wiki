@@ -1,0 +1,4 @@
+
+When run AutoHotKey for the first time, AHK will ask you to write a default script into 'My Document' (%userprofile%/My Documents).
+
+Since AHK can run without install, so I prefer to move the default srcipt 'AutoHotkey.ahk' to where AHK is. ( 'C:\Program Files\AutoHotkey\', for example). After that, we can zip the AHK folder, and copy it to another computer. Then, the two computers have the same configurations.

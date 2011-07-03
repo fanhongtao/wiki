@@ -23,12 +23,11 @@ __标准&规范__
 * [XML]
 
 __工具软件__
-* [AutoHotKey]
 * [Eclipse]
-* [Git]
-* [SecureCRT]
 * [Vim]
 * [Wireshark]
+* [Git]
+* [SecureCRT]
 
 __OS__
 * [Linux]

@@ -16,4 +16,3 @@ Git相关文档
 * [Git命令说明|Git.Commands]
 * [Git Howto|Git.Howto]
 * [网络文章|Git.NetDocs]
-* [Build Git|Git.Build]

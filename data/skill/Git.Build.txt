@@ -1,0 +1,44 @@
+[{TableOfContents }] \\
+!!! Build Git on Linux
+
+!! Prepare
+* Python is needed in order to build Git.
+* asciidoc is optional for install manual.
+
+For Ubuntu, we can install Python and asciidoc with apt-get:
+{{{
+apt-get install Python
+apt-get install asciidoc
+}}}
+%%information
+Actually, asciidoc means a serial of software. About some 50M.
+%%
+
+
+!! Build Steps
+# Download git's source code from [http://www.kernel.org/pub/software/scm/git/]\\
+  For example, download [git-1.7.3.tar.gz|http://www.kernel.org/pub/software/scm/git/git-1.7.3.tar.gz]
+  
+# Unzip .tar.gz, use the fellowing command:\\
+  gunzip -cf git-1.7.3.tar.gz | tar -xvf -
+  
+# Build git.\\
+  cd git-1.7.3\\
+  ./configure \\
+  ./make \\
+  ./make install \\
+
+
+!!Install Manual
+After build/install git, we cat use the following command to install manual.
+{{{
+make install-man
+}}}
+
+If asciidoc is not installed, it's better to copy manual from another Linux.
+
+{{{
+cd /usr/local/share/man
+tar cvf git-manual.tar  man1/git*  man3/Git.3pm  man5/git*  man7/git*
+}}}
+

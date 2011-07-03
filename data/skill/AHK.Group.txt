@@ -1,0 +1,27 @@
+
+If we want to add a shutcut to IE, we can use the fellowing script. 
+{{{
+#IfWinActive ahk_class IEFrame
+    ; Ctrl-F1 to input URL of Google
+    ^F1::SendInput  http://www.google.com.hk
+#IfWinActive
+}}}
+
+But if we switch from IE to FireFox or Chrome, we can use Group to make the code simpler. 
+{{{
+; Define commonly used browseres
+GroupAdd, Browser, ahk_class IEFrame                ; IE & Mathon
+GroupAdd, Browser, ahk_class MozillaWindowClass     ; FireFox
+GroupAdd, Browser, ahk_class Chrome_WidgetWin_0     ; Chrome
+
+#IfWinActive ahk_group Browser
+    ; Ctrl-F1 to input URL of Google
+    ^F1::SendInput  http://www.google.com.hk
+#IfWinActive
+}}}
+
+%%warning
+The definition of group __MUST__  be at the top of AHK script. \\
+If not, the group will no work. It cost me about 4 hours to find out why my group did't work. \\
+You don't want do it again, aren't you?
+%%
