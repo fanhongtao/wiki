@@ -9,8 +9,6 @@ Vim相关的技巧文档
 * [配置Vim|Vim.Config]
 * [在新标签页中打开文件|Vim.OpenFileInTab]
 * [我所安装的插件|Vim.InstalledPlugin]
-* [配置颜色|Vim.Color]
-* [代码格式|Vim.CodeFormat]
 ----
 * [Vim相关网站|Vim.Site]
 

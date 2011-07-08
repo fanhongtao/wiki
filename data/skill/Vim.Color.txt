@@ -1,0 +1,5 @@
+* :colo[[rscheme] Output the name of the currently active color scheme.
+
+* :hi[[ghlight] List all the current highlight groups that have attributes set.
+
+My favorite scheme is 'torte', but I don't like the color of Pmenu, magenta by default. So I create a color scheme named 'torte_fht.vim', change Pmenu's background to Blue.

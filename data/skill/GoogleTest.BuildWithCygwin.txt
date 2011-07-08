@@ -1,0 +1,84 @@
+[{TableOfContents }] \\
+
+!!!Build Google Test with Cygwin
+
+!! Download & Build
+Suppose we download gtest-1.6.0.zip, unzip it, and execute the following commands to make
+{{{
+cd gtest-1.6.0
+./configure
+./make
+}}}
+
+!! Copy libraries to /usr/lib, includes to /usr/include
+After make, copy the libraries to /usr/lib
+{{{
+cp lib/.libs/libgtest.a /usr/lib
+cp lib/.libs/libgtest_main.a /usr/lib
+cp -r include/gtest /usr/include
+}}}
+
+Or we can use links:
+{{{
+ln -s  /cygdrive/d/Project/gtest-1.6.0/lib/.libs/libgtest.a /usr/lib/
+ln -s  /cygdrive/d/Project/gtest-1.6.0/lib/.libs/libgtest_main.a /usr/lib/
+ln -s  /cygdrive/d/Project/gtest-1.6.0/include/gtest/  /usr/include/gtest
+}}}
+
+!!Test with Google Test
+!Write a test source code
+Named as test1.cc
+%%prettify 
+{{{
+#include "gtest/gtest.h"
+#include <stdio.h>
+
+TEST(Test1, HelloWorld) {
+    printf("Hello, world\n");
+    int i = 1;
+    EXPECT_EQ(1, i);
+}
+}}}
+/%
+
+
+! Write a Makefile
+{{{
+CPPFLAGS = -g -I ../include
+
+LIBS = -lgtest -lgtest_main
+
+objects = test1.o
+
+test1:$(objects)
+	$(CXX) -g -o test1 $(objects) $(LIBS)
+
+clean:
+	rm -f *.o
+}}}
+
+! Build
+Execute make to build the test program
+{{{
+$ make
+g++  -g -I ../include -c -o test1.o test1.cc
+g++ -g -o test1 test1.o -lgtest -lgtest_main
+}}}
+
+! Run and get result
+{{{
+$ ./test1.exe
+Running main() from gtest_main.cc
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from Test1
+[ RUN      ] Test1.HelloWorld
+Hello, world
+[       OK ] Test1.HelloWorld (1 ms)
+[----------] 1 test from Test1 (19 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (71 ms total)
+[  PASSED  ] 1 test.
+
+}}}

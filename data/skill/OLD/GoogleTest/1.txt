@@ -12,5 +12,3 @@ Website: [http://code.google.com/p/googletest/]
 * [Assertions|GoogleTest.Assertions]
 * [Selecting Tests|GoogleTest.SelectingTests]
 
-* [Cygwin下编译|GoogleTest.BuildWithCygwin]
-
