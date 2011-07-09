@@ -12,30 +12,27 @@
 !!!相关操作
 !!增加配置
 {{{
- git config --global user.name "Fan Hongtao"
- git config --global user.email fanhongtao@gmail.com
- git config --global color.ui true
+$ git config --global user.name "Fan Hongtao"
+$ git config --global user.email fanhongtao@gmail.com
 }}}
 会导致在 ~/.gitconfig 文件中增加如下内容
 {{{
 [user]
         name = Fan Hongtao
         email = fanhongtao@gmail.com
-[color]
-        ui = true
 }}}
 如果在文件中原来已经有同名的配置项，则会使用新的值覆盖原有的值（相当于修改配置项）
 
 !!查看配置
 通过 -l 参数查看现有的配置项。通过下面的命令可以查看全局的配置项。
 {{{
- git config --global -l
+$ git config --global -l
 }}}
 
 !!删除配置
 删除全局配置项中的 user.name
 {{{
- git config --global --unset user.name
+$ git config --global --unset user.name
 }}}
 
 

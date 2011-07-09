@@ -47,23 +47,22 @@ Connection to github.com closed.
 看到有 “successfully authenticated” 字样，说明GitHub上的SSH已经配置好了。
 
 !!提交变更
-! 配置用户信息 及让 Git 显示颜色
+! 配置用户信息
 {{{
-$ git config --global user.name "Fan Hongtao"
+$ git config --global user.name "fanhongtao"
 $ git config --global user.email fanhongtao@gmail.com
-$ git config --global color.ui true
 }}}
 
 ! 创建Repository
 下面举例说明如何合建一个全新的 Repository。
 {{{
-$ mkdir utils   # 在本地创建一个目录，作为本地工程的根目录
-$ cd utils      # 进入该目录
+$ mkdir MyCode   # 在本地创建一个目录，作为本地工程的根目录
+$ cd MyCode      # 进入该目录
 $ git init       # 创建 Repository
 $ touch README   # 在本地工程创建一个文件
 $ git add README # 将文件添加到 Repository
 $ git commit -m 'first commit'    # 将修改提交到本地的Repository
-$ git remote add origin git@github.com:fanhongtao/utils.git  # 在远端创建一个名为 origin的branch
+$ git remote add origin git@github.com:fanhongtao/MyCode.git  # 在远端创建一个名为 origin的branch
 $ git push origin master  # 将本地Repository提交到远端
 }}}
 
@@ -71,18 +70,13 @@ $ git push origin master  # 将本地Repository提交到远端
 !! 获取GitHub上的版本
 ! 获取新版本
 {{{
-$ git clone git@github.com:fanhongtao/utils.git
+$ git clone git@github.com:fanhongtao/MyCode.git
 }}}
 
-执行该命令后，会在当前目录下创建一个 utils 目录，将 github 上的 utils.git 克隆到本地。
+执行该命令后，会在当前目录下创建一个 MyCode 目录，将 github 上的 MyCode.git 拷贝一份到本地。
 
-也可以执行
+! 更新本地拷贝
 {{{
-$ git clone http://github.com/fanhongtao/utils.git
-}}}
-
-! 更新本地工作目录
-{{{
-$ cd utils    # 进入工作目录
+$ cd MyCode   # 进入根目录
 $ git pull    # 将远端的代码更新到本地
 }}}

@@ -17,5 +17,3 @@ Git相关文档
 * [Git Howto|Git.Howto]
 * [网络文章|Git.NetDocs]
 * [Build Git|Git.Build]
-* [Chang file mode in Windows|Git.ChangeFileMode]
-

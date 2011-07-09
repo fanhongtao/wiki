@@ -1,0 +1,20 @@
+Git can keep file's mode, so it better to commit the exact mode.
+
+I use [msysgit|http://code.google.com/p/msysgit/] in the Microsoft Windows. When commit with msysgit, it always commit file with mode 644.
+
+So I install [http://www.cygwin.com/] with git, and use git in cygwin to commit when the file needs special mode.
+
+%%warning
+Using msysgit and cygwin in different working directories.
+%%
+
+Suppose we have a repository named foo.git.
+
+When using msysgit, the working directory is D:/msysgit/foo.
+
+When using cygwin, the working directory should be in D:/cygwin/foo, or somewhere NOT D:/msysgit/foo.
+
+If using the same working directory, and change file mode with cygwin, the msysgit will  complain the file's mode have been changed. That means, when execute 'git diff', msysgit shows the files need to be committed.
+
+But if change file mode with cygwin in working directory A, commit it, push to repository.
+And use msysgit to pull to working directory B, it's OK.
