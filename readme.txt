@@ -26,3 +26,6 @@
 4. Start tomcat.
 
 
+Note:
+	Tomcat 7 is not supported by JSPWiki. Please choose Tomcat 6.
+

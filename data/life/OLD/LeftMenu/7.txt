@@ -12,10 +12,6 @@ USA
 * [本杰明•格雷厄姆|格雷厄姆]
 * [沃伦•巴菲特|巴菲特]
 
-Other
-* [Digest]
-
-
 Wiki管理
 * [最近修改|Recent Changes]
 * [查找页面|FindPage]

@@ -1,0 +1,32 @@
+!! Question
+To those of you who program for a living, look around. How many programmers do you see who are older than 30? Older than 35? Older than 40? It's my guess that, as you proceed through the increasing ages, you will find fewer and fewer hands-on programmers.
+ 
+So what's that mean to younger programmers, say, in their twenties? I believe that it means that programming is not a long term career path. As programmers become older, they fall prey to the niceties of management (carpets, big desk, a door that closes, etc.). And as a result, fewer and fewer programmers have gray hair. Maybe a lot of managers do but few programmers do.
+ 
+I'm a lucky one. I continue to program. And I'm old! But I think I bring a far ranging experience to the table.
+ 
+I am cautioning young programmers to beware. Although you may think it is, programming is not a long term career.
+
+-- [gggustafson|http://www.codeproject.com/script/Membership/View.aspx?mid=3987831]
+
+!!Answer
+!A1
+Young programmers are cheaper, that's why nobody in my old company was over 30. 
+
+--[wizardzz|http://www.codeproject.com/script/Membership/View.aspx?mid=6821521]
+
+!A2
+No, young programmers are perceived to be cheaper by management with little or no experience in these matters. __Experience can ONLY be gained with age (though age in itself does not prove that anything has been LEARNED from experience!)__ and, regardless of the programming language, toolset, application etc.. etc.. there are things that are learned from (sometimes bitter) experience that can make older developers very much more cost-effective (not cheaper by the hour) than new graduates or even developers in their thirties. What's more, age tends to weed out those who aren't really passionate about programming - they become managers, salespeople, admininstrators etc. Find someone in their 50s who's still programming after 20 or 30 years, and you'll find a highly experienced, adaptable, enthusiastic individual who can add a lot more to a development project than just lines of code.
+\\
+
+I've been writing code in six different decades now (and still I'm only 52 - started in 1969) and was progressing up the technical seniority path in various organisations until they tried to push me into management. I jumped ship, went freelance, and just write code for a living these days. This year I'm on target to earn 6 times what I earned as a programming team leader in a major multinational (taking inflation into account) and am having much more fun!
+\\
+
+__It certainly CAN be long-term if you want it to be and have the skills and mindset to do it.__
+\\
+
+--[DerekTP123|http://www.codeproject.com/script/Membership/View.aspx?mid=6261960]
+
+----
+[http://www.codeproject.com/Lounge.aspx?msg=3951020#xx3951020xx]
+
