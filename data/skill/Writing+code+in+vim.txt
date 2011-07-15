@@ -1,0 +1,13 @@
+[{TableOfContents }]\\
+
+!!! Writing code in vim
+!!Nagevate
+vim is an excellent editor for source code because it has many features that are specifically designed to help programmers. Here are a few of the more handy ones:
+
+| ]p | Just like p, but it automatically adjusts the indent level of the pasted code to match that of the code you paste into. Try it!
+| % | Putting the cursor on a brace, bracket, or parenthesis and pressing % will send the cursor to the matching brace, bracket, or parenthese. Great for fixing parse problems related to heavily nested blocks of code or logic.
+| >> | Indent the highlighted code. (See the earlier section about efficient text selection. If no text is selected, the current line is indented.)
+| << | Like >>, but un-indents.
+| gd | Go to the definition (or declaration) of the function or variable under the cursor.
+| K | Go to the man page for the word currently under the cursor. (For instance, if your cursor is currently over the word sleep, you will see the man page for sleep displayed.)
+

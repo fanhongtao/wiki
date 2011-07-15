@@ -1,0 +1,43 @@
+[{TableOfContents }] \\
+
+!!!Moving efficiently
+!!Stay out of insert mode
+In general, you want to spend as little of your time in vim's insert mode as possible, because in that mode it acts like a dumb editor. This is why most vim novices spend so much time in insert mode -- it makes vim easy to use. But vim's real power lies in command mode! You'll find that the better you know vim, the less time you will spend in insert mode.
+
+!!Use h, j, k, and l
+The first step to efficient editing in vim is to wean yourself from the arrow keys. One of the the advantages of vim's modal design is that you do not need to constantly move your hands back and forth between the arrow keys and the letter keys; when you are in command mode, the letters h, j, k and l correspond to the directions left, down, up, and right, respectively. It takes some practice to get used to, but you will notice the speed difference once you're used to it.
+
+When you are editing e-mail or other paragraph-formatted text, you might notice that the direction keys skip more lines than you expect. This is because your paragraphs appear as one long line to vim. Type g before h, j, k or l to move by screen lines instead of virtual lines.
+
+!!Use motions to move the cursor in the current line
+Most editors have only simple commands for moving the cursor (left, up, right, down, to beginning/end of line, etc). vim has very advanced commands for moving the cursor; these commands are referred to as motions. When the cursor moves from one point in the text to another, the text between the points (and including the points themselves) is considered to be "moved over." (This will be important later.)
+
+Here are a few of the more useful motions:
+| fx | Move the cursor forward to the next occurance of the character x on the current line (obviously, x can be any character you like). This is an extremely useful command. You can type ; to repeat the last f command you gave.
+| tx |Same as above, but moves the cursor to right before the character, not all the way to it. (It's very useful, really.)
+| Fx | Move the cursor backward to the next occurance of the character x on the current line.
+| w | Move the cursor forward by a word.
+| b |Move the cursor backward by a word.
+| 0 | Move the cursor to the beginning of the current line.
+| ^ | Move the cursor to the first character on the current line.
+| $ | Move the cursor to the end of the line
+| ) |Move the cursor forward to the next sentence. (Useful when editing e-mail or text documents.)
+| ( |Move the cursor backward by a sentence.
+
+!!Move efficiently through the file
+vim has many commands that can send you to where you want to go in your file -- there's rarely a need to scroll manually through it. The below keystrokes are not technically motions, since they move around in the file instead of in a particular line.
+| <C-F> | Move the cursor forward by a screenful of text
+| <C-B> | Move the cursor backward by a screenful of text
+| G | Move the cursor to the end of the file
+| numG | Move the cursor line num. (For instance, 10G moves to line 10.)
+| gg | Move the cursor to the beginning of the file
+| H | Move the cursor to the top of the screen.
+| M | Move the cursor to the middle of the screen.
+| L | Move the cursor to the bottom of the screen.
+| * | Read the string under the cursor and go to the next place it appears. (For instance, if your cursor was somewhere on the word "bob," the cursor would move to the next occurance of "bob" in your file.)
+| # | Same as above, except it moves the cursor to the previous occurance.
+| /text | Starting from the cursor, find the next occurance of the string text and go to it. You will need to press Enter to execute the search. To re-execute your last search, type n (for next occurance).
+| ?text | Same as /, but searches in the opposite direction.
+| ma | Make a bookmark named a at the current cursor position. A bookmark can be named any lowercase letter. You can't see the bookmark, but it's there!
+| `a | Go to bookmark a. Important: that's a backtick, not a single quote. The backtick is located to the left of the 1 on most keyboards.
+| `. | Go to the line that you last edited. This is very useful! If you need to scroll through the file to look something up, you can go back to where you were without bookmarking it by using the `. command.

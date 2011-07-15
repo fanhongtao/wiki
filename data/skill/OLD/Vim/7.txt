@@ -11,8 +11,6 @@ Vim相关的技巧文档
 * [我所安装的插件|Vim.InstalledPlugin]
 * [配置颜色|Vim.Color]
 * [代码格式|Vim.CodeFormat]
-* [Edit Registory file with Vim]
-* [Efficient Editing With vim]
 ----
 * [Vim相关网站|Vim.Site]
 

@@ -1,0 +1,11 @@
+!!!Efficient Editing With vim
+This tutorial assumes a basic knowledge of vim -- insert mode, command mode, loading and saving files, etc. It is intended to help vi novices develop their skills so that they can use vi efficiently.
+
+In this tutorial, <C-X> means Ctrl-X -- that is, hold down the Ctrl key and press X. You can get help on most of the commands used here by typing :help command in vim, where command is what you need help on.
+
+* [Moving in Vim]
+* [Editing in Vim]
+* [Writing code in vim]
+
+----
+Original copy is from [http://jmcpherson.org/editing.html]

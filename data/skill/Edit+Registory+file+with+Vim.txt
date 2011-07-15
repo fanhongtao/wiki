@@ -1,0 +1,19 @@
+
+Windows registry files (*.REG) are encoded in UTF-16le with BOM. So we need to config vim to read registry files correctly.
+
+Add the following lines to vimrc file.
+{{{
+set encoding=utf-8
+set fileencodings=ucs-bom,utf-8,cp936
+}}}
+Note, the __ucs-bom__ must set before __utf-8__.
+
+My windows's default language is zh_CN. The setting of encoding to utf-8 will cause vim display message in the wrong way. To solve this problem, set the environment variable __LANG__ to __en_US.UTF-8__.
+{{{
+set LANG=en_US.UTF-8
+}}}
+
+
+For more details, see [http://vim.wikia.com/Working_with_Unicode].
+
+ 
