@@ -1,0 +1,22 @@
+!!!Add a button (Form control)
+
+1. If the Developer tab is not available, display it.
+
+2. On the Developer tab, in the Controls group, click Insert, and then under Form Controls, click Button [{Image src='Button.gif'}].
+
+[{Image src='Controls.gif'}]
+
+3. Click the worksheet location where you want the upper-left corner of the button to appear.
+
+4. Assign a macro to the button.
+
+5. To specify the control properties of the button, right-click the button, and then click Format Control.
+
+----
+!! Display the Developer tab
+
+1. Click the __Microsoft Office Button__ , and then click __Excel Options__.
+
+[{Image src='Microsoft.gif'}]
+
+2. In the __Popular__ category, under __Top options for working with Excel__, select the __Show Developer tab in the Ribbon__ check box, and then click __OK__.
