@@ -4,4 +4,3 @@ Tomcat 是Apache软件基金会（ASF）赞助的一个开源项目，它实现�
 Tomcat 相关的文档
 * [配置SSL|Tomcat.SSL]
 * [URL支持UTF-8|Tomcat.UTF-8]
-* [访问WebApp之外的资源|Tomcat.VisitResourceOutOfApp]
